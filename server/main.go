@@ -128,7 +128,8 @@ import (
 
 	"golang.org/x/crypto/bcrypt"
 	"github.com/golang-jwt/jwt/v5"
-	//  "github.com/lib/pq"
+	 _ "github.com/lib/pq"
+	
 )
 
 var db *sql.DB
