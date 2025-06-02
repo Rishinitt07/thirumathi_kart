@@ -3,6 +3,9 @@ import Dashboard from './components/Dashboard'
 import Login from './components/Login'
 import Register from './components/Register'
 import Home from './components/Home'
+import Upload from './components/Upload'
+import Orders from './components/Orders'     
+import Profile from './components/Profile'
 
 import { BrowserRouter, Route,Routes } from 'react-router-dom'
 
@@ -14,6 +17,7 @@ function App() {
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register/>}/>
          <Route path='/home' element={<Home/>}/>
+         
         
       </Routes>
       
