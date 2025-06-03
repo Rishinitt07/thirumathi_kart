@@ -16,7 +16,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   const notify = (msg) => {
-    toast.warning(msg, {
+    toast.error(msg, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,

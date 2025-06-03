@@ -57,7 +57,7 @@ const Register = () => {
   return (
     <div
       className="text-white h-[100vh] w-[100%] flex justify-center items-center bg-cover"
-      style={{ backgroundImage: "url('../src/assets/blue.jpg')" }}
+      style={{ backgroundImage: "url('../src/assets/bluee.jpg')" }}
     >
       <div className="w-full h-screen backdrop-filter backdrop-blur-xl flex justify-center items-center">
         <div className="bg-transparent border border-slate-400 rounded-xl p-8 shadow-lg backdrop-filter backdrop-blur-lg bg-opacity-20 relative">
