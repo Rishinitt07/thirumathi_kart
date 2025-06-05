@@ -35,15 +35,15 @@ const Login = () => {
     axios.post('http://localhost:8080/login', { username: user, password: pass })
       .then(res => {
         if (res.data.token) {
-          localStorage.setItem('token', res.data.token);  // Store JWT token
-          navigate('/home');  // Navigate to protected home page
+          localStorage.setItem('token', res.data.token); 
+          navigate('/home');  
         } else {
-          show2();  // Show error toast on failure
+          show2();  
         }
       })
       .catch(err => {
         console.log(err);
-        show2();  // Show error toast on error
+        show2();  
       });
   };
 

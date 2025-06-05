@@ -6,7 +6,7 @@ import Home from './components/Home'
 import Upload from './components/Upload'
 import Orders from './components/Orders'     
 import Profile from './components/Profile'
-
+   
 import { BrowserRouter, Route,Routes } from 'react-router-dom'
 
 function App() {
