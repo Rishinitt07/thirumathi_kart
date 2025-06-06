@@ -1,8 +1,49 @@
 // Upload.jsx
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+const Navbar = () => {
+  return (
+    <nav style={styles.navbar}>
+      <div style={styles.logo}>ThirumathiKart</div>
+      <ul style={styles.navLinks}>
+          <li><Link to="/home" className="hover:underline" style={{ color: '#fff' }}>Home</Link></li>
+          <li><Link to="/upload" className="hover:underline" style={{ color: '#fff' }}>Upload Products</Link></li>
+          <li><Link to="/orders" className="hover:underline" style={{ color: '#fff' }}>Orders</Link></li>
+          <li><Link to="/profile" className="hover:underline" style={{ color: '#fff' }}>Profile</Link></li>
+      </ul>
+    </nav>
+  );
+};
+const styles = {
+  navbar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '12px 24px',
+    backgroundColor: '#282c34',
+    color: 'white',
+  },
+  logo: {
+    fontSize: '24px',
+    fontWeight: 'bold',
+  },
+  navLinks: {
+    display: 'flex',
+    gap: '20px',
+  },
+  link: {
+    color: 'white',
+    textDecoration: 'none',
+    fontSize: '16px',
+    fontWeight: '500',
+  }
+};
+
+
 const Upload = () => {
+  
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
@@ -30,7 +71,9 @@ const Upload = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md space-y-4">
         <h2 className="text-2xl font-bold">Upload Product</h2>
         <input type="file" onChange={e => setImage(e.target.files[0])} required />
@@ -39,7 +82,8 @@ const Upload = () => {
         <input type="number" placeholder="Quantity" value={quantity} onChange={e => setQuantity(e.target.value)} className="border p-2 w-full" required />
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Upload</button>
       </form>
-    </div>
+      </div>
+    </>
   );
 };
 
