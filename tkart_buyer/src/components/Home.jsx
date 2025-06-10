@@ -169,6 +169,8 @@ const Home = () => {
   return (
     <>
 
+      
+
       <div
         style={{
           ...styles.container,
@@ -189,10 +191,29 @@ const Home = () => {
               minHeight: 'calc(100vh - 80px)',
             }}
           >
-            <div style={styles.adBottomContainer}>
-              <div style={styles.adBottomBox}>Ad 1</div>
-              <div style={styles.adBottomBox}>Ad 2</div>
-              <div style={styles.adBottomBox}>Ad 3</div>
+            <div className="min-h-screen bg-white flex items-center justify-center px-6">
+              <motion.div
+                initial={{ x: -200, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 1 }}
+                className="flex flex-col md:flex-row items-center gap-10"
+              >
+                {/* Left Text Section */}
+                <div className="max-w-xl text-center md:text-left">
+                  <h1 className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight">
+                    The e-commerce platform for <span className="text-indigo-600">SHGs</span> to market their products
+                  </h1>
+                  <p className="mt-6 text-lg text-gray-600">
+                    We provide Self-help groups a formal platform to showcase their products to a wider market,
+                    and hence empower them by increasing their income.
+                  </p>
+                </div>
+
+                {/* Right Image Section */}
+                <div className="max-w-md">
+                  <img src="https://thirumathikart.nitt.edu/assets/img/tklogo.png" alt="ThirumathiKart Illustration" className="w-full h-auto" />
+                </div>
+              </motion.div>
             </div>
             <div style={{ marginTop: '0px', width: '100%' }}>
               <CategorySection />
