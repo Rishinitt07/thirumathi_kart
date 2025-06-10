@@ -1,5 +1,3 @@
-
-
 package main
 
 import (
@@ -12,10 +10,10 @@ import (
 	"strings"
 	"time"
 
-	"golang.org/x/crypto/bcrypt"
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/rs/cors" // 👈 Added CORS package
 	_ "github.com/lib/pq"
+	"github.com/rs/cors"
+	"golang.org/x/crypto/bcrypt"
 )
 
 var db *sql.DB
@@ -177,6 +175,16 @@ func main() {
 		AllowedHeaders:   []string{"Content-Type", "Authorization"},
 		AllowCredentials: true,
 	}).Handler(mux)
+
+	handler := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:5173"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Content-Type", "Authorization"},
+		AllowCredentials: true,
+	}).Handler(mux)
+
+	fmt.Println("Server started on :8081")
+	http.ListenAndServe(":8081", handler)
 
 	fmt.Println("🚀 Server running on http://localhost:8081")
 	err = http.ListenAndServe(":8081", corsHandler)
