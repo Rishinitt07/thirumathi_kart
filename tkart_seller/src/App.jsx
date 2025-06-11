@@ -6,6 +6,7 @@ import Home from './components/Home'
 import Upload from './components/Upload'
 import Orders from './components/Orders'     
 import Profile from './components/Profile'
+import MyProducts from './components/MyProducts'          
    
 import { BrowserRouter, Route,Routes } from 'react-router-dom'
 
@@ -18,6 +19,7 @@ function App() {
         <Route path='/register' element={<Register/>}/>
          <Route path='/home' element={<Home/>}/>
          <Route path='/upload' element={<Upload/>}/>
+         <Route path='/myproducts' element={<MyProducts/>}/>
          <Route path='/orders' element={<Orders/>}/>
          <Route path='/profile' element={<Profile/>}/>
 
