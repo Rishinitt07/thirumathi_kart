@@ -99,13 +99,13 @@ const categoryData = [
 
 const CategorySection = () => {
   return (
-    <section className="px-4 md:px-12 lg:px-20 py-8">
-      <div className="flex items-center justify-between mb-4">
+    <section className="px-4 md:px-12 lg:px-20 pt-0 pb-2"> {/* Reduced pt-2 to pt-0 */}
+      <div className="flex items-center justify-between mb-3"> {/* mb-4 to mb-3 (optional) */}
         <h2 className="text-2xl font-semibold text-gray-800">Categories</h2>
         <a href="/categories" className="text-blue-500 hover:underline text-sm">View More</a>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 mt-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 mt-2"> {/* mt-4 to mt-2 */}
         {categoryData.map((cat, index) => (
           <motion.div
             key={index}
@@ -129,8 +129,23 @@ const CategorySection = () => {
   );
 };
 
+
 const Home = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [query, setQuery] = useState('');
+const [results, setResults] = useState([]);
+
+const handleSearch = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await axios.get(`http://localhost:8081/search?query=${query}`);
+    setResults(res.data.hits.hits); // Adjust based on your API response
+    console.log('Search results:', res.data.hits.hits);
+  } catch (err) {
+    console.error('Search error:', err);
+  }
+};
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -168,8 +183,8 @@ const Home = () => {
 
   return (
     <>
-
       
+
 
       <div
         style={{
@@ -187,11 +202,13 @@ const Home = () => {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: 'flex-start', // 🟢 change this
               minHeight: 'calc(100vh - 80px)',
+              paddingTop: '10px', // 🟢 reduce padding if needed
             }}
           >
-            <div className="min-h-screen bg-white flex items-center justify-center px-6">
+            
+            <div className="bg-white px-6 pt-12 pb-6">
               <motion.div
                 initial={{ x: -200, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
@@ -216,11 +233,88 @@ const Home = () => {
               </motion.div>
             </div>
             <div style={{ marginTop: '0px', width: '100%' }}>
+             <div  style={{ marginTop: '0px', width: '100%' }}> 
+              <section className="w-full px-6 py-12 md:px-20 bg-white">
+                <motion.div
+                  initial={{ opacity: 0, x: -100 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, ease: 'easeOut' }}
+                  viewport={{ once: true }}
+                  className="max-w-5xl mx-auto text-center md:text-left"
+                >
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+                    About Thirumathi Kart
+                  </h2>
+                  <p className="text-gray-600 text-lg leading-relaxed">
+                    Thirumathi Kart is an initiative by NIT Trichy, aimed at empowering rural entrepreneurs,
+                    artisans, and self-help groups by giving them a digital platform to sell their products.
+                    With a mission to foster inclusive development, we provide a curated marketplace for
+                    handmade goods, groceries, clothing, and more.
+                  </p>
+                  <p className="text-gray-600 text-lg mt-4 leading-relaxed">
+                    Our goal is to create a sustainable digital ecosystem where tradition meets technology,
+                    connecting passionate creators with socially-conscious consumers across India.
+                  </p>
+                </motion.div>
+              </section>
               <CategorySection />
+              </div>
+              
+
+
+            
             </div>
           </div>
         </div>
       </div>
+
+      <footer style={styles.footer}>
+        <div style={styles.footerContainer}>
+          <div style={styles.footerColumn}>
+            <h3 style={styles.footerHeading}>Thirumathikart</h3>
+            <p>NIT-Trichy,<br />Tiruchirappalli, Tamil Nadu</p>
+            <p><strong>Phone:</strong> +91 1234567890</p>
+            <p><strong>Email:</strong> abc@gmail.com</p>
+            <div style={styles.socialIcons}>
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+                <img src="https://cdn-icons-png.flaticon.com/128/733/733553.png" alt="GitHub" style={styles.socialIcon} />
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                <img src="https://cdn-icons-png.flaticon.com/128/174/174857.png" alt="LinkedIn" style={styles.socialIcon} />
+              </a>
+            </div>
+          </div>
+
+          <div style={styles.footerColumn}>
+            <h4 style={styles.footerSubheading}>Useful Links</h4>
+            <ul style={styles.footerList}>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">About us</a></li>
+              <li><a href="#">Services</a></li>
+              <li><a href="#">Terms of service</a></li>
+              <li><a href="#">Privacy policy</a></li>
+            </ul>
+          </div>
+
+          <div style={styles.footerColumn}>
+            <h4 style={styles.footerSubheading}>Our Services</h4>
+            <ul style={styles.footerList}>
+              <li><a href="#">Fashion and Jewellery</a></li>
+              <li><a href="#">Handicraft</a></li>
+              <li><a href="#">Clothing</a></li>
+              <li><a href="#">Beauty and Healthcare</a></li>
+              <li><a href="#">Food</a></li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        style={styles.backToTop}
+        aria-label="Back to top"
+      >
+        ⬆️
+      </button>
     </>
   );
 };
@@ -236,6 +330,57 @@ const styles = {
     maxWidth: '350px',
     margin: '0 20px',
     boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.1)',
+  },
+  footer: {
+    backgroundColor: '#f8f9fa',
+    padding: '40px 20px',
+    borderTop: '1px solid #e0e0e0',
+    fontFamily: "'Josefin Sans', sans-serif",
+  },
+
+  footerContainer: {
+    maxWidth: '1200px',
+    margin: '0 auto',
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    gap: '30px',
+  },
+
+  footerColumn: {
+    flex: '1',
+    minWidth: '200px',
+  },
+
+  footerHeading: {
+    fontSize: '20px',
+    fontWeight: 'bold',
+    marginBottom: '10px',
+  },
+
+  footerSubheading: {
+    fontSize: '16px',
+    fontWeight: '600',
+    marginBottom: '10px',
+  },
+
+  footerList: {
+    listStyle: 'none',
+    padding: 0,
+    lineHeight: '28px',
+  },
+
+  socialIcons: {
+    display: 'flex',
+    gap: '10px',
+    marginTop: '10px',
+  },
+
+  socialIcon: {
+    width: '28px',
+    height: '28px',
+    filter: 'grayscale(100%)',
+    transition: 'filter 0.3s ease',
   },
 
   searchInput: {
@@ -274,6 +419,22 @@ const styles = {
     backgroundColor: 'rgba(255, 255, 255, 0.3)',  // 🟡 Semi-transparent background
     backdropFilter: 'blur(25px)',                // 🟢 Optional extra glass blur effect
     WebkitBackdropFilter: 'blur(10px)',          // 🟢 For Safari support
+  },
+  backToTop: {
+    position: 'fixed',
+    bottom: '30px',
+    right: '30px',
+
+    color: '#848482',
+    border: 'none',
+    borderRadius: '6px',
+    width: '40px',
+    height: '40px',
+    fontSize: '20px',
+    cursor: 'pointer',
+    boxShadow: '0 4px 10px rgba(164, 142, 131, 0.3)',
+    zIndex: 1000,
+    transition: 'background-color 0.3s ease',
   },
 
 

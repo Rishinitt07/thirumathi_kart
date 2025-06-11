@@ -7,15 +7,16 @@ import Categories from './components/categories';
 
 function App() {
   return (
-    
+    <div className="font-sans">
       <Routes>
         <Route path='/' element={<Dashboard />} />
         <Route path='/login' element={<Login />} />
-         <Route path='/categories' element={<Categories />} />
+        <Route path='/categories' element={<Categories />} />
         <Route path='/register' element={<Register />} />
         <Route path='/Home' element={<Home />} />
       </Routes>
-      
+    </div>
   );
 }
+
 export default App;
