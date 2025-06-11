@@ -31,7 +31,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => (
       }}
     >
       <SidebarItem to="/home" label="Home" />
-      <SidebarItem to="/cart" label="My Cart" />
+      <SidebarItem label="My Cart" onClick={() => setShowCart(true)} />
       <SidebarItem to="/orders" label="My Orders" />
       <SidebarItem to="/wishlist" label="Wishlist" />
       <SidebarItem to="/profile" label="Profile" />
@@ -42,6 +42,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => (
     )}
   </>
 );
+
 
 const Navbar = ({ toggleSidebar }) => (
   <div style={styles.navbar}>
@@ -134,6 +135,9 @@ const Home = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [query, setQuery] = useState('');
 const [results, setResults] = useState([]);
+const [cartItems, setCartItems] = useState([]);
+const [showCartOverlay, setShowCartOverlay] = useState(false);
+
 
 const handleSearch = async (e) => {
   e.preventDefault();
@@ -146,29 +150,45 @@ const handleSearch = async (e) => {
   }
 };
 
-  const navigate = useNavigate();
+const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
+useEffect(() => {
+  const storedCart = localStorage.getItem('cart');
+  if (storedCart) setCartItems(JSON.parse(storedCart));
+}, []);
 
-    if (!token) {
-      navigate('/login');
-      return;
-    }
+useEffect(() => {
+  localStorage.setItem('cart', JSON.stringify(cartItems));
+}, [cartItems]);
 
-    axios.get('http://localhost:8081/dashboard', {
-      headers: { Authorization: `Bearer ${token}` },
+const updateQuantity = (itemName, change) => {
+  const updatedCart = cartItems.map(item =>
+    item.name === itemName
+      ? { ...item, quantity: Math.max(1, item.quantity + change) }
+      : item
+  );
+  setCartItems(updatedCart);
+};
+const removeFromCart = (itemName) => {
+  setCartItems(cartItems.filter(item => item.name !== itemName));
+};
+
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  axios.get('http://localhost:8081/dashboard', {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+    .then(() => {
+      // Optional: handle success
+      console.log('Dashboard access granted');
     })
-      .then(() => {
-        // Optional: handle success
-        console.log('Dashboard access granted');
-      })
-      .catch((err) => {
-        console.error('Access denied', err);
-        localStorage.removeItem('token');
-        navigate('/login');
-      });
-  }, [navigate]);
+    .catch((err) => {
+      console.error('Access denied', err);
+      localStorage.removeItem('token');
+      navigate('/login');
+    });
+}, [navigate]);
+
 
   const getIsDesktop = () => (typeof window !== 'undefined' ? window.innerWidth > 768 : true);
   const [isDesktop, setIsDesktop] = useState(getIsDesktop());
@@ -267,6 +287,8 @@ const handleSearch = async (e) => {
           </div>
         </div>
       </div>
+      
+
 
       <footer style={styles.footer}>
         <div style={styles.footerContainer}>

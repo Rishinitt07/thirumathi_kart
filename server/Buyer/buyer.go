@@ -59,6 +59,21 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
+func GetUsernameFromToken(r *http.Request) (string, error) {
+	authHeader := r.Header.Get("Authorization")
+	if authHeader == "" || !strings.HasPrefix(authHeader, "Bearer ") {
+		return "", fmt.Errorf("missing token")
+	}
+	tokenStr := strings.TrimPrefix(authHeader, "Bearer ")
+	claims := &Claims{}
+	token, err := jwt.ParseWithClaims(tokenStr, claims, func(token *jwt.Token) (interface{}, error) {
+		return jwtKey, nil
+	})
+	if err != nil || !token.Valid {
+		return "", fmt.Errorf("invalid token")
+	}
+	return claims.Username, nil
+}
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -145,6 +160,69 @@ func AuthMiddleware(next http.Handler) http.Handler {
 func ProtectedHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "✅ You are authenticated and can access this route.")
 }
+func GetProfileHandler(w http.ResponseWriter, r *http.Request) {
+	username, err := GetUsernameFromToken(r)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
+
+	var profile struct {
+		FirstName string `json:"firstName"`
+		LastName  string `json:"lastName"`
+		Gender    string `json:"gender"`
+		Email     string `json:"email"`
+		Mobile    string `json:"mobile"`
+		Feedback  string `json:"feedback"`
+	}
+
+	err = db.QueryRow(`
+		SELECT first_name, last_name, gender, email, mobile, feedback, avatar
+		FROM users WHERE username = $1`, username).
+		Scan(&profile.FirstName, &profile.LastName, &profile.Gender, &profile.Email,
+			&profile.Mobile, &profile.Feedback)
+
+	if err != nil {
+		http.Error(w, "User not found", http.StatusNotFound)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(profile)
+}
+
+func UpdateProfileHandler(w http.ResponseWriter, r *http.Request) {
+	username, err := GetUsernameFromToken(r)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
+
+	err = r.ParseMultipartForm(10 << 20)
+	if err != nil {
+		http.Error(w, "Error parsing form", http.StatusBadRequest)
+		return
+	}
+
+	firstName := r.FormValue("firstName")
+	lastName := r.FormValue("lastName")
+	gender := r.FormValue("gender")
+	email := r.FormValue("email")
+	mobile := r.FormValue("mobile")
+	feedback := r.FormValue("feedback")
+
+	query := `
+		UPDATE users SET first_name=$1, last_name=$2, gender=$3, email=$4,
+		mobile=$5, feedback=$6 WHERE username=$7`
+	_, err = db.Exec(query, firstName, lastName, gender, email, mobile, feedback, username)
+	if err != nil {
+		http.Error(w, "Update failed", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{"message": "Profile updated"})
+}
 
 func main() {
 	initDB()
@@ -155,9 +233,17 @@ func main() {
         id SERIAL PRIMARY KEY,
         name TEXT,
         username TEXT UNIQUE,
-        password TEXT
+        password TEXT,
+        first_name TEXT,
+        last_name TEXT,
+        gender TEXT CHECK (gender IN ('Male', 'Female', 'Other')),
+        email TEXT,
+        mobile VARCHAR(10),
+        feedback TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
     `
+
 	_, err := db.Exec(createTableQuery)
 	if err != nil {
 		panic(err)
@@ -167,6 +253,8 @@ func main() {
 	mux.HandleFunc("/info", RegisterHandler)
 	mux.HandleFunc("/login", LoginHandler)
 	mux.Handle("/dashboard", AuthMiddleware(http.HandlerFunc(ProtectedHandler)))
+	mux.Handle("/profile", AuthMiddleware(http.HandlerFunc(GetProfileHandler)))
+	mux.Handle("/profile/update", AuthMiddleware(http.HandlerFunc(UpdateProfileHandler)))
 
 	// ✅ Add CORS middleware
 	corsHandler := cors.New(cors.Options{
