@@ -6,24 +6,34 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Profile = () => {
     const [profile, setProfile] = useState({
+        username: '',
         firstName: '',
         lastName: '',
         gender: '',
         email: '',
         mobile: '',
         feedback: '',
-        
+
     });
 
     const [errors, setErrors] = useState({});
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        axios.get('http://localhost:8081/profile', {
-            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        }).then(res => {
-            setProfile(res.data);
-        }).catch(err => console.error(err));
+        const fetchProfile = async () => {
+            try {
+                const res = await axios.get('http://localhost:8081/profile', {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                setProfile(res.data); // ✅ Set username and all other fields at once
+            } catch (err) {
+                console.error('Failed to fetch profile:', err);
+            }
+        };
+
+        fetchProfile();
     }, []);
 
     const handleChange = (e) => {
@@ -49,42 +59,53 @@ const Profile = () => {
         return Object.values(temp).every(x => x === '');
     };
 
-const handleSubmit = async () => {
-    if (!validate()) return;
-    const formData = new FormData();
-    for (let key in profile) {
-        formData.append(key, profile[key]);
-    }
-    try {
-        await axios.put('http://localhost:8081/profile/update', formData, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                'Content-Type': 'multipart/form-data',
-            },
-        });
-        toast.success('✅ Profile updated successfully!');
-    } catch (error) {
-        toast.error('❌ Failed to update profile.');
-    }
-};
+    const handleSubmit = async () => {
+        if (!validate()) return;
+        const formData = new FormData();
+        for (let key in profile) {
+            formData.append(key, profile[key]);
+        }
+        try {
+            await axios.put('http://localhost:8081/profile/update', formData, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            toast.success('✅ Profile updated successfully!');
+        } catch (error) {
+            toast.error('❌ Failed to update profile.');
+        }
+    };
 
     return (
         <div className="min-h-screen bg-gray-100 font-josefin">
             <header className="bg-white shadow px-6 py-4 flex justify-between items-center sticky top-0 z-50">
-                <div className="text-xl font-bold">Thirumathi Kart</div>
+                <a href="/home" className="flex items-center gap-1 hover:">
+                    <img
+                        src="https://thirumathikart.nitt.edu/assets/img/tklogo.png"
+                        alt="Thirumathi Kart Logo"
+                        className="w-10 h-10 object-contain"
+                    />
+                    <div className="text-xl font-bold">Thirumathi Kart</div>
+                </a>
+
                 <nav className="flex gap-6 text-sm">
                     <a href="/home" className="hover:underline">Home</a>
                     <a href="/categories" className="hover:underline">Categories</a>
                     <a href="/cart" className="hover:underline">🛒</a>
                 </nav>
             </header>
-
             <main className="flex flex-col lg:flex-row gap-6 p-6 max-w-6xl mx-auto">
                 {/* Sidebar */}
                 <aside className="w-full lg:w-1/4 bg-white rounded-lg shadow p-4 space-y-6">
                     <div className="text-center">
-                       
-                       
+                        {/* 👤 Profile Icon */}
+                        <img
+                            src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+                            alt="User Icon"
+                            className="w-16 h-16 mx-auto rounded-full mb-2"
+                        />
                         <p className="text-gray-700">Hello, <strong>user</strong></p>
                     </div>
 
@@ -109,14 +130,40 @@ const handleSubmit = async () => {
                             <li><a href="#" className="hover:underline">Saved Cards</a></li>
                         </ul>
                     </div>
+                    <div className="pt-4 border-t">
+                        <button
+                            onClick={() => {
+                                const confirmed = window.confirm("Are you sure you want to log out?");
+                                if (confirmed) {
+                                    localStorage.removeItem('token');
+                                    window.location.href = '/';
+                                }
+                            }}
+                            className="w-full flex items-center gap-2 px-4 py-2 mt-4 text-red-600 border border-red-300 rounded hover:bg-red-50 hover:text-red-700 transition duration-200"
+                        >
+                            <span className="text-lg">⎋</span>
+                            <span className="font-medium text-sm">Logout</span>
+                        </button>
+                    </div>
                 </aside>
 
                 {/* Profile Info */}
+
                 <section className="w-full lg:w-3/4 bg-white rounded-lg shadow p-6 space-y-6">
                     <div className="flex justify-between items-center">
                         <h2 className="text-xl font-semibold">Personal Information</h2>
                         <button className="text-blue-500 hover:underline text-sm">Edit</button>
                     </div>
+                    <div>
+                        <label className="font-medium">Username</label>
+                        <input
+                            type="text"
+                            value={profile.username}
+                            disabled
+                            className="border p-2 rounded w-full mt-1 bg-gray-100 text-gray-700"
+                        />
+                    </div>
+
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <input type="text" name="firstName" value={profile.firstName} onChange={handleChange} placeholder="First Name" className="border p-2 rounded" />

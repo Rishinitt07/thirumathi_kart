@@ -1,317 +1,317 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 
 const productData = [
-    {
-        category: 'Household',
-        subCategories: [
-            {
-                name: 'Bedroom',
-                subSubCategories: [
-                    'Bed', 'Pillow', 'Blanket', 'Wardrobe', 'Mirror', 'Curtains', 'Table lamp', 'Alarm clock'
-                ]
-            },
-            {
-                name: 'Living Room',
-                subSubCategories: [
-                    'Curtains', 'Wall clock', 'Books/Magazines'
-                ]
-            },
-            {
-                name: 'Bathroom',
-                subSubCategories: [
-                    'Bucket', 'Mug', 'Towel', 'Toothbrush', 'Soap', 'Mirror', 'Comb', 'Cleaning tools'
-                ]
-            },
-            {
-                name: 'Cleaning Supplies',
-                subSubCategories: [
-                    'Broom', 'Mop', 'Dustpan', 'Detergent', 'Cloths', 'Garbage bags', 'Disinfectant'
-                ]
-            },
-            {
-                name: 'Electrical & Misc',
-                subSubCategories: [
-                    'Bulbs', 'Charger', 'Power bank', 'Extension cords', 'Iron box', 'Batteries', 'Torch'
-                ]
-            }
+  {
+    category: 'Household',
+    subCategories: [
+      {
+        name: 'Bedroom',
+        subSubCategories: [
+          'Bed', 'Pillow', 'Blanket', 'Wardrobe', 'Mirror', 'Curtains', 'Table lamp', 'Alarm clock'
         ]
-    },
-    {
-        category: 'Fashion',
-        subCategories: [
-            {
-                name: 'Clothing',
-                subSubCategories: [
-                    'Tops', 'Kurtis', 'Dresses', 'Jeans', 'Sarees', 'Nightwear', 'Kids wear', 'Men’s wear'
-                ]
-            },
-            {
-                name: 'Accessories',
-                subSubCategories: [
-                    'Bags', 'Wallets', 'Sunglasses', 'Belts', 'Hats', 'Scarves', 'Socks'
-                ]
-            },
-            {
-                name: 'Footwear',
-                subSubCategories: [
-                    'Sandals', 'Heels', 'Sneakers', 'Traditional footwear', 'Kids’ shoes'
-                ]
-            },
-            {
-                name: 'Materials',
-                subSubCategories: [
-                    'Fabric', 'Sewing kits', 'Beads', 'Laces', 'Zips'
-                ]
-            }
+      },
+      {
+        name: 'Living Room',
+        subSubCategories: [
+          'Curtains', 'Wall clock', 'Books/Magazines'
         ]
-    },
-    {
-        category: 'Kitchen',
-        subCategories: [
-            {
-                name: 'Cooking Appliances',
-                subSubCategories: [
-                    'Stove', 'Induction cooktop', 'Mixer', 'Rice cooker', 'Pressure cooker'
-                ]
-            },
-            {
-                name: 'Cookware',
-                subSubCategories: [
-                    'Frying pan', 'Kadai', 'Tawa', 'Pressure cooker'
-                ]
-            },
-            {
-                name: 'Utensils & Cutlery',
-                subSubCategories: [
-                    'Plates', 'Bowls', 'Spoons', 'Forks', 'Knives', 'Tongs', 'Ladles', 'Trays'
-                ]
-            },
-            {
-                name: 'Storage Containers',
-                subSubCategories: [
-                    'Spice jars', 'Oil cans', 'Grain boxes', 'Lunch boxes', 'Water bottles'
-                ]
-            },
-            {
-                name: 'Cleaning',
-                subSubCategories: [
-                    'Dish soap', 'Sponge', 'Rack', 'Bin', 'Towels', 'Gloves', 'Mop'
-                ]
-            },
-            {
-                name: 'Food Basics',
-                subSubCategories: [
-                    'Rice', 'Wheat', 'Pulses', 'Oil', 'Spices', 'Salt', 'Sugar', 'Tea/Coffee'
-                ]
-            },
-            {
-                name: 'Prep Tools',
-                subSubCategories: [
-                    'Measuring cups', 'Chopping board', 'Knives', 'Peeler', 'Grater', 'Whisk'
-                ]
-            }
+      },
+      {
+        name: 'Bathroom',
+        subSubCategories: [
+          'Bucket', 'Mug', 'Towel', 'Toothbrush', 'Soap', 'Mirror', 'Comb', 'Cleaning tools'
         ]
-    },
-    {
-        category: 'Cosmetics',
-        subCategories: [
-            {
-                name: 'Makeup',
-                subSubCategories: ['Lipstick', 'Eyeliner', 'Mascara', 'Foundation', 'Blush', 'Removers', 'Brushes']
-            },
-            {
-                name: 'Skincare',
-                subSubCategories: ['Face wash', 'Scrub', 'Moisturizer', 'Serum', 'Sunscreen', 'Masks', 'Toner']
-            },
-            {
-                name: 'Haircare',
-                subSubCategories: ['Hair oil', 'Shampoo', 'Conditioner', 'Serum', 'Masks']
-            },
-            {
-                name: 'Bodycare',
-                subSubCategories: ['Lotion', 'Soaps', 'Body wash', 'Scrubs', 'Deodorants']
-            },
-            {
-                name: 'Nailcare',
-                subSubCategories: ['Nail polish', 'Removers', 'Art kits', 'Cuticle oil']
-            }
+      },
+      {
+        name: 'Cleaning Supplies',
+        subSubCategories: [
+          'Broom', 'Mop', 'Dustpan', 'Detergent', 'Cloths', 'Garbage bags', 'Disinfectant'
         ]
-    },
-    {
-        category: 'Organics',
-        subCategories: [
-            {
-                name: 'Skincare & Beauty',
-                subSubCategories: ['Herbal packs', 'Organic soaps', 'Aloe gel', 'Rose water', 'Hair oils']
-            },
-            {
-                name: 'Organic Food',
-                subSubCategories: ['Cold-pressed oils', 'Raw honey', 'Ghee', 'Jaggery', 'Millets', 'Pulses', 'Spices']
-            },
-            {
-                name: 'Wellness',
-                subSubCategories: ['Ayurvedic powders', 'Herbal juices', 'Detox mixes', 'Bath salts']
-            },
-            {
-                name: 'Home & Personal',
-                subSubCategories: ['Natural cleaners', 'Eco pads', 'Bamboo brushes', 'Repellents']
-            },
-            {
-                name: 'Gardening',
-                subSubCategories: ['Organic fertilizers', 'Seeds', 'Bio-pesticides']
-            },
-            {
-                name: 'Eco Products',
-                subSubCategories: ['Cloth bags', 'Clay utensils', 'Bamboo goods', 'Organic clothing']
-            }
+      },
+      {
+        name: 'Electrical & Misc',
+        subSubCategories: [
+          'Bulbs', 'Charger', 'Power bank', 'Extension cords', 'Iron box', 'Batteries', 'Torch'
         ]
-    },
-    {
-        category: 'Handcrafts',
-        subCategories: [
-            {
-                name: 'Home Decor',
-                subSubCategories: ['Wall art', 'Candles', 'Lamps', 'Dreamcatchers', 'Planters']
-            },
-            {
-                name: 'Fashion Accessories',
-                subSubCategories: ['Handmade jewelry', 'Bags', 'Scarves', 'Keychains']
-            },
-            {
-                name: 'Traditional Crafts',
-                subSubCategories: ['Terracotta', 'Wooden toys', 'Bamboo items', 'Jute products']
-            },
-            {
-                name: 'Fabric Crafts',
-                subSubCategories: ['Printed fabrics', 'Embroidered items', 'Quilts', 'Knitted goods']
-            },
-            {
-                name: 'Gifts & Stationery',
-                subSubCategories: ['Cards', 'Notebooks', 'Soap sets', 'Resin gifts', 'Magnets']
-            },
-            {
-                name: 'Kids & DIY',
-                subSubCategories: ['Toys', 'Craft kits', 'Coloring books']
-            },
-            {
-                name: 'Kitchen Items',
-                subSubCategories: ['Clay cups', 'Wooden boards', 'Coasters', 'Painted bowls']
-            }
+      }
+    ]
+  },
+  {
+    category: 'Fashion',
+    subCategories: [
+      {
+        name: 'Clothing',
+        subSubCategories: [
+          'Tops', 'Kurtis', 'Dresses', 'Jeans', 'Sarees', 'Nightwear', 'Kids wear', 'Men’s wear'
         ]
-    },
-    {
-        category: 'Groceries',
-        subCategories: [
-            {
-                name: 'Grains & Staples',
-                subSubCategories: ['Rice', 'Wheat', 'Millets', 'Poha', 'Dalia']
-            },
-            {
-                name: 'Pulses',
-                subSubCategories: ['Toor', 'Moong', 'Urad', 'Chana', 'Masoor', 'Rajma', 'Chole']
-            },
-            {
-                name: 'Oils & Ghee',
-                subSubCategories: ['Sunflower', 'Mustard', 'Coconut', 'Ghee']
-            },
-            {
-                name: 'Spices',
-                subSubCategories: ['Turmeric', 'Chili', 'Garam masala', 'Jeera', 'Whole spices']
-            },
-            {
-                name: 'Sweeteners',
-                subSubCategories: ['Sugar', 'Jaggery', 'Honey']
-            },
-            {
-                name: 'Beverages',
-                subSubCategories: ['Tea', 'Coffee', 'Health drinks']
-            },
-            {
-                name: 'Snacks',
-                subSubCategories: ['Biscuits', 'Chips', 'Dry fruits', 'Seeds']
-            },
-            {
-                name: 'Essentials',
-                subSubCategories: ['Detergents', 'Cleaners', 'Soaps', 'Toiletries']
-            },
-            {
-                name: 'Vegetables',
-                subSubCategories: ['Onion', 'Potato', 'Tomato', 'Garlic', 'Greens']
-            }
+      },
+      {
+        name: 'Accessories',
+        subSubCategories: [
+          'Bags', 'Wallets', 'Sunglasses', 'Belts', 'Hats', 'Scarves', 'Socks'
         ]
-    },
-    {
-        category: 'Jewellery',
-        subCategories: [
-            {
-                name: 'Earrings',
-                subSubCategories: ['Studs', 'Hoops', 'Jhumkas', 'Danglers', 'Terracotta', 'Resin']
-            },
-            {
-                name: 'Necklaces',
-                subSubCategories: ['Chains', 'Pendants', 'Beaded', 'Chokers', 'Layered']
-            },
-            {
-                name: 'Rings',
-                subSubCategories: ['Bands', 'Stone rings', 'Adjustable', 'Handmade']
-            },
-            {
-                name: 'Bracelets/Bangles',
-                subSubCategories: ['Glass', 'Metal', 'Thread', 'Cuff', 'Kada']
-            },
-            {
-                name: 'Anklets',
-                subSubCategories: ['Silver', 'Beaded', 'Chain']
-            },
-            {
-                name: 'Nose Jewelry',
-                subSubCategories: ['Nose pins', 'Rings', 'Nath']
-            },
-            {
-                name: 'Hair/Head Jewelry',
-                subSubCategories: ['Maang tikka', 'Clips', 'Hairbands', 'Juda pins']
-            },
-            {
-                name: 'Other Accessories',
-                subSubCategories: ['Waist belts', 'Brooches', 'Toe rings', 'Armlets']
-            },
-            {
-                name: 'Eco-Friendly',
-                subSubCategories: ['Terracotta', 'Fabric', 'Wooden', 'Crochet', 'Quilling']
-            }
+      },
+      {
+        name: 'Footwear',
+        subSubCategories: [
+          'Sandals', 'Heels', 'Sneakers', 'Traditional footwear', 'Kids’ shoes'
         ]
-    },
-    {
-        category: 'Stationery',
-        subCategories: [
-            {
-                name: 'Writing Tools',
-                subSubCategories: ['Pens', 'Pencils', 'Markers', 'Highlighters', 'Erasers', 'Sharpeners']
-            },
-            {
-                name: 'Paper Products',
-                subSubCategories: ['Notebooks', 'Diaries', 'Sticky notes', 'Drawing books']
-            },
-            {
-                name: 'Office Supplies',
-                subSubCategories: ['Files', 'Clips', 'Staplers', 'Scissors', 'Glue', 'Tape']
-            },
-            {
-                name: 'Art Supplies',
-                subSubCategories: ['Crayons', 'Paints', 'Brushes', 'Colour pencils']
-            },
-            {
-                name: 'Math Tools',
-                subSubCategories: ['Geometry box', 'Calculator', 'Graph rulers']
-            },
-            {
-                name: 'Misc',
-                subSubCategories: ['ID holders', 'Whiteboards', 'Chalk', 'Packaging material']
-            }
+      },
+      {
+        name: 'Materials',
+        subSubCategories: [
+          'Fabric', 'Sewing kits', 'Beads', 'Laces', 'Zips'
         ]
-    }
+      }
+    ]
+  },
+  {
+    category: 'Kitchen',
+    subCategories: [
+      {
+        name: 'Cooking Appliances',
+        subSubCategories: [
+          'Stove', 'Induction cooktop', 'Mixer', 'Rice cooker', 'Pressure cooker'
+        ]
+      },
+      {
+        name: 'Cookware',
+        subSubCategories: [
+          'Frying pan', 'Kadai', 'Tawa', 'Pressure cooker'
+        ]
+      },
+      {
+        name: 'Utensils & Cutlery',
+        subSubCategories: [
+          'Plates', 'Bowls', 'Spoons', 'Forks', 'Knives', 'Tongs', 'Ladles', 'Trays'
+        ]
+      },
+      {
+        name: 'Storage Containers',
+        subSubCategories: [
+          'Spice jars', 'Oil cans', 'Grain boxes', 'Lunch boxes', 'Water bottles'
+        ]
+      },
+      {
+        name: 'Cleaning',
+        subSubCategories: [
+          'Dish soap', 'Sponge', 'Rack', 'Bin', 'Towels', 'Gloves', 'Mop'
+        ]
+      },
+      {
+        name: 'Food Basics',
+        subSubCategories: [
+          'Rice', 'Wheat', 'Pulses', 'Oil', 'Spices', 'Salt', 'Sugar', 'Tea/Coffee'
+        ]
+      },
+      {
+        name: 'Prep Tools',
+        subSubCategories: [
+          'Measuring cups', 'Chopping board', 'Knives', 'Peeler', 'Grater', 'Whisk'
+        ]
+      }
+    ]
+  },
+  {
+    category: 'Cosmetics',
+    subCategories: [
+      {
+        name: 'Makeup',
+        subSubCategories: ['Lipstick', 'Eyeliner', 'Mascara', 'Foundation', 'Blush', 'Removers', 'Brushes']
+      },
+      {
+        name: 'Skincare',
+        subSubCategories: ['Face wash', 'Scrub', 'Moisturizer', 'Serum', 'Sunscreen', 'Masks', 'Toner']
+      },
+      {
+        name: 'Haircare',
+        subSubCategories: ['Hair oil', 'Shampoo', 'Conditioner', 'Serum', 'Masks']
+      },
+      {
+        name: 'Bodycare',
+        subSubCategories: ['Lotion', 'Soaps', 'Body wash', 'Scrubs', 'Deodorants']
+      },
+      {
+        name: 'Nailcare',
+        subSubCategories: ['Nail polish', 'Removers', 'Art kits', 'Cuticle oil']
+      }
+    ]
+  },
+  {
+    category: 'Organics',
+    subCategories: [
+      {
+        name: 'Skincare & Beauty',
+        subSubCategories: ['Herbal packs', 'Organic soaps', 'Aloe gel', 'Rose water', 'Hair oils']
+      },
+      {
+        name: 'Organic Food',
+        subSubCategories: ['Cold-pressed oils', 'Raw honey', 'Ghee', 'Jaggery', 'Millets', 'Pulses', 'Spices']
+      },
+      {
+        name: 'Wellness',
+        subSubCategories: ['Ayurvedic powders', 'Herbal juices', 'Detox mixes', 'Bath salts']
+      },
+      {
+        name: 'Home & Personal',
+        subSubCategories: ['Natural cleaners', 'Eco pads', 'Bamboo brushes', 'Repellents']
+      },
+      {
+        name: 'Gardening',
+        subSubCategories: ['Organic fertilizers', 'Seeds', 'Bio-pesticides']
+      },
+      {
+        name: 'Eco Products',
+        subSubCategories: ['Cloth bags', 'Clay utensils', 'Bamboo goods', 'Organic clothing']
+      }
+    ]
+  },
+  {
+    category: 'Handcrafts',
+    subCategories: [
+      {
+        name: 'Home Decor',
+        subSubCategories: ['Wall art', 'Candles', 'Lamps', 'Dreamcatchers', 'Planters']
+      },
+      {
+        name: 'Fashion Accessories',
+        subSubCategories: ['Handmade jewelry', 'Bags', 'Scarves', 'Keychains']
+      },
+      {
+        name: 'Traditional Crafts',
+        subSubCategories: ['Terracotta', 'Wooden toys', 'Bamboo items', 'Jute products']
+      },
+      {
+        name: 'Fabric Crafts',
+        subSubCategories: ['Printed fabrics', 'Embroidered items', 'Quilts', 'Knitted goods']
+      },
+      {
+        name: 'Gifts & Stationery',
+        subSubCategories: ['Cards', 'Notebooks', 'Soap sets', 'Resin gifts', 'Magnets']
+      },
+      {
+        name: 'Kids & DIY',
+        subSubCategories: ['Toys', 'Craft kits', 'Coloring books']
+      },
+      {
+        name: 'Kitchen Items',
+        subSubCategories: ['Clay cups', 'Wooden boards', 'Coasters', 'Painted bowls']
+      }
+    ]
+  },
+  {
+    category: 'Groceries',
+    subCategories: [
+      {
+        name: 'Grains & Staples',
+        subSubCategories: ['Rice', 'Wheat', 'Millets', 'Poha', 'Dalia']
+      },
+      {
+        name: 'Pulses',
+        subSubCategories: ['Toor', 'Moong', 'Urad', 'Chana', 'Masoor', 'Rajma', 'Chole']
+      },
+      {
+        name: 'Oils & Ghee',
+        subSubCategories: ['Sunflower', 'Mustard', 'Coconut', 'Ghee']
+      },
+      {
+        name: 'Spices',
+        subSubCategories: ['Turmeric', 'Chili', 'Garam masala', 'Jeera', 'Whole spices']
+      },
+      {
+        name: 'Sweeteners',
+        subSubCategories: ['Sugar', 'Jaggery', 'Honey']
+      },
+      {
+        name: 'Beverages',
+        subSubCategories: ['Tea', 'Coffee', 'Health drinks']
+      },
+      {
+        name: 'Snacks',
+        subSubCategories: ['Biscuits', 'Chips', 'Dry fruits', 'Seeds']
+      },
+      {
+        name: 'Essentials',
+        subSubCategories: ['Detergents', 'Cleaners', 'Soaps', 'Toiletries']
+      },
+      {
+        name: 'Vegetables',
+        subSubCategories: ['Onion', 'Potato', 'Tomato', 'Garlic', 'Greens']
+      }
+    ]
+  },
+  {
+    category: 'Jewellery',
+    subCategories: [
+      {
+        name: 'Earrings',
+        subSubCategories: ['Studs', 'Hoops', 'Jhumkas', 'Danglers', 'Terracotta', 'Resin']
+      },
+      {
+        name: 'Necklaces',
+        subSubCategories: ['Chains', 'Pendants', 'Beaded', 'Chokers', 'Layered']
+      },
+      {
+        name: 'Rings',
+        subSubCategories: ['Bands', 'Stone rings', 'Adjustable', 'Handmade']
+      },
+      {
+        name: 'Bracelets/Bangles',
+        subSubCategories: ['Glass', 'Metal', 'Thread', 'Cuff', 'Kada']
+      },
+      {
+        name: 'Anklets',
+        subSubCategories: ['Silver', 'Beaded', 'Chain']
+      },
+      {
+        name: 'Nose Jewelry',
+        subSubCategories: ['Nose pins', 'Rings', 'Nath']
+      },
+      {
+        name: 'Hair/Head Jewelry',
+        subSubCategories: ['Maang tikka', 'Clips', 'Hairbands', 'Juda pins']
+      },
+      {
+        name: 'Other Accessories',
+        subSubCategories: ['Waist belts', 'Brooches', 'Toe rings', 'Armlets']
+      },
+      {
+        name: 'Eco-Friendly',
+        subSubCategories: ['Terracotta', 'Fabric', 'Wooden', 'Crochet', 'Quilling']
+      }
+    ]
+  },
+  {
+    category: 'Stationery',
+    subCategories: [
+      {
+        name: 'Writing Tools',
+        subSubCategories: ['Pens', 'Pencils', 'Markers', 'Highlighters', 'Erasers', 'Sharpeners']
+      },
+      {
+        name: 'Paper Products',
+        subSubCategories: ['Notebooks', 'Diaries', 'Sticky notes', 'Drawing books']
+      },
+      {
+        name: 'Office Supplies',
+        subSubCategories: ['Files', 'Clips', 'Staplers', 'Scissors', 'Glue', 'Tape']
+      },
+      {
+        name: 'Art Supplies',
+        subSubCategories: ['Crayons', 'Paints', 'Brushes', 'Colour pencils']
+      },
+      {
+        name: 'Math Tools',
+        subSubCategories: ['Geometry box', 'Calculator', 'Graph rulers']
+      },
+      {
+        name: 'Misc',
+        subSubCategories: ['ID holders', 'Whiteboards', 'Chalk', 'Packaging material']
+      }
+    ]
+  }
 ];
 
 
@@ -319,9 +319,9 @@ const Navbar = ({ toggleCart }) => (
   <div className="flex items-center justify-between px-6 py-3 border-w shadow-md sticky top-0 bg-white z-50 font-josefin">
     <div className="flex items-center gap-3">
       <img src="https://thirumathikart.nitt.edu/assets/img/tklogo.png" alt="Logo" className="w-10 h-10" />
-     <Link to="/Home" className="text-xl font-bold ">
-   Thirumathi Kart
-</Link>
+      <Link to="/Home" className="text-xl font-bold ">
+        Thirumathi Kart
+      </Link>
 
     </div>
     <div className="flex items-center gap-4 cursor-pointer" onClick={toggleCart}>
@@ -350,14 +350,21 @@ const Categories = () => {
     localStorage.setItem('cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const addToCart = (itemName) => {
-    const existingItem = cartItems.find(item => item.name === itemName);
-    if (existingItem) {
-      setCartItems(cartItems.map(item => item.name === itemName ? { ...item, quantity: item.quantity + 1 } : item));
+  const addToCart = (item) => {
+    const existing = cartItems.find(i => i.name === item.name);
+    let updatedCart;
+
+    if (existing) {
+      updatedCart = cartItems.map(i =>
+        i.name === item.name ? { ...i, qty: i.qty + 1 } : i
+      );
     } else {
-      setCartItems([...cartItems, { name: itemName, quantity: 1 }]);
+      updatedCart = [...cartItems, { ...item, qty: 1 }];
     }
-    setConfirmationMessage(`${itemName} added to cart!`);
+
+    setCartItems(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart)); // ✅ save to localStorage
+    setConfirmationMessage(`${item.name} added to cart!`);
     setTimeout(() => setConfirmationMessage(''), 2000);
   };
 
@@ -463,11 +470,14 @@ const Categories = () => {
                 <h3 className="font-semibold text-lg mb-2">{prod}</h3>
                 <motion.button
                   whileTap={{ scale: 0.9 }}
-                  onClick={() => addToCart(prod)}
-                  className="mt-2 px-4 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
+                  onClick={() =>
+                    addToCart({ id: index, name: prod, price: 299, image: 'https://via.placeholder.com/64' })
+                  }
+                 className="mt-2 px-4 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
                 >
                   Add to Cart
                 </motion.button>
+
               </div>
             ))}
           </div>

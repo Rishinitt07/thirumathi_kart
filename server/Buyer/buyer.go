@@ -168,6 +168,7 @@ func GetProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var profile struct {
+		Username  string `json:"username"`
 		FirstName string `json:"firstName"`
 		LastName  string `json:"lastName"`
 		Gender    string `json:"gender"`
@@ -177,10 +178,10 @@ func GetProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = db.QueryRow(`
-		SELECT first_name, last_name, gender, email, mobile, feedback, avatar
+		SELECT username, first_name, last_name, gender, email, mobile, feedback
 		FROM users WHERE username = $1`, username).
-		Scan(&profile.FirstName, &profile.LastName, &profile.Gender, &profile.Email,
-			&profile.Mobile, &profile.Feedback)
+		Scan(&profile.Username, &profile.FirstName, &profile.LastName,
+			&profile.Gender, &profile.Email, &profile.Mobile, &profile.Feedback)
 
 	if err != nil {
 		http.Error(w, "User not found", http.StatusNotFound)
