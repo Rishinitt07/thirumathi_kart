@@ -110,6 +110,7 @@ const Login = () => {
         pauseOnHover
         theme="colored"
       />
+      
     </div>
   );
 };

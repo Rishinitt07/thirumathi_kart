@@ -31,7 +31,8 @@ const Sidebar = ({ isOpen, closeSidebar }) => (
       }}
     >
       <SidebarItem to="/home" label="Home" />
-      <SidebarItem label="My Cart" onClick={() => setShowCart(true)} />
+       <SidebarItem to="/categories" label="Categories" />
+      <SidebarItem to="/cart" label="MyCart" />
       <SidebarItem to="/orders" label="My Orders" />
       <SidebarItem to="/wishlist" label="Wishlist" />
       <SidebarItem to="/profile" label="Profile" />
@@ -136,7 +137,7 @@ const Home = () => {
   const [query, setQuery] = useState('');
 const [results, setResults] = useState([]);
 const [cartItems, setCartItems] = useState([]);
-const [showCartOverlay, setShowCartOverlay] = useState(false);
+
 
 
 const handleSearch = async (e) => {

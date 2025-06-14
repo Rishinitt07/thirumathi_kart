@@ -51,6 +51,9 @@ const Dashboard = () => {
           Welcome to Buyer Service
         </motion.h1>
       </div>
+      <footer className="mt-0 text-center text-sm py-3 text-gray-500 border-t">
+        Copyright © 2025 Thirumathi Kart. All Rights Reserved.
+      </footer>
 
     </>
   );

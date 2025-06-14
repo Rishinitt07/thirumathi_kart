@@ -315,21 +315,111 @@ const productData = [
 ];
 
 
-const Navbar = ({ toggleCart }) => (
-  <div className="flex items-center justify-between px-6 py-3 border-w shadow-md sticky top-0 bg-white z-50 font-josefin">
-    <div className="flex items-center gap-3">
-      <img src="https://thirumathikart.nitt.edu/assets/img/tklogo.png" alt="Logo" className="w-10 h-10" />
-      <Link to="/Home" className="text-xl font-bold ">
-        Thirumathi Kart
-      </Link>
+// Sidebar item
+const SidebarItem = ({ to, label }) => {
+  const [hover, setHover] = useState(false);
+  return (
+    <Link
+      to={to}
+      style={{
+        padding: '12px 20px',
+        textDecoration: 'none',
+        color: '#333',
+        fontWeight: '500',
+        borderRadius: '4px',
+        backgroundColor: hover ? '#E5E7EB' : 'transparent',
+        display: 'block',
+      }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      {label}
+    </Link>
+  );
+};
 
+// Sidebar layout
+const Sidebar = ({ isOpen, closeSidebar }) => (
+  <>
+    <div
+      style={{
+        position: 'fixed',
+        top: '60px',
+        left: isOpen ? 0 : '-200px',
+        width: '200px',
+        height: '100%',
+        backgroundColor: 'white',
+        borderRight: '1px solid white',
+        paddingTop: '20px',
+        transition: 'left 0.3s ease',
+        zIndex: 1000,
+      }}
+    >
+      <SidebarItem to="/home" label="Home" />
+      <SidebarItem to="/categories" label="Categories" />
+      <SidebarItem to="/cart" label="My Cart" />
+      <SidebarItem to="/orders" label="My Orders" />
+      <SidebarItem to="/wishlist" label="Wishlist" />
+      <SidebarItem to="/profile" label="Profile" />
     </div>
-    <div className="flex items-center gap-4 cursor-pointer" onClick={toggleCart}>
-      <span className="text-sm">🛒 My Cart</span>
+    {isOpen && window.innerWidth <= 768 && (
+      <div
+        onClick={closeSidebar}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          backgroundColor: 'rgba(0, 0, 0, 0.3)',
+          zIndex: 900,
+        }}
+      />
+    )}
+  </>
+);
+
+// Navbar layout
+const Navbar = ({ toggleSidebar }) => (
+  <div
+    style={{
+      fontFamily: 'Poppins',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: '10px 20px',
+      borderBottom: '1px solid lightgray',
+      position: 'sticky',
+      top: 0,
+      zIndex: 1001,
+      backgroundColor: 'rgba(255, 255, 255, 0.3)',
+      backdropFilter: 'blur(25px)',
+    }}
+  >
+    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+      <img
+        src="https://thirumathikart.nitt.edu/assets/img/tklogo.png"
+        alt="Logo"
+        style={{ width: '40px', height: '40px' }}
+      />
+      <Link to="/home" className="text-xl font-bold">Thirumathi Kart</Link>
+    </div>
+
+    <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+      <span style={{ fontSize: '14px', color: 'gray' }}>Hi! Buyer</span>
+      <motion.img
+        src="https://cdn-icons-png.flaticon.com/128/1828/1828859.png"
+        alt="Menu"
+        onClick={toggleSidebar}
+        style={{ width: '20px', height: '20px', cursor: 'pointer', filter: 'grayscale(100%)' }}
+        whileHover={{ scale: 1.2 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 12 }}
+      />
     </div>
   </div>
 );
 
+// Main component
 const Categories = () => {
   const [cartItems, setCartItems] = useState([]);
   const [showCart, setShowCart] = useState(false);
@@ -338,6 +428,7 @@ const Categories = () => {
   const [selectedSubSubCategory, setSelectedSubSubCategory] = useState(productData[0].subCategories[0].subSubCategories[0]);
   const [searchQuery, setSearchQuery] = useState('');
   const [confirmationMessage, setConfirmationMessage] = useState('');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const storedCart = localStorage.getItem('cart');
@@ -352,30 +443,16 @@ const Categories = () => {
 
   const addToCart = (item) => {
     const existing = cartItems.find(i => i.name === item.name);
-    let updatedCart;
-
-    if (existing) {
-      updatedCart = cartItems.map(i =>
-        i.name === item.name ? { ...i, qty: i.qty + 1 } : i
-      );
-    } else {
-      updatedCart = [...cartItems, { ...item, qty: 1 }];
-    }
+    const updatedCart = existing
+      ? cartItems.map(i => i.name === item.name ? { ...i, quantity: i.quantity + 1 } : i)
+      : [...cartItems, { ...item, quantity: 1 }];
 
     setCartItems(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart)); // ✅ save to localStorage
     setConfirmationMessage(`${item.name} added to cart!`);
     setTimeout(() => setConfirmationMessage(''), 2000);
   };
 
-  const removeFromCart = (itemName) => {
-    const updatedCart = cartItems
-      .map(item => item.name === itemName ? { ...item, quantity: item.quantity - 1 } : item)
-      .filter(item => item.quantity > 0);
-    setCartItems(updatedCart);
-  };
 
-  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   const filteredProducts = selectedSubCategory.subSubCategories.filter(product =>
     product.toLowerCase().includes(searchQuery.toLowerCase())
@@ -383,7 +460,8 @@ const Categories = () => {
 
   return (
     <div className="min-h-screen bg-white text-black font-josefin">
-      <Navbar toggleCart={() => setShowCart(!showCart)} />
+      <Navbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+      <Sidebar isOpen={sidebarOpen} closeSidebar={() => setSidebarOpen(false)} />
 
       <AnimatePresence>
         {confirmationMessage && (
@@ -399,7 +477,7 @@ const Categories = () => {
       </AnimatePresence>
 
       <div className="flex">
-        <aside className="w-64 bg-gray-100 border-w p-4 hidden sm:block sticky top-0 h-[calc(100vh-64px)] overflow-auto">
+        <aside className="w-64 bg-gray-100 border-r p-4 hidden sm:block sticky top-0 h-[calc(100vh-64px)] overflow-auto">
           <h2 className="text-xl font-bold mb-4">Categories</h2>
           <ul>
             {productData.map((cat, i) => (
@@ -451,6 +529,7 @@ const Categories = () => {
             ))}
           </ul>
         </aside>
+
         <main className="flex-1 p-6">
           <header className="flex items-center justify-between mb-6">
             <h1 className="text-2xl font-bold">
@@ -464,6 +543,7 @@ const Categories = () => {
               className="border px-4 py-2 rounded-md w-64"
             />
           </header>
+
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {filteredProducts.map((prod, index) => (
               <div key={index} className="border rounded-md p-4 shadow-sm">
@@ -473,60 +553,20 @@ const Categories = () => {
                   onClick={() =>
                     addToCart({ id: index, name: prod, price: 299, image: 'https://via.placeholder.com/64' })
                   }
-                 className="mt-2 px-4 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
+                  className="mt-2 px-4 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
                 >
                   Add to Cart
                 </motion.button>
-
               </div>
             ))}
           </div>
         </main>
-
-        {showCart && (
-          <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="fixed top-0 right-0 h-full w-80 bg-white/70 backdrop-blur-lg border-0 shadow-2xl z-50 p-6 overflow-y-auto"
-          >
-            <h2 className="text-xl font-bold mb-4">🛒 My Cart</h2>
-            {cartItems.length === 0 ? (
-              <p className="text-gray-500">Your cart is empty.</p>
-            ) : (
-              <ul className="space-y-3">
-                {cartItems.map((item, idx) => (
-                  <li key={idx} className="flex justify-between items-center border-b pb-2">
-                    <div>
-                      <p className="font-medium">{item.name}</p>
-                      <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
-                    </div>
-                    <button
-                      onClick={() => removeFromCart(item.name)}
-                      className="text-red-500 hover:underline text-sm"
-                    >
-                      Remove
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-            {cartItems.length > 0 && (
-              <div className="mt-6">
-                <p className="font-bold text-lg">Total Items: {totalItems}</p>
-              </div>
-            )}
-            <button
-              onClick={() => setShowCart(false)}
-              className="absolute top-4 right-4 text-gray-600 hover:text-black"
-            >✕</button>
-          </motion.div>
-        )}
       </div>
+      <footer className="mt-0 text-center text-sm py-3 text-gray-500 border-t">
+        Copyright © 2025 Thirumathi Kart. All Rights Reserved.
+      </footer>
     </div>
   );
 };
 
 export default Categories;
-

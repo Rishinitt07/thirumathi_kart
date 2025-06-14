@@ -20,9 +20,9 @@ function App() {
          <Route path='/categories' element={<Categories />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/Wishlist" element={<Wishlist />} />
-         <Route path="/Cart" element={<Cart />} />
-          <Route path="/Orders" element={<Orders />} />
-         
+        <Route path="/Cart" element={<Cart />} />
+        <Route path="/Orders" element={<Orders />} />
+        
       </Routes>
     </div>
   );
