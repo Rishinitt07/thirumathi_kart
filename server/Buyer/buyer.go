@@ -225,6 +225,97 @@ func UpdateProfileHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]string{"message": "Profile updated"})
 }
 
+func GetOrdersHandler(w http.ResponseWriter, r *http.Request) {
+	username, err := GetUsernameFromToken(r)
+	fmt.Println("Orders fetched for:", username)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
+
+	rows, err := db.Query("SELECT id, items, date FROM orders WHERE username = $1 ORDER BY date DESC", username)
+	if err != nil {
+		http.Error(w, "Error fetching orders", http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
+
+	var orders []map[string]interface{}
+	for rows.Next() {
+		var id int
+		var itemsData string
+		var date time.Time
+		if err := rows.Scan(&id, &itemsData, &date); err != nil {
+			continue
+		}
+
+		var items []map[string]interface{}
+		if err := json.Unmarshal([]byte(itemsData), &items); err != nil {
+			continue
+		}
+
+		orders = append(orders, map[string]interface{}{
+			"id":    id,
+			"items": items,
+			"date":  date,
+		})
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(orders)
+}
+
+type Order struct {
+	Username string     `json:"username"`
+	Items    []CartItem `json:"items"`
+	Date     time.Time  `json:"date"`
+}
+
+type CartItem struct {
+	Name  string  `json:"name"`
+	Price float64 `json:"price"`
+	Qty   int     `json:"qty"`
+	Image string  `json:"image"`
+}
+
+func PlaceOrderHandler(w http.ResponseWriter, r *http.Request) {
+	username, err := GetUsernameFromToken(r)
+	if err != nil {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+
+	var order Order
+	err = json.NewDecoder(r.Body).Decode(&order)
+	if err != nil {
+		http.Error(w, "Invalid request", http.StatusBadRequest)
+		return
+	}
+
+	order.Date = time.Now()
+
+	orderID := 0
+	err = db.QueryRow("INSERT INTO orders (username, date) VALUES ($1, $2) RETURNING id", username, order.Date).Scan(&orderID)
+	if err != nil {
+		http.Error(w, "Failed to place order", http.StatusInternalServerError)
+		return
+	}
+
+	for _, item := range order.Items {
+		_, err := db.Exec(
+			`INSERT INTO order_items (order_id, name, price, qty, image) VALUES ($1, $2, $3, $4, $5)`,
+			orderID, item.Name, item.Price, item.Qty, item.Image,
+		)
+		if err != nil {
+			http.Error(w, "Failed to save order items", http.StatusInternalServerError)
+			return
+		}
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(map[string]string{"message": "Order placed successfully"})
+}
+
 func main() {
 	initDB()
 	defer db.Close()
@@ -250,12 +341,37 @@ func main() {
 		panic(err)
 	}
 
+	createOrdersTable := `
+CREATE TABLE IF NOT EXISTS orders (
+    id SERIAL PRIMARY KEY,
+    username TEXT,
+    items JSONB,
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS order_items (
+  id SERIAL PRIMARY KEY,
+  order_id INTEGER REFERENCES orders(id) ON DELETE CASCADE,
+  name TEXT,
+  price FLOAT,
+  qty INTEGER,
+  image TEXT
+);
+`
+
+	_, err = db.Exec(createOrdersTable)
+	if err != nil {
+		panic(err)
+	}
+
 	mux := http.NewServeMux()
 	mux.HandleFunc("/info", RegisterHandler)
 	mux.HandleFunc("/login", LoginHandler)
 	mux.Handle("/dashboard", AuthMiddleware(http.HandlerFunc(ProtectedHandler)))
 	mux.Handle("/profile", AuthMiddleware(http.HandlerFunc(GetProfileHandler)))
 	mux.Handle("/profile/update", AuthMiddleware(http.HandlerFunc(UpdateProfileHandler)))
+	mux.Handle("/orders", AuthMiddleware(http.HandlerFunc(GetOrdersHandler)))
+	mux.Handle("/orders/place", AuthMiddleware(http.HandlerFunc(PlaceOrderHandler)))
 
 	// ✅ Add CORS middleware
 	corsHandler := cors.New(cors.Options{
