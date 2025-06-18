@@ -1,5 +1,4 @@
-
-
+// Login.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BiUser } from "react-icons/bi";
@@ -21,8 +20,7 @@ const Login = () => {
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      progress: undefined,
-      theme: "dark",
+      theme: "light",
       transition: Bounce,
     });
   };
@@ -35,81 +33,66 @@ const Login = () => {
     axios.post('http://localhost:8080/login', { username: user, password: pass })
       .then(res => {
         if (res.data.token) {
-          localStorage.setItem('token', res.data.token); 
-          navigate('/home');  
+          localStorage.setItem('token', res.data.token);
+          navigate('/home');
         } else {
-          show2();  
+          show2();
         }
       })
       .catch(err => {
         console.log(err);
-        show2();  
+        show2();
       });
   };
 
   return (
-    <div className='text-white h-[100vh] w-[100%] flex justify-center items-center bg-cover' style={{ backgroundImage: "url('../src/assets/green.jpg')" }}>
-      <div className='w-full h-screen backdrop-filter backdrop-blur-xl flex justify-center items-center'>
-        <div className='bg-transparent border border-slate-400 rounded-xl p-8 shadow-lg backdrop-filter backdrop-blur-lg bg-opacity-20 relative'>
-          <h1 className='text-4xl text-white font-bold text-center mb-8'>Login</h1>
-          <form onSubmit={handleLogin}>
-            <div className='relative my-4'>
-              <input
-                type='text'
-                className='block w-72 mb-7 py-2.3 px-0 text-l text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer'
-                placeholder=''
-                onChange={(e) => setUser(e.target.value)}
-              />
-              <label className='absolute text-l text-white duration-300 transform -translate-y-8 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-3 peer-focus:scale-75 peer-focus:-translate-y-8'>
-                Your Username
-              </label>
-              <BiUser className='absolute right-6 top-1' />
-            </div>
-            <div className='relative my-4'>
-              <input
-                type='password'
-                className='block w-72 py-2.3 px-0 text-l text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer'
-                placeholder=''
-                onChange={(e) => setPass(e.target.value)}
-              />
-              <label className='absolute text-l text-white duration-300 transform -translate-y-8 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-3 peer-focus:scale-75 peer-focus:-translate-y-8'>
-                Your Password
-              </label>
-              <AiOutlineLock className='absolute right-6 top-1' />
-            </div>
-            <div className='flex justify-between items-center'>
-              <div className='flex gap-2 items-center '>
-                <input type='checkbox' />
-                <label>Remember Me</label>
-              </div>
-              <Link to="" className='text-blue-300 hover:cursor-pointer'>
-                Forget Password?
-              </Link>
-            </div>
-            <button
-              type='submit'
-              className='w-full mb-4 mt-3 text-[20px] rounded-full bg-white h-10 text-blue-950 hover:bg-emerald-500 hover:text-white py-1 transition-colors duration-300'
-            >
-              Login
-            </button>
-            <div>
-              <span className='m-9'>New Here? <Link to="/register" className='text-blue-950'>Create an account</Link></span>
-            </div>
-          </form>
-        </div>
+    <div className='flex justify-center items-center h-screen bg-white'>
+      <div className='w-full max-w-md p-8 rounded-lg shadow-lg border border-gray-200 bg-white'>
+        <h1 className='text-3xl font-semibold text-center text-blue-900 mb-8'>Login to Your Account</h1>
+        <form onSubmit={handleLogin} className='space-y-6'>
+          <div className='relative'>
+            <input
+              type='text'
+              required
+              className='w-full border border-gray-300 rounded-md py-2 px-4 pl-10 focus:outline-none focus:border-blue-500'
+              placeholder='Username'
+              onChange={(e) => setUser(e.target.value)}
+            />
+            <BiUser className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500' />
+          </div>
+
+          <div className='relative'>
+            <input
+              type='password'
+              required
+              className='w-full border border-gray-300 rounded-md py-2 px-4 pl-10 focus:outline-none focus:border-blue-500'
+              placeholder='Password'
+              onChange={(e) => setPass(e.target.value)}
+            />
+            <AiOutlineLock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500' />
+          </div>
+
+          <div className='flex justify-between items-center text-sm text-gray-600'>
+            <label className='flex items-center gap-2'>
+              <input type='checkbox' />
+              Remember Me
+            </label>
+            <Link to="#" className='text-blue-500 hover:underline'>Forgot Password?</Link>
+          </div>
+
+          <button
+            type='submit'
+            className='w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300'
+          >
+            Login
+          </button>
+
+          <p className='text-center text-gray-600'>
+            New Here? <Link to="/register" className='text-blue-600 hover:underline'>Create an account</Link>
+          </p>
+        </form>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
+      <ToastContainer />
     </div>
   );
 };

@@ -1,3 +1,4 @@
+// Myproducts.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -44,7 +45,7 @@ const Navbar = ({ toggleSidebar }) => (
     <div style={styles.rightMenu}>
       <span style={styles.adminText}>Hi! Admin</span>
       <img
-        src="https://cdn-icons-png.flaticon.com/128/9073/9073147.png"
+        src="https://cdn-icons-png.flaticon.com/128/3917/3917065.png"
         alt="Menu"
         onClick={toggleSidebar}
         style={styles.menuIcon}
@@ -56,6 +57,7 @@ const Navbar = ({ toggleSidebar }) => (
 const MyProducts = () => {
   const [products, setProducts] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [error, setError] = useState('');
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -63,7 +65,10 @@ const MyProducts = () => {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(res => setProducts(res.data))
-      .catch(err => console.error('Failed to fetch products', err));
+      .catch(err => {
+        console.error('Failed to fetch products', err);
+        setError('Failed to load your products.');
+      });
   }, []);
 
   const updateStock = (id, inStock) => {
@@ -100,38 +105,49 @@ const MyProducts = () => {
           marginLeft: sidebarOpen ? '200px' : '0px',
         }}
       >
+        {error && (
+          <div style={{ color: 'red', textAlign: 'center', marginBottom: '20px' }}>
+            {error}
+          </div>
+        )}
         <div style={styles.cardsWrapper}>
-          {products.map(product => (
-            <div key={product.id} style={styles.card}>
-              <img
-                src={`data:image/jpeg;base64,${product.image1}`}
-                alt="Product"
-                style={styles.image}
-              />
-              <div style={styles.details}>
-                <h3 style={styles.name}>{product.name}</h3>
-                <p style={styles.category}>Category: {product.category}</p>
-                <p style={styles.quantity}>Quantity: {product.quantity}</p>
-                <input
-                  type="number"
-                  value={product.price}
-                  onChange={e => updatePrice(product.id, e.target.value)}
-                  style={styles.input}
+          {products.length === 0 ? (
+            <div style={{ textAlign: 'center', marginTop: '50px', fontSize: '18px', color: '#555' }}>
+              You haven't uploaded any products yet.
+            </div>
+          ) : (
+            products.map(product => (
+              <div key={product.id} style={styles.card}>
+                <img
+                  src={`data:image/jpeg;base64,${product.image1}`}
+                  alt="Product"
+                  style={styles.image}
                 />
-                <div style={styles.toggleContainer}>
-                  <label className="custom-switch">
-                    <input
-                      type="checkbox"
-                      checked={product.in_stock}
-                      onChange={(e) => updateStock(product.id, e.target.checked)}
-                    />
-                    <span className="slider-round"></span>
-                  </label>
-                  <span>{product.in_stock ? "In Stock" : "Out of Stock"}</span>
+                <div style={styles.details}>
+                  <h3 style={styles.name}>{product.name}</h3>
+                  <p style={styles.category}>Category: {product.category}</p>
+                  <p style={styles.quantity}>Quantity: {product.quantity}</p>
+                  <input
+                    type="number"
+                    value={product.price}
+                    onChange={e => updatePrice(product.id, e.target.value)}
+                    style={styles.input}
+                  />
+                  <div style={styles.toggleContainer}>
+                    <label className="custom-switch">
+                      <input
+                        type="checkbox"
+                        checked={product.in_stock}
+                        onChange={(e) => updateStock(product.id, e.target.checked)}
+                      />
+                      <span className="slider-round"></span>
+                    </label>
+                    <span>{product.in_stock ? "In Stock" : "Out of Stock"}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </div>
@@ -147,11 +163,8 @@ const styles = {
   navbar: {
     borderBottom: '1px solid lightgray', boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
     display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 20px',
-    position: 'sticky',
-    top: 0,
-    zIndex: 1001,
-    background:'white',
-    },
+    position: 'sticky', top: 0, zIndex: 1001, background:'white',
+  },
   logoContainer: { display: 'flex', alignItems: 'center', gap: '10px' },
   logo: { width: '40px', height: '40px' },
   logoText: { fontSize: '22px', fontWeight: 'bold' },
@@ -161,7 +174,7 @@ const styles = {
   sidebar: {
     position: 'fixed', top: '93px', bottom: '100px', left: 0, width: '200px', height: '85%',
     backgroundColor: 'white', borderRight: '1px solid lightgray', borderTop: '1px solid lightgray', borderBottom: '1px solid lightgray', display: 'flex', flexDirection: 'column',
-    paddingTop: '20px', zIndex: 1000, transition: 'left 0.3s ease',borderRadius: '20px', boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+    paddingTop: '20px', zIndex: 1000, transition: 'left 0.3s ease', borderRadius: '20px', boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
   },
   menuItem: {
     padding: '12px 20px', textDecoration: 'none', color: '#333',
@@ -191,7 +204,7 @@ const styles = {
     boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
     alignItems: 'center',
     gap: '20px',
-    transition: 'transform 0.3s, box-shadow 0.3s',border: '1px solid lightgray',
+    transition: 'transform 0.3s, box-shadow 0.3s', border: '1px solid lightgray',
   },
   image: {
     width: '120px',
@@ -234,7 +247,7 @@ const styles = {
   },
 };
 
-// Inject custom slider CSS
+// Inject custom switch CSS
 const style = document.createElement("style");
 style.textContent = `
 .custom-switch {

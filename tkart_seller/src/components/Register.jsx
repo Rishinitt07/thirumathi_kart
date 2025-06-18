@@ -1,5 +1,4 @@
-
-
+// Register.jsx
 
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -19,11 +18,7 @@ const Register = () => {
     toast.error(msg, {
       position: "top-right",
       autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      theme: "dark",
+      theme: "light",
       transition: Bounce,
     });
   };
@@ -49,99 +44,63 @@ const Register = () => {
         toast.error("Registration failed", {
           position: "top-right",
           autoClose: 5000,
-          theme: "dark",
+          theme: "light",
         });
       });
   };
 
   return (
-    <div
-      className="text-white h-[100vh] w-[100%] flex justify-center items-center bg-cover"
-      style={{ backgroundImage: "url('../src/assets/green.jpg')" }}
-    >
-      <div className="w-full h-screen backdrop-filter backdrop-blur-xl flex justify-center items-center">
-        <div className="bg-transparent border border-slate-400 rounded-xl p-8 shadow-lg backdrop-filter backdrop-blur-lg bg-opacity-20 relative">
-          <h1 className="text-4xl text-white font-bold text-center mb-8">
+    <div className="flex justify-center items-center h-screen bg-white">
+      <div className="w-full max-w-md p-8 rounded-lg shadow-lg border border-gray-200 bg-white">
+        <h1 className="text-3xl font-semibold text-center text-blue-900 mb-8">Create an Account</h1>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="relative">
+            <input
+              type="text"
+              required
+              className="w-full border border-gray-300 rounded-md py-2 px-4 pl-10 focus:outline-none focus:border-blue-500"
+              placeholder="Full Name"
+              onChange={(e) => setName(e.target.value)}
+            />
+            <BiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+          </div>
+
+          <div className="relative">
+            <input
+              type="text"
+              required
+              className="w-full border border-gray-300 rounded-md py-2 px-4 pl-10 focus:outline-none focus:border-blue-500"
+              placeholder="Username"
+              onChange={(e) => setUser(e.target.value)}
+            />
+            <BiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+          </div>
+
+          <div className="relative">
+            <input
+              type="password"
+              required
+              className="w-full border border-gray-300 rounded-md py-2 px-4 pl-10 focus:outline-none focus:border-blue-500"
+              placeholder="Password"
+              onChange={(e) => setPass(e.target.value)}
+            />
+            <AiOutlineLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300"
+          >
             Register
-          </h1>
-          <form onSubmit={handleSubmit}>
-            <div className="relative my-4">
-              <input
-                type="text"
-                className="block w-72 mb-7 py-2.3 px-0 text-l text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer"
-                placeholder=""
-                onChange={(e) => setName(e.target.value)}
-              />
-              <label
-                className="absolute text-l text-white duration-300 transform -translate-y-8 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-3 peer-focus:scale-75 peer-focus:-translate-y-8"
-              >
-                Name
-              </label>
-              <BiUser className="absolute right-8 top-1" />
-            </div>
+          </button>
 
-            <div className="relative my-4">
-              <input
-                type="text"
-                className="block w-72 py-2.3 px-0 mb-6 text-l text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer"
-                placeholder=""
-                onChange={(e) => setUser(e.target.value)}
-              />
-              <label
-                className="absolute text-l text-white duration-300 transform -translate-y-8 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-3 peer-focus:scale-75 peer-focus:-translate-y-8"
-              >
-                New username
-              </label>
-              <BiUser className="absolute right-8 top-1" />
-            </div>
-
-            <div className="relative my-4">
-              <input
-                type="password"
-                className="block w-72 py-2.3 px-0 text-l text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer"
-                placeholder=""
-                onChange={(e) => setPass(e.target.value)}
-              />
-              <label
-                className="absolute text-l text-white duration-300 transform -translate-y-8 scale-75 top-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-3 peer-focus:scale-75 peer-focus:-translate-y-8"
-              >
-                New Password
-              </label>
-              <AiOutlineLock className="absolute right-8 top-1" />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full mb-4 mt-3 text-[20px] rounded-full bg-white h-10 text-blue-950 hover:bg-emerald-500 hover:text-white py-1 transition-colors duration-300"
-            >
-              Register
-            </button>
-
-            <div>
-              <span className="m-9">
-                Already have an Account?
-                <Link to="/login" className="text-blue-950">
-                  {" "}
-                  Login
-                </Link>
-              </span>
-            </div>
-          </form>
-        </div>
+          <p className="text-center text-gray-600">
+            Already have an account?{" "}
+            <Link to="/login" className="text-blue-600 hover:underline">Login</Link>
+          </p>
+        </form>
       </div>
-
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
+      <ToastContainer />
     </div>
   );
 };
