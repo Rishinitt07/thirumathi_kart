@@ -3,123 +3,111 @@ import { FaTrash, FaCartPlus } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
-const SidebarItem = ({ to, label }) => {
-  const [hover, setHover] = useState(false);
-  return (
-    <Link
-      to={to}
-      style={{
-        padding: '12px 20px',
-        textDecoration: 'none',
-        color: '#333',
-        fontWeight: '500',
-        borderRadius: '4px',
-        backgroundColor: hover ? '#E5E7EB' : 'transparent',
-        display: 'block',
-      }}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
-      {label}
-    </Link>
-  );
-};
+// Reusable Sidebar Component
+const SidebarItem = ({ to, label, icon }) => (
+  <Link
+    to={to}
+    className="flex items-center gap-3 px-5 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+  >
+    <span className="text-lg">{icon}</span>
+    <span className="font-medium">{label}</span>
+  </Link>
+);
 
 const Sidebar = ({ isOpen, closeSidebar }) => (
   <>
     <div
-      style={{
-        position: 'fixed',
-        top: '60px',
-        left: isOpen ? 0 : '-200px',
-        width: '200px',
-        height: '100%',
-        backgroundColor: 'white',
-        borderRight: '1px solid lightgray',
-        paddingTop: '20px',
-        transition: 'left 0.3s ease',
-        zIndex: 1000,
-      }}
+      className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transition-all duration-300 z-40 ${
+        isOpen ? 'translate-x-0' : '-translate-x-full'
+      }`}
     >
-      <SidebarItem to="/home" label="Home" />
-       <SidebarItem to="/categories" label="Categories" />
-      <SidebarItem to="/cart" label="My Cart" />
-      <SidebarItem to="/orders" label="My Orders" />
-      <SidebarItem to="/wishlist" label="Wishlist" />
-      <SidebarItem to="/profile" label="Profile" />
+      <div className="h-16 flex items-center px-6 border-b">
+        <h2 className="text-xl font-bold">Menu</h2>
+      </div>
+      <div className="p-4 space-y-2 mt-4">
+        <SidebarItem to="/home" label="Home" icon="🏠" />
+        <SidebarItem to="/categories" label="Categories" icon="🗂️" />
+        <SidebarItem to="/cart" label="My Cart" icon="🛒" />
+        <SidebarItem to="/orders" label="My Orders" icon="📦" />
+        <SidebarItem to="/wishlist" label="Wishlist" icon="❤️" />
+        <SidebarItem to="/profile" label="Profile" icon="👤" />
+      </div>
     </div>
-    {isOpen && window.innerWidth <= 768 && (
+    {isOpen && (
       <div
         onClick={closeSidebar}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100vw',
-          height: '100vh',
-          backgroundColor: 'rgba(0, 0, 0, 0.3)',
-          zIndex: 900,
-        }}
+        className="fixed inset-0 bg-transparent bg-opacity-50 z-30 md:hidden"
       />
     )}
   </>
 );
 
+// Enhanced Navbar Component
 const Navbar = ({ toggleSidebar }) => (
-  <div
-    style={{
-      fontFamily: 'Poppins',
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: '10px 20px',
-      borderBottom: '1px solid lightgray',
-      position: 'sticky',
-      top: 0,
-      zIndex: 1001,
-      backgroundColor: 'rgba(255, 255, 255, 0.3)',
-      backdropFilter: 'blur(25px)',
-    }}
-  >
-    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-      <img
-        src="https://thirumathikart.nitt.edu/assets/img/tklogo.png"
-        alt="Logo"
-        style={{ width: '40px', height: '40px' }}
-      />
-      <Link to="/home" className="text-xl font-bold">Thirumathi Kart</Link>
+  <header className="sticky top-0 z-30 bg-white shadow-sm">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex justify-between items-center h-16">
+        <div className="flex items-center">
+          <button
+            onClick={toggleSidebar}
+            className="mr-4 text-gray-500 hover:text-gray-600 md:hidden"
+          >
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          <Link to="/home" className="flex items-center">
+            <img
+              src="https://thirumathikart.nitt.edu/assets/img/tklogo.png"
+              alt="Logo"
+              className="h-8 w-8"
+            />
+            <span className="ml-2 text-xl font-bold text-gray-800">Thirumathi Kart</span>
+          </Link>
+        </div>
+        <div className="flex items-center space-x-4">
+          <span className="text-sm text-gray-600 hidden sm:inline">Hi! Buyer</span>
+          <Link to="/cart" className="p-1 text-gray-500 hover:text-gray-600">
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </Link>
+        </div>
+      </div>
     </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-      <span style={{ fontSize: '14px', color: 'gray' }}>Hi! Buyer</span>
-      <motion.img
-        src="https://cdn-icons-png.flaticon.com/128/1828/1828859.png"
-        alt="Menu"
-        onClick={toggleSidebar}
-        style={{ width: '20px', height: '20px', cursor: 'pointer', filter: 'grayscale(100%)' }}
-        whileHover={{ scale: 1.2 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 12 }}
-      />
-    </div>
-  </div>
+  </header>
 );
 
 const Wishlist = () => {
+  const [wishlist, setWishlist] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [wishlist, setWishlist] = useState([
-    { id: 1, name: 'Handcrafted Bowl', price: 399, rating: 4 },
-    { id: 2, name: 'Organic Honey', price: 249, rating: 5 },
-    { id: 3, name: 'Clay Water Jug', price: 499, rating: 4 },
-    { id: 4, name: 'Bamboo Basket', price: 299, rating: 5 },
-    { id: 5, name: 'Herbal Soap Set', price: 199, rating: 4 },
-    { id: 6, name: 'Cotton Saree', price: 799, rating: 5 },
-    { id: 7, name: 'Brass Diya Set', price: 599, rating: 4 },
-    { id: 8, name: 'Jute Handbag', price: 349, rating: 4 },
-    { id: 9, name: 'Millet Combo Pack', price: 699, rating: 5 },
-    { id: 10, name: 'Terracotta Mug Set', price: 549, rating: 4 },
-  ]);
 
-  const handleRemove = (id) => setWishlist(wishlist.filter(item => item.id !== id));
-  const handleAddToCart = (item) => alert(`${item.name} added to cart!`);
+  React.useEffect(() => {
+    const stored = localStorage.getItem('wishlist');
+    if (stored) {
+      setWishlist(JSON.parse(stored));
+    }
+  }, []);
+
+  const handleRemove = (id) => {
+    const updated = wishlist.filter(item => item.id !== id);
+    setWishlist(updated);
+    localStorage.setItem('wishlist', JSON.stringify(updated));
+  };
+
+  const handleAddToCart = (item) => {
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    const existing = storedCart.find(i => i.name === item.name);
+
+    const updatedCart = existing
+      ? storedCart.map(i =>
+        i.name === item.name ? { ...i, qty: i.qty + 1 } : i
+      )
+      : [...storedCart, { ...item, qty: 1 }];
+
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    alert(`${item.name} added to cart!`);
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 font-josefin">
@@ -132,7 +120,7 @@ const Wishlist = () => {
             <p className="text-gray-500 col-span-full">Your wishlist is empty.</p>
           ) : (
             wishlist.map(item => (
-              <div key={item.id} className="bg-white p-4 rounded-lg shadow-md flex flex-col justify-between">
+             <div key={`${item.id}-${item.name}`} className="bg-white p-4 rounded-lg shadow-md flex flex-col justify-between">
                 <div>
                   <div className="w-full h-40 bg-gray-200 rounded mb-4 flex items-center justify-center text-4xl">
                     📦
@@ -141,7 +129,8 @@ const Wishlist = () => {
                   <p className="text-yellow-500 text-sm mt-1">
                     {'★'.repeat(item.rating)}{'☆'.repeat(5 - item.rating)}
                   </p>
-                  <p className="text-gray-700 font-medium mt-2">₹ {item.price}</p>
+                  <p className="text-gray-700 font-medium mt-2">₹ {item.price || 'N/A'}</p>
+
                 </div>
                 <div className="flex gap-3 mt-4">
                   <button
@@ -162,9 +151,10 @@ const Wishlist = () => {
           )}
         </div>
       </main>
-      <footer className="mt-12 text-center text-sm py-4 text-gray-500 border-t">
+     <footer className="mt-85 text-center text-sm py-3 text-gray-500 border-t">
         Copyright © 2025 Thirumathi Kart. All Rights Reserved.
       </footer>
+
     </div>
   );
 };

@@ -3,92 +3,81 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 
-
-
-const SidebarItem = ({ to, label }) => {
-  const [hover, setHover] = useState(false);
-  return (
-    <Link
-      to={to}
-      style={{
-        ...styles.menuItem,
-        backgroundColor: hover ? '#E5E7EB' : 'transparent',
-      }}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
-      {label}
-    </Link>
-  );
-};
+// Reusable Sidebar Component
+const SidebarItem = ({ to, label, icon }) => (
+  <Link
+    to={to}
+    className="flex items-center gap-3 px-5 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+  >
+    <span className="text-lg">{icon}</span>
+    <span className="font-medium">{label}</span>
+  </Link>
+);
 
 const Sidebar = ({ isOpen, closeSidebar }) => (
   <>
     <div
-      style={{
-        ...styles.sidebar,
-        left: isOpen ? 0 : '-200px',
-      }}
+      className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transition-all duration-300 z-40 ${
+        isOpen ? 'translate-x-0' : '-translate-x-full'
+      }`}
     >
-      <SidebarItem to="/home" label="Home" />
-       <SidebarItem to="/categories" label="Categories" />
-      <SidebarItem to="/cart" label="MyCart" />
-      <SidebarItem to="/orders" label="My Orders" />
-      <SidebarItem to="/wishlist" label="Wishlist" />
-      <SidebarItem to="/profile" label="Profile" />
+      <div className="h-16 flex items-center px-6 border-b">
+        <h2 className="text-xl font-bold">Menu</h2>
+      </div>
+      <div className="p-4 space-y-2 mt-4">
+        <SidebarItem to="/home" label="Home" icon="🏠" />
+        <SidebarItem to="/categories" label="Categories" icon="🗂️" />
+        <SidebarItem to="/cart" label="My Cart" icon="🛒" />
+        <SidebarItem to="/orders" label="My Orders" icon="📦" />
+        <SidebarItem to="/wishlist" label="Wishlist" icon="❤️" />
+        <SidebarItem to="/profile" label="Profile" icon="👤" />
+      </div>
     </div>
-
-    {isOpen && window.innerWidth <= 768 && (
-      <div style={styles.overlay} onClick={closeSidebar}></div>
+    {isOpen && (
+      <div
+        onClick={closeSidebar}
+        className="fixed inset-0 bg-transparent bg-opacity-50 z-30 md:hidden"
+      />
     )}
   </>
 );
 
-
+// Enhanced Navbar Component
 const Navbar = ({ toggleSidebar }) => (
-  <div style={styles.navbar}>
-    {/* Logo */}
-    <div style={styles.logoContainer}>
-      <img
-        src="https://thirumathikart.nitt.edu/assets/img/tklogo.png"
-        alt="Logo"
-        style={styles.logo}
-        onError={e => {
-          e.target.onerror = null;
-          e.target.src = "https://via.placeholder.com/40";
-        }}
-      />
-      <span style={styles.logoText}>Thirumathi Kart</span>
+  <header className="sticky top-0 z-30 bg-white shadow-sm">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex justify-between items-center h-16">
+        <div className="flex items-center">
+          <button
+            onClick={toggleSidebar}
+            className="mr-4 text-gray-500 hover:text-gray-600 md:hidden"
+          >
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          <Link to="/home" className="flex items-center">
+            <img
+              src="https://thirumathikart.nitt.edu/assets/img/tklogo.png"
+              alt="Logo"
+              className="h-8 w-8"
+            />
+            <span className="ml-2 text-xl font-bold text-gray-800">Thirumathi Kart</span>
+          </Link>
+        </div>
+        <div className="flex items-center space-x-4">
+          <span className="text-sm text-gray-600 hidden sm:inline">Hi! Buyer</span>
+          <Link to="/cart" className="p-1 text-gray-500 hover:text-gray-600">
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </Link>
+        </div>
+      </div>
     </div>
-
-    <div style={styles.searchContainer}>
-      <input
-        type="text"
-        placeholder="Search products..."
-        style={styles.searchInput}
-      />
-      <button style={styles.searchButton}>
-        <img
-          src="https://cdn-icons-png.flaticon.com/128/54/54481.png"
-          alt="Search"
-          style={{ width: '16px', height: '16px' }}
-        />
-      </button>
-    </div>
-    {/* Right Menu */}
-    <div style={styles.rightMenu}>
-      <span style={styles.adminText}>Hi! Buyer</span>
-      <motion.img
-        src="https://cdn-icons-png.flaticon.com/128/1828/1828859.png" // 🟢 Proper hamburger menu icon
-        alt="Menu"
-        onClick={toggleSidebar}
-        style={styles.menuIcon}
-        whileHover={{ scale: 1.2 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 12 }}
-      />
-    </div>
-  </div>
+  </header>
 );
+
 
 const categoryData = [
   { name: 'Fashion', icon: '👗' },
@@ -101,20 +90,19 @@ const categoryData = [
 
 const CategorySection = () => {
   return (
-    <section className="px-4 md:px-12 lg:px-20 pt-0 pb-2"> {/* Reduced pt-2 to pt-0 */}
-      <div className="flex items-center justify-between mb-3"> {/* mb-4 to mb-3 (optional) */}
+    <section className="px-4 md:px-12 lg:px-20 pt-0 pb-2">
+      <div className="flex items-center justify-between mb-3">
         <h2 className="text-2xl font-semibold text-gray-800">Categories</h2>
         <a href="/categories" className="text-blue-500 hover:underline text-sm">View More</a>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 mt-2"> {/* mt-4 to mt-2 */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 mt-2">
         {categoryData.map((cat, index) => (
           <motion.div
             key={index}
             whileHover={{ scale: 1.08 }}
             transition={{ type: 'spring', stiffness: 300 }}
-            className="flex flex-col items-center justify-center p-6 rounded-2xl bg-white shadow-lg 
-               cursor-pointer text-center"
+            className="flex flex-col items-center justify-center p-6 rounded-2xl bg-white shadow-lg cursor-pointer text-center"
           >
             <motion.div
               whileHover={{ rotate: 10 }}
@@ -131,65 +119,60 @@ const CategorySection = () => {
   );
 };
 
-
 const Home = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [query, setQuery] = useState('');
-const [results, setResults] = useState([]);
-const [cartItems, setCartItems] = useState([]);
+  const [results, setResults] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+  const navigate = useNavigate();
 
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.get(`http://localhost:8081/search?query=${query}`);
+      setResults(res.data.hits.hits);
+      console.log('Search results:', res.data.hits.hits);
+    } catch (err) {
+      console.error('Search error:', err);
+    }
+  };
 
+  useEffect(() => {
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) setCartItems(JSON.parse(storedCart));
+  }, []);
 
-const handleSearch = async (e) => {
-  e.preventDefault();
-  try {
-    const res = await axios.get(`http://localhost:8081/search?query=${query}`);
-    setResults(res.data.hits.hits); // Adjust based on your API response
-    console.log('Search results:', res.data.hits.hits);
-  } catch (err) {
-    console.error('Search error:', err);
-  }
-};
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+  }, [cartItems]);
 
-const navigate = useNavigate();
+  const updateQuantity = (itemName, change) => {
+    const updatedCart = cartItems.map(item =>
+      item.name === itemName
+        ? { ...item, quantity: Math.max(1, item.quantity + change) }
+        : item
+    );
+    setCartItems(updatedCart);
+  };
 
-useEffect(() => {
-  const storedCart = localStorage.getItem('cart');
-  if (storedCart) setCartItems(JSON.parse(storedCart));
-}, []);
+  const removeFromCart = (itemName) => {
+    setCartItems(cartItems.filter(item => item.name !== itemName));
+  };
 
-useEffect(() => {
-  localStorage.setItem('cart', JSON.stringify(cartItems));
-}, [cartItems]);
-
-const updateQuantity = (itemName, change) => {
-  const updatedCart = cartItems.map(item =>
-    item.name === itemName
-      ? { ...item, quantity: Math.max(1, item.quantity + change) }
-      : item
-  );
-  setCartItems(updatedCart);
-};
-const removeFromCart = (itemName) => {
-  setCartItems(cartItems.filter(item => item.name !== itemName));
-};
-
-useEffect(() => {
-  const token = localStorage.getItem('token');
-  axios.get('http://localhost:8081/dashboard', {
-    headers: { Authorization: `Bearer ${token}` },
-  })
-    .then(() => {
-      // Optional: handle success
-      console.log('Dashboard access granted');
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    axios.get('http://localhost:8081/dashboard', {
+      headers: { Authorization: `Bearer ${token}` },
     })
-    .catch((err) => {
-      console.error('Access denied', err);
-      localStorage.removeItem('token');
-      navigate('/login');
-    });
-}, [navigate]);
-
+      .then(() => {
+        console.log('Dashboard access granted');
+      })
+      .catch((err) => {
+        console.error('Access denied', err);
+        localStorage.removeItem('token');
+        navigate('/login');
+      });
+  }, [navigate]);
 
   const getIsDesktop = () => (typeof window !== 'undefined' ? window.innerWidth > 768 : true);
   const [isDesktop, setIsDesktop] = useState(getIsDesktop());
@@ -203,93 +186,58 @@ useEffect(() => {
   }, []);
 
   return (
-    <>
+    <div style={styles.appContainer}>
+      <Navbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+      <Sidebar isOpen={sidebarOpen} closeSidebar={() => setSidebarOpen(false)} />
       
-
-
-      <div
-        style={{
-          ...styles.container,
-
-        }}
-      >
-        <Navbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-        <div style={styles.bodyWrapper}>
-          <Sidebar isOpen={sidebarOpen} closeSidebar={() => setSidebarOpen(false)} />
-          <div
-            style={{
-              ...styles.contentArea,
-              marginLeft: isDesktop && sidebarOpen ? '200px' : '0',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'flex-start', // 🟢 change this
-              minHeight: 'calc(100vh - 80px)',
-              paddingTop: '10px', // 🟢 reduce padding if needed
-            }}
+      <main style={{
+        ...styles.mainContent,
+        marginLeft: isDesktop && sidebarOpen ? '200px' : '0',
+      }}>
+        <div className="bg-white px-6 pt-12 pb-6">
+          <motion.div
+            initial={{ x: -200, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 1 }}
+            className="flex flex-col md:flex-row items-center gap-10"
           >
-            
-            <div className="bg-white px-6 pt-12 pb-6">
-              <motion.div
-                initial={{ x: -200, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 1 }}
-                className="flex flex-col md:flex-row items-center gap-10"
-              >
-                {/* Left Text Section */}
-                <div className="max-w-xl text-center md:text-left">
-                  <h1 className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight">
-                    The e-commerce platform for <span className="text-indigo-600">SHGs</span> to market their products
-                  </h1>
-                  <p className="mt-6 text-lg text-gray-600">
-                    We provide Self-help groups a formal platform to showcase their products to a wider market,
-                    and hence empower them by increasing their income.
-                  </p>
-                </div>
-
-                {/* Right Image Section */}
-                <div className="max-w-md">
-                  <img src="https://thirumathikart.nitt.edu/assets/img/tklogo.png" alt="ThirumathiKart Illustration" className="w-full h-auto" />
-                </div>
-              </motion.div>
+            <div className="max-w-xl text-center md:text-left">
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight">
+                The e-commerce platform for <span className="text-indigo-600">SHGs</span> to market their products
+              </h1>
+              <p className="mt-6 text-lg text-gray-600">
+                We provide Self-help groups a formal platform to showcase their products to a wider market,
+                and hence empower them by increasing their income.
+              </p>
             </div>
-            <div style={{ marginTop: '0px', width: '100%' }}>
-             <div  style={{ marginTop: '0px', width: '100%' }}> 
-              <section className="w-full px-6 py-12 md:px-20 bg-white">
-                <motion.div
-                  initial={{ opacity: 0, x: -100 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, ease: 'easeOut' }}
-                  viewport={{ once: true }}
-                  className="max-w-5xl mx-auto text-center md:text-left"
-                >
-                  <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-                    About Thirumathi Kart
-                  </h2>
-                  <p className="text-gray-600 text-lg leading-relaxed">
-                    Thirumathi Kart is an initiative by NIT Trichy, aimed at empowering rural entrepreneurs,
-                    artisans, and self-help groups by giving them a digital platform to sell their products.
-                    With a mission to foster inclusive development, we provide a curated marketplace for
-                    handmade goods, groceries, clothing, and more.
-                  </p>
-                  <p className="text-gray-600 text-lg mt-4 leading-relaxed">
-                    Our goal is to create a sustainable digital ecosystem where tradition meets technology,
-                    connecting passionate creators with socially-conscious consumers across India.
-                  </p>
-                </motion.div>
-              </section>
-              <CategorySection />
-              </div>
-              
 
-
-            
+            <div className="max-w-md">
+              <img src="https://thirumathikart.nitt.edu/assets/img/tklogo.png" alt="ThirumathiKart Illustration" className="w-full h-auto" />
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
-      
 
+        <div style={{ width: '100%' }}>
+          <section className="w-full px-6 py-12 md:px-20 bg-white">
+            <motion.div
+              initial={{ opacity: 0, x: -100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
+              viewport={{ once: true }}
+              className="max-w-5xl mx-auto text-center md:text-left"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+                About Thirumathi Kart
+              </h2>
+              <p className="text-gray-600 text-lg leading-relaxed">
+                Thirumathi Kart is an initiative by NIT Trichy, aimed at empowering rural entrepreneurs,
+                artisans, and self-help groups by giving them a digital platform to sell their products.
+              </p>
+            </motion.div>
+          </section>
+          <CategorySection />
+        </div>
+      </main>
 
       <footer style={styles.footer}>
         <div style={styles.footerContainer}>
@@ -314,8 +262,6 @@ useEffect(() => {
               <li><a href="#">Home</a></li>
               <li><a href="#">About us</a></li>
               <li><a href="#">Services</a></li>
-              <li><a href="#">Terms of service</a></li>
-              <li><a href="#">Privacy policy</a></li>
             </ul>
           </div>
 
@@ -325,12 +271,11 @@ useEffect(() => {
               <li><a href="#">Fashion and Jewellery</a></li>
               <li><a href="#">Handicraft</a></li>
               <li><a href="#">Clothing</a></li>
-              <li><a href="#">Beauty and Healthcare</a></li>
-              <li><a href="#">Food</a></li>
             </ul>
           </div>
         </div>
       </footer>
+
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         style={styles.backToTop}
@@ -338,11 +283,43 @@ useEffect(() => {
       >
         ⬆️
       </button>
-    </>
+    </div>
   );
 };
 
 const styles = {
+  appContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+    position: 'relative',
+  },
+  navbar: {
+    width: '100%',
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    backdropFilter: 'blur(25px)',
+    WebkitBackdropFilter: 'blur(10px)',
+    borderBottom: '1px solid lightgray',
+    position: 'sticky',
+    top: 0,
+    zIndex: 1001,
+  },
+  navbarContent: {
+    maxWidth: '1400px',
+    margin: '0 auto',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '10px 20px',
+  },
+  mainContent: {
+    flex: 1,
+    transition: 'margin-left 0.3s ease',
+    width: '100%',
+    maxWidth: '1400px',
+    margin: '0 auto',
+    padding: '20px',
+  },
   searchContainer: {
     display: 'flex',
     alignItems: 'center',
@@ -359,8 +336,8 @@ const styles = {
     padding: '40px 20px',
     borderTop: '1px solid #e0e0e0',
     fontFamily: "'Josefin Sans', sans-serif",
+    marginTop: 'auto',
   },
-
   footerContainer: {
     maxWidth: '1200px',
     margin: '0 auto',
@@ -369,43 +346,36 @@ const styles = {
     flexWrap: 'wrap',
     gap: '30px',
   },
-
   footerColumn: {
     flex: '1',
     minWidth: '200px',
   },
-
   footerHeading: {
     fontSize: '20px',
     fontWeight: 'bold',
     marginBottom: '10px',
   },
-
   footerSubheading: {
     fontSize: '16px',
     fontWeight: '600',
     marginBottom: '10px',
   },
-
   footerList: {
     listStyle: 'none',
     padding: 0,
     lineHeight: '28px',
   },
-
   socialIcons: {
     display: 'flex',
     gap: '10px',
     marginTop: '10px',
   },
-
   socialIcon: {
     width: '28px',
     height: '28px',
     filter: 'grayscale(100%)',
     transition: 'filter 0.3s ease',
   },
-
   searchInput: {
     flex: 1,
     border: 'none',
@@ -414,7 +384,6 @@ const styles = {
     fontSize: '14px',
     fontFamily: "'Josefin Sans', sans-serif",
   },
-
   searchButton: {
     background: 'none',
     border: 'none',
@@ -422,32 +391,10 @@ const styles = {
     cursor: 'pointer',
     color: '#555',
   },
-
-  container: {
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-
-  navbar: {
-    fontFamily: 'Poppins',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '10px 20px',
-    borderBottom: '1px solid lightgray',
-    position: 'sticky',
-    top: 0,
-    zIndex: 1001,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',  // 🟡 Semi-transparent background
-    backdropFilter: 'blur(25px)',                // 🟢 Optional extra glass blur effect
-    WebkitBackdropFilter: 'blur(10px)',          // 🟢 For Safari support
-  },
   backToTop: {
     position: 'fixed',
     bottom: '30px',
     right: '30px',
-
     color: '#848482',
     border: 'none',
     borderRadius: '6px',
@@ -459,19 +406,15 @@ const styles = {
     zIndex: 1000,
     transition: 'background-color 0.3s ease',
   },
-
-
   logoContainer: {
     display: 'flex',
     alignItems: 'center',
     gap: '10px',
   },
-
   logo: {
     width: '40px',
     height: '40px',
   },
-
   logoText: {
     fontFamily: 'poppins',
     fontSize: '22px',
@@ -479,38 +422,29 @@ const styles = {
     color: '#333',
     fontFamily: "'Josefin Sans', sans-serif",
   },
-
   rightMenu: {
     display: 'flex',
     alignItems: 'center',
     gap: '15px',
   },
-
   adminText: {
     fontSize: '14px',
     color: 'gray',
     fontWeight: '500',
     fontFamily: "'Josefin Sans', sans-serif",
   },
-
   menuIcon: {
     width: '20px',
     height: '20px',
     cursor: 'pointer',
     filter: 'grayscale(100%)',
   },
-
-  bodyWrapper: {
-    display: 'flex',
-    flex: 1,
-  },
-
   sidebar: {
     position: 'fixed',
     top: '60px',
     left: 0,
     width: '200px',
-    height: '100%',
+    height: 'calc(100vh - 60px)',
     backgroundColor: 'white',
     borderRight: '1px solid lightgray',
     display: 'flex',
@@ -520,7 +454,6 @@ const styles = {
     transition: 'left 0.3s ease',
     fontFamily: "'Josefin Sans', sans-serif",
   },
-
   menuItem: {
     padding: '12px 20px',
     textDecoration: 'none',
@@ -530,14 +463,6 @@ const styles = {
     borderRadius: '4px',
     fontFamily: "'Josefin Sans', sans-serif",
   },
-
-  contentArea: {
-    flex: 1,
-    padding: '40px 20px',
-    fontSize: '20px',
-    transition: 'margin-left 0.3s ease',
-  },
-
   overlay: {
     position: 'fixed',
     top: '60px',
@@ -547,55 +472,6 @@ const styles = {
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     zIndex: 900,
   },
-
-  adContainer: {
-    height: '900px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '25px',
-    marginTop: '0px',
-    width: '350%',
-    maxWidth: '1520px',
-    alignItems: 'center',
-  },
-
-  adTopBanner: {
-
-    width: '100%',
-    height: '500px',
-    backgroundColor: '#e5e7eb',
-    borderRadius: '2px',
-    overflow: 'hidden',
-    display: 'flex',
-    position: 'relative',
-    bottom: '0px',
-    paddingTop: '0px',
-    justifyContent: 'center',
-    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
-    marginTop: '0px',
-  },
-
-  adBottomContainer: {
-    display: 'flex',
-    width: '90%',
-    justifyContent: 'space-between',
-    gap: '15px',
-  },
-
-  adBottomBox: {
-    width: '100%',
-    flex: 1,
-    height: '300px',
-    backgroundColor: '#e5e7eb',
-    borderRadius: '5px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '16px',
-    fontFamily: "'Josefin Sans', sans-serif",
-    color: '#555',
-  },
-
 };
 
 export default Home;

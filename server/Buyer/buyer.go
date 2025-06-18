@@ -227,38 +227,59 @@ func UpdateProfileHandler(w http.ResponseWriter, r *http.Request) {
 
 func GetOrdersHandler(w http.ResponseWriter, r *http.Request) {
 	username, err := GetUsernameFromToken(r)
-	fmt.Println("Orders fetched for:", username)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusUnauthorized)
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
 
-	rows, err := db.Query("SELECT id, items, date FROM orders WHERE username = $1 ORDER BY date DESC", username)
+	rows, err := db.Query(`
+		SELECT o.id, o.date, i.name, i.price, i.qty, i.image
+		FROM orders o
+		JOIN order_items i ON o.id = i.order_id
+		WHERE o.username = $1
+		ORDER BY o.date DESC`, username)
 	if err != nil {
 		http.Error(w, "Error fetching orders", http.StatusInternalServerError)
 		return
 	}
 	defer rows.Close()
 
-	var orders []map[string]interface{}
+	type Item struct {
+		Name  string `json:"name"`
+		Price int    `json:"price"`
+		Qty   int    `json:"qty"`
+		Image string `json:"image"`
+	}
+
+	type Order struct {
+		ID    int       `json:"id"`
+		Date  time.Time `json:"date"`
+		Items []Item    `json:"items"`
+	}
+
+	orderMap := make(map[int]*Order)
+
 	for rows.Next() {
-		var id int
-		var itemsData string
+		var orderID int
 		var date time.Time
-		if err := rows.Scan(&id, &itemsData, &date); err != nil {
-			continue
+		var item Item
+
+		err := rows.Scan(&orderID, &date, &item.Name, &item.Price, &item.Qty, &item.Image)
+		if err != nil {
+			http.Error(w, "Error reading order data", http.StatusInternalServerError)
+			return
 		}
 
-		var items []map[string]interface{}
-		if err := json.Unmarshal([]byte(itemsData), &items); err != nil {
-			continue
+		if orderMap[orderID] == nil {
+			orderMap[orderID] = &Order{ID: orderID, Date: date}
 		}
+		orderMap[orderID].Items = append(orderMap[orderID].Items, item)
+	}
 
-		orders = append(orders, map[string]interface{}{
-			"id":    id,
-			"items": items,
-			"date":  date,
-		})
+	// Convert map to slice
+	var orders []Order
+	for _, o := range orderMap {
+		orders = append(orders, *o)
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -269,6 +290,9 @@ type Order struct {
 	Username string     `json:"username"`
 	Items    []CartItem `json:"items"`
 	Date     time.Time  `json:"date"`
+	Phone    string     `json:"phone"`
+	Address  string     `json:"address"`
+	Pincode  string     `json:"pincode"`
 }
 
 type CartItem struct {
@@ -295,7 +319,12 @@ func PlaceOrderHandler(w http.ResponseWriter, r *http.Request) {
 	order.Date = time.Now()
 
 	orderID := 0
-	err = db.QueryRow("INSERT INTO orders (username, date) VALUES ($1, $2) RETURNING id", username, order.Date).Scan(&orderID)
+	err = db.QueryRow(
+		`INSERT INTO orders (username, date, phone, address, pincode) 
+         VALUES ($1, $2, $3, $4, $5) RETURNING id`,
+		username, order.Date, order.Phone, order.Address, order.Pincode,
+	).Scan(&orderID)
+
 	if err != nil {
 		http.Error(w, "Failed to place order", http.StatusInternalServerError)
 		return
