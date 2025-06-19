@@ -9,38 +9,101 @@ const SidebarItem = ({ to, label, icon }) => (
     to={to}
     className="flex items-center gap-3 px-5 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
   >
-    <span className="text-lg">{icon}</span>
+    <span className="text-lg text-pink-500">{icon}</span>
     <span className="font-medium">{label}</span>
   </Link>
 );
 
-const Sidebar = ({ isOpen, closeSidebar }) => (
-  <>
-    <div
-      className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transition-all duration-300 z-40 ${
-        isOpen ? 'translate-x-0' : '-translate-x-full'
-      }`}
-    >
-      <div className="h-16 flex items-center px-6 border-b">
-        <h2 className="text-xl font-bold">Menu</h2>
-      </div>
-      <div className="p-4 space-y-2 mt-4">
-        <SidebarItem to="/home" label="Home" icon="🏠" />
-        <SidebarItem to="/categories" label="Categories" icon="🗂️" />
-        <SidebarItem to="/cart" label="My Cart" icon="🛒" />
-        <SidebarItem to="/orders" label="My Orders" icon="📦" />
-        <SidebarItem to="/wishlist" label="Wishlist" icon="❤️" />
-        <SidebarItem to="/profile" label="Profile" icon="👤" />
-      </div>
-    </div>
-    {isOpen && (
+const Sidebar = ({ isOpen, closeSidebar }) => {
+  const navigate = useNavigate();
+
+  // Pink-themed SVG icons
+  const icons = {
+    home: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+      </svg>
+    ),
+    categories: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+      </svg>
+    ),
+    cart: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+      </svg>
+    ),
+    orders: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
+        <path fillRule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clipRule="evenodd" />
+      </svg>
+    ),
+    wishlist: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+      </svg>
+    ),
+    profile: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+      </svg>
+    ),
+    logout: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
+      </svg>
+    )
+  };
+
+  const handleLogout = () => {
+    if (window.confirm("Are you sure you want to log out?")) {
+      localStorage.removeItem('token');
+      toast.success("Logged out successfully");
+      navigate('/login');
+    }
+  };
+
+  return (
+    <>
       <div
-        onClick={closeSidebar}
-        className="fixed inset-0 bg-transparent bg-opacity-50 z-30 md:hidden"
-      />
-    )}
-  </>
-);
+        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transition-all duration-300 z-40 flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+      >
+        <div className="h-16 flex items-center px-6 border-b">
+          <h2 className="text-xl font-bold">Menu</h2>
+        </div>
+        <div className="flex-1 p-4 space-y-2 overflow-y-auto">
+          <SidebarItem to="/home" label="Home" icon={icons.home} />
+          <SidebarItem to="/categories" label="Categories" icon={icons.categories} />
+          <SidebarItem to="/cart" label="My Cart" icon={icons.cart} />
+          <SidebarItem to="/orders" label="My Orders" icon={icons.orders} />
+          <SidebarItem to="/wishlist" label="Wishlist" icon={icons.wishlist} />
+          <SidebarItem to="/profile" label="Profile" icon={icons.profile} />
+        </div>
+
+        {/* Logout Button at Bottom */}
+        <div className="p-4 border-t">
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-5 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+          >
+            <span className="text-lg text-red-600">{icons.logout}</span>
+            <span className="font-medium">Logout</span>
+          </button>
+        </div>
+      </div>
+
+      {isOpen && (
+        <div
+          onClick={closeSidebar}
+          className="fixed inset-0 bg-transparent bg-opacity-30 z-30 md:hidden"
+        />
+      )}
+    </>
+  );
+};
 
 // Enhanced Navbar Component
 const Navbar = ({ toggleSidebar }) => (
@@ -48,14 +111,6 @@ const Navbar = ({ toggleSidebar }) => (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex justify-between items-center h-16">
         <div className="flex items-center">
-          <button
-            onClick={toggleSidebar}
-            className="mr-4 text-gray-500 hover:text-gray-600 md:hidden"
-          >
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
           <Link to="/home" className="flex items-center">
             <img
               src="https://thirumathikart.nitt.edu/assets/img/tklogo.png"
@@ -72,6 +127,15 @@ const Navbar = ({ toggleSidebar }) => (
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
           </Link>
+          <motion.img
+            src="https://cdn-icons-png.flaticon.com/128/1828/1828859.png"
+            alt="Menu"
+            onClick={toggleSidebar}
+            className="w-5 h-5 cursor-pointer filter grayscale"
+            whileHover={{ scale: 1.2 }}
+            style={{ display: 'block' }} // ✅ force visibility
+          />
+
         </div>
       </div>
     </div>
@@ -189,7 +253,7 @@ const Home = () => {
     <div style={styles.appContainer}>
       <Navbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
       <Sidebar isOpen={sidebarOpen} closeSidebar={() => setSidebarOpen(false)} />
-      
+
       <main style={{
         ...styles.mainContent,
         marginLeft: isDesktop && sidebarOpen ? '200px' : '0',
