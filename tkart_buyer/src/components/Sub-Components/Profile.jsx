@@ -64,7 +64,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
         if (window.confirm("Are you sure you want to log out?")) {
             localStorage.removeItem('token');
             toast.success("Logged out successfully");
-            navigate('/login');
+            navigate('/');
         }
     };
 

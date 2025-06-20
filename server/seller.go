@@ -3,14 +3,14 @@
 package main
 
 import (
-    "crypto/rand"
+	"crypto/rand"
 	"database/sql"
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io"
-	
+
 	"net/http"
 	"strconv"
 	"strings"
@@ -289,7 +289,6 @@ func UpdateProfileHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]string{"message": "Profile updated successfully"})
 }
 
-
 func getClaimsFromRequest(r *http.Request) (*Claims, error) {
 	authHeader := r.Header.Get("Authorization")
 	tokenStr := strings.TrimPrefix(authHeader, "Bearer ")
@@ -362,51 +361,39 @@ func UploadProductHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetMyProductsHandler(w http.ResponseWriter, r *http.Request) {
-	claims, err := getClaimsFromRequest(r)
+	rows, err := db.Query(`SELECT id, name, description, category, subcategory, inner_subcategory, quantity, price, in_stock FROM products WHERE in_stock = true`)
 	if err != nil {
-		http.Error(w, "Unauthorized", http.StatusUnauthorized)
-		return
-	}
-
-	rows, err := db.Query(`SELECT id, name, category, price, quantity, image1, in_stock 
-		FROM products WHERE username=$1 ORDER BY id DESC`, claims.Username)
-	if err != nil {
-		http.Error(w, "Failed to retrieve products: "+err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Failed to fetch products", http.StatusInternalServerError)
 		return
 	}
 	defer rows.Close()
 
 	var products []map[string]interface{}
 	for rows.Next() {
-		var id, quantity int
-		var name, category string
+		var p = make(map[string]interface{})
+		var id int
+		var name, description, category, subcategory, inner_subcategory string
+		var quantity int
 		var price float64
-		var image1 []byte
 		var inStock bool
 
-		if err := rows.Scan(&id, &name, &category, &price, &quantity, &image1, &inStock); err != nil {
-			continue
+		err := rows.Scan(&id, &name, &description, &category, &subcategory, &inner_subcategory, &quantity, &price, &inStock)
+		if err != nil {
+			http.Error(w, "Row parse error", http.StatusInternalServerError)
+			return
 		}
 
-		product := map[string]interface{}{
-			"id":       id,
-			"name":     name,
-			"category": category,
-			"price":    price,
-			"quantity": quantity,
-			"in_stock": inStock,
-		}
+		p["id"] = id
+		p["name"] = name
+		p["description"] = description
+		p["category"] = category
+		p["subcategory"] = subcategory
+		p["inner_subcategory"] = inner_subcategory
+		p["quantity"] = quantity
+		p["price"] = price
+		p["in_stock"] = inStock
 
-		if len(image1) > 0 {
-			product["image1"] = base64.StdEncoding.EncodeToString(image1)
-		}
-
-		products = append(products, product)
-	}
-
-	if err = rows.Err(); err != nil {
-		http.Error(w, "Database error: "+err.Error(), http.StatusInternalServerError)
-		return
+		products = append(products, p)
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -563,7 +550,3 @@ func main() {
 		panic("Server failed: " + err.Error())
 	}
 }
-
-
-
-

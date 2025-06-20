@@ -63,7 +63,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
     if (window.confirm("Are you sure you want to log out?")) {
       localStorage.removeItem('token');
       toast.success("Logged out successfully");
-      navigate('/login');
+      navigate('/');
     }
   };
 
@@ -217,7 +217,7 @@ const Wishlist = () => {
           )}
         </div>
       </main>
-      <footer className="mt-85 text-center text-sm py-3 text-gray-500 border-t">
+      <footer className="mt-99 text-center text-sm py-3 text-gray-500 border-t">
         Copyright © 2025 Thirumathi Kart. All Rights Reserved.
       </footer>
 

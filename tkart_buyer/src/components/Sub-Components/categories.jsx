@@ -374,11 +374,25 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
     )
   };
 
+  useEffect(() => {
+  const fetchProducts = async () => {
+    try {
+      const res = await axios.get('http://localhost:8080/products');
+      setFetchedProducts(res.data); // Set state here
+    } catch (error) {
+      console.error('Failed to fetch products:', error);
+    }
+  };
+
+  fetchProducts();
+}, []);
+
+
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
       localStorage.removeItem('token');
       toast.success("Logged out successfully");
-      navigate('/login');
+      navigate('/');
     }
   };
 
