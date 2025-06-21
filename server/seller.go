@@ -361,39 +361,53 @@ func UploadProductHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetMyProductsHandler(w http.ResponseWriter, r *http.Request) {
-	rows, err := db.Query(`SELECT id, name, description, category, subcategory, inner_subcategory, quantity, price, in_stock FROM products WHERE in_stock = true`)
+	claims, err := getClaimsFromRequest(r)
 	if err != nil {
-		http.Error(w, "Failed to fetch products", http.StatusInternalServerError)
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+	username := claims.Username
+
+	rows, err := db.Query(`SELECT id, name, description, category, subcategory, inner_subcategory, quantity, price, in_stock, created_at FROM products WHERE username = $1`, username)
+	if err != nil {
+		http.Error(w, "Failed to fetch your products", http.StatusInternalServerError)
 		return
 	}
 	defer rows.Close()
 
 	var products []map[string]interface{}
-	for rows.Next() {
-		var p = make(map[string]interface{})
-		var id int
-		var name, description, category, subcategory, inner_subcategory string
-		var quantity int
-		var price float64
-		var inStock bool
 
-		err := rows.Scan(&id, &name, &description, &category, &subcategory, &inner_subcategory, &quantity, &price, &inStock)
+	for rows.Next() {
+		var p struct {
+			ID               int
+			Name             string
+			Description      string
+			Category         string
+			Subcategory      string
+			InnerSubcategory string
+			Quantity         int
+			Price            float64
+			InStock          bool
+			CreatedAt        time.Time
+		}
+		err := rows.Scan(&p.ID, &p.Name, &p.Description, &p.Category, &p.Subcategory, &p.InnerSubcategory, &p.Quantity, &p.Price, &p.InStock, &p.CreatedAt)
 		if err != nil {
-			http.Error(w, "Row parse error", http.StatusInternalServerError)
+			http.Error(w, "Error scanning product", http.StatusInternalServerError)
 			return
 		}
 
-		p["id"] = id
-		p["name"] = name
-		p["description"] = description
-		p["category"] = category
-		p["subcategory"] = subcategory
-		p["inner_subcategory"] = inner_subcategory
-		p["quantity"] = quantity
-		p["price"] = price
-		p["in_stock"] = inStock
-
-		products = append(products, p)
+		products = append(products, map[string]interface{}{
+			"id":                p.ID,
+			"name":              p.Name,
+			"description":       p.Description,
+			"category":          p.Category,
+			"subcategory":       p.Subcategory,
+			"inner_subcategory": p.InnerSubcategory,
+			"quantity":          p.Quantity,
+			"price":             p.Price,
+			"in_stock":          p.InStock,
+			"created_at":        p.CreatedAt,
+		})
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -459,6 +473,53 @@ func ProtectedHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(response)
 }
 
+func GetProductsHandler(w http.ResponseWriter, r *http.Request) {
+	rows, err := db.Query(`SELECT id, name, description, category, subcategory, inner_subcategory, quantity, price, in_stock, created_at FROM products`)
+	if err != nil {
+		http.Error(w, "Failed to fetch products", http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
+
+	var products []map[string]interface{}
+
+	for rows.Next() {
+		var p struct {
+			ID               int
+			Name             string
+			Description      string
+			Category         string
+			Subcategory      string
+			InnerSubcategory string
+			Quantity         int
+			Price            float64
+			InStock          bool
+			CreatedAt        time.Time
+		}
+		err := rows.Scan(&p.ID, &p.Name, &p.Description, &p.Category, &p.Subcategory, &p.InnerSubcategory, &p.Quantity, &p.Price, &p.InStock, &p.CreatedAt)
+		if err != nil {
+			http.Error(w, "Error scanning product", http.StatusInternalServerError)
+			return
+		}
+
+		products = append(products, map[string]interface{}{
+			"id":                p.ID,
+			"name":              p.Name,
+			"description":       p.Description,
+			"category":          p.Category,
+			"subcategory":       p.Subcategory,
+			"inner_subcategory": p.InnerSubcategory,
+			"quantity":          p.Quantity,
+			"price":             p.Price,
+			"in_stock":          p.InStock,
+			"created_at":        p.CreatedAt,
+		})
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(products)
+}
+
 func main() {
 	initDB()
 	defer db.Close()
@@ -513,8 +574,11 @@ func main() {
 	mux.Handle("/upload", AuthMiddleware(http.HandlerFunc(UploadProductHandler)))
 	mux.Handle("/profile", AuthMiddleware(http.HandlerFunc(GetProfileHandler)))
 	mux.Handle("/profile/update", AuthMiddleware(http.HandlerFunc(UpdateProfileHandler)))
-	mux.Handle("/products", AuthMiddleware(http.HandlerFunc(GetMyProductsHandler)))
-	mux.Handle("/products/", AuthMiddleware(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/products", GetProductsHandler)                                    // Public: for buyers
+	mux.Handle("/my-products", AuthMiddleware(http.HandlerFunc(GetMyProductsHandler))) // Protected: seller-only
+
+	// Add a handler for PUT requests to /products/{id}/stock and /products/{id}/price
+	mux.HandleFunc("/products/", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodPut:
 			if strings.HasSuffix(r.URL.Path, "/stock") {
@@ -527,10 +591,10 @@ func main() {
 		default:
 			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		}
-	})))
+	})
 
 	corsHandler := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:5173"},
+		AllowedOrigins:   []string{"http://localhost:5173", "http://localhost:5174"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Content-Type", "Authorization"},
 		AllowCredentials: true,

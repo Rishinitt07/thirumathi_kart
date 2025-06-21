@@ -403,25 +403,15 @@ CREATE TABLE IF NOT EXISTS order_items (
 	mux.Handle("/orders/place", AuthMiddleware(http.HandlerFunc(PlaceOrderHandler)))
 
 	// ✅ Add CORS middleware
-	corsHandler := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:5174"},
-		AllowedMethods:   []string{"GET", "POST", "OPTIONS"},
-		AllowedHeaders:   []string{"Content-Type", "Authorization"},
-		AllowCredentials: true,
-	}).Handler(mux)
-
 	handler := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:5173"},
+		AllowedOrigins:   []string{"http://localhost:5174", "http://localhost:5174"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Content-Type", "Authorization"},
 		AllowCredentials: true,
 	}).Handler(mux)
 
-	fmt.Println("Server started on :8081")
-	http.ListenAndServe(":8081", handler)
-
 	fmt.Println("🚀 Server running on http://localhost:8081")
-	err = http.ListenAndServe(":8081", corsHandler)
+	err = http.ListenAndServe(":8081", handler)
 	if err != nil {
 		panic(err)
 	}
