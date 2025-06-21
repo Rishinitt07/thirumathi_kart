@@ -4,321 +4,7 @@ import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-
-
-
-const productData = [
-  {
-    category: 'Household',
-    subCategories: [
-      {
-        name: 'Bedroom',
-        subSubCategories: [
-          'Bed', 'Pillow', 'Blanket', 'Wardrobe', 'Mirror', 'Curtains', 'Table lamp', 'Alarm clock'
-        ]
-      },
-      {
-        name: 'Living Room',
-        subSubCategories: [
-          'Curtains', 'Wall clock', 'Books/Magazines'
-        ]
-      },
-      {
-        name: 'Bathroom',
-        subSubCategories: [
-          'Bucket', 'Mug', 'Towel', 'Toothbrush', 'Soap', 'Mirror', 'Comb', 'Cleaning tools'
-        ]
-      },
-      {
-        name: 'Cleaning Supplies',
-        subSubCategories: [
-          'Broom', 'Mop', 'Dustpan', 'Detergent', 'Cloths', 'Garbage bags', 'Disinfectant'
-        ]
-      },
-      {
-        name: 'Electrical & Misc',
-        subSubCategories: [
-          'Bulbs', 'Charger', 'Power bank', 'Extension cords', 'Iron box', 'Batteries', 'Torch'
-        ]
-      }
-    ]
-  },
-  {
-    category: 'Fashion',
-    subCategories: [
-      {
-        name: 'Clothing',
-        subSubCategories: [
-          'Tops', 'Kurtis', 'Dresses', 'Jeans', 'Sarees', 'Nightwear', 'Kids wear', 'Men’s wear'
-        ]
-      },
-      {
-        name: 'Accessories',
-        subSubCategories: [
-          'Bags', 'Wallets', 'Sunglasses', 'Belts', 'Hats', 'Scarves', 'Socks'
-        ]
-      },
-      {
-        name: 'Footwear',
-        subSubCategories: [
-          'Sandals', 'Heels', 'Sneakers', 'Traditional footwear', 'Kids’ shoes'
-        ]
-      },
-      {
-        name: 'Materials',
-        subSubCategories: [
-          'Fabric', 'Sewing kits', 'Beads', 'Laces', 'Zips'
-        ]
-      }
-    ]
-  },
-  {
-    category: 'Kitchen',
-    subCategories: [
-      {
-        name: 'Cooking Appliances',
-        subSubCategories: [
-          'Stove', 'Induction cooktop', 'Mixer', 'Rice cooker', 'Pressure cooker'
-        ]
-      },
-      {
-        name: 'Cookware',
-        subSubCategories: [
-          'Frying pan', 'Kadai', 'Tawa', 'Pressure cooker'
-        ]
-      },
-      {
-        name: 'Utensils & Cutlery',
-        subSubCategories: [
-          'Plates', 'Bowls', 'Spoons', 'Forks', 'Knives', 'Tongs', 'Ladles', 'Trays'
-        ]
-      },
-      {
-        name: 'Storage Containers',
-        subSubCategories: [
-          'Spice jars', 'Oil cans', 'Grain boxes', 'Lunch boxes', 'Water bottles'
-        ]
-      },
-      {
-        name: 'Cleaning',
-        subSubCategories: [
-          'Dish soap', 'Sponge', 'Rack', 'Bin', 'Towels', 'Gloves', 'Mop'
-        ]
-      },
-      {
-        name: 'Food Basics',
-        subSubCategories: [
-          'Rice', 'Wheat', 'Pulses', 'Oil', 'Spices', 'Salt', 'Sugar', 'Tea/Coffee'
-        ]
-      },
-      {
-        name: 'Prep Tools',
-        subSubCategories: [
-          'Measuring cups', 'Chopping board', 'Knives', 'Peeler', 'Grater', 'Whisk'
-        ]
-      }
-    ]
-  },
-  {
-    category: 'Cosmetics',
-    subCategories: [
-      {
-        name: 'Makeup',
-        subSubCategories: ['Lipstick', 'Eyeliner', 'Mascara', 'Foundation', 'Blush', 'Removers', 'Brushes']
-      },
-      {
-        name: 'Skincare',
-        subSubCategories: ['Face wash', 'Scrub', 'Moisturizer', 'Serum', 'Sunscreen', 'Masks', 'Toner']
-      },
-      {
-        name: 'Haircare',
-        subSubCategories: ['Hair oil', 'Shampoo', 'Conditioner', 'Serum', 'Masks']
-      },
-      {
-        name: 'Bodycare',
-        subSubCategories: ['Lotion', 'Soaps', 'Body wash', 'Scrubs', 'Deodorants']
-      },
-      {
-        name: 'Nailcare',
-        subSubCategories: ['Nail polish', 'Removers', 'Art kits', 'Cuticle oil']
-      }
-    ]
-  },
-  {
-    category: 'Organics',
-    subCategories: [
-      {
-        name: 'Skincare & Beauty',
-        subSubCategories: ['Herbal packs', 'Organic soaps', 'Aloe gel', 'Rose water', 'Hair oils']
-      },
-      {
-        name: 'Organic Food',
-        subSubCategories: ['Cold-pressed oils', 'Raw honey', 'Ghee', 'Jaggery', 'Millets', 'Pulses', 'Spices']
-      },
-      {
-        name: 'Wellness',
-        subSubCategories: ['Ayurvedic powders', 'Herbal juices', 'Detox mixes', 'Bath salts']
-      },
-      {
-        name: 'Home & Personal',
-        subSubCategories: ['Natural cleaners', 'Eco pads', 'Bamboo brushes', 'Repellents']
-      },
-      {
-        name: 'Gardening',
-        subSubCategories: ['Organic fertilizers', 'Seeds', 'Bio-pesticides']
-      },
-      {
-        name: 'Eco Products',
-        subSubCategories: ['Cloth bags', 'Clay utensils', 'Bamboo goods', 'Organic clothing']
-      }
-    ]
-  },
-  {
-    category: 'Handcrafts',
-    subCategories: [
-      {
-        name: 'Home Decor',
-        subSubCategories: ['Wall art', 'Candles', 'Lamps', 'Dreamcatchers', 'Planters']
-      },
-      {
-        name: 'Fashion Accessories',
-        subSubCategories: ['Handmade jewelry', 'Bags', 'Scarves', 'Keychains']
-      },
-      {
-        name: 'Traditional Crafts',
-        subSubCategories: ['Terracotta', 'Wooden toys', 'Bamboo items', 'Jute products']
-      },
-      {
-        name: 'Fabric Crafts',
-        subSubCategories: ['Printed fabrics', 'Embroidered items', 'Quilts', 'Knitted goods']
-      },
-      {
-        name: 'Gifts & Stationery',
-        subSubCategories: ['Cards', 'Notebooks', 'Soap sets', 'Resin gifts', 'Magnets']
-      },
-      {
-        name: 'Kids & DIY',
-        subSubCategories: ['Toys', 'Craft kits', 'Coloring books']
-      },
-      {
-        name: 'Kitchen Items',
-        subSubCategories: ['Clay cups', 'Wooden boards', 'Coasters', 'Painted bowls']
-      }
-    ]
-  },
-  {
-    category: 'Groceries',
-    subCategories: [
-      {
-        name: 'Grains & Staples',
-        subSubCategories: ['Rice', 'Wheat', 'Millets', 'Poha', 'Dalia']
-      },
-      {
-        name: 'Pulses',
-        subSubCategories: ['Toor', 'Moong', 'Urad', 'Chana', 'Masoor', 'Rajma', 'Chole']
-      },
-      {
-        name: 'Oils & Ghee',
-        subSubCategories: ['Sunflower', 'Mustard', 'Coconut', 'Ghee']
-      },
-      {
-        name: 'Spices',
-        subSubCategories: ['Turmeric', 'Chili', 'Garam masala', 'Jeera', 'Whole spices']
-      },
-      {
-        name: 'Sweeteners',
-        subSubCategories: ['Sugar', 'Jaggery', 'Honey']
-      },
-      {
-        name: 'Beverages',
-        subSubCategories: ['Tea', 'Coffee', 'Health drinks']
-      },
-      {
-        name: 'Snacks',
-        subSubCategories: ['Biscuits', 'Chips', 'Dry fruits', 'Seeds']
-      },
-      {
-        name: 'Essentials',
-        subSubCategories: ['Detergents', 'Cleaners', 'Soaps', 'Toiletries']
-      },
-      {
-        name: 'Vegetables',
-        subSubCategories: ['Onion', 'Potato', 'Tomato', 'Garlic', 'Greens']
-      }
-    ]
-  },
-  {
-    category: 'Jewellery',
-    subCategories: [
-      {
-        name: 'Earrings',
-        subSubCategories: ['Studs', 'Hoops', 'Jhumkas', 'Danglers', 'Terracotta', 'Resin']
-      },
-      {
-        name: 'Necklaces',
-        subSubCategories: ['Chains', 'Pendants', 'Beaded', 'Chokers', 'Layered']
-      },
-      {
-        name: 'Rings',
-        subSubCategories: ['Bands', 'Stone rings', 'Adjustable', 'Handmade']
-      },
-      {
-        name: 'Bracelets/Bangles',
-        subSubCategories: ['Glass', 'Metal', 'Thread', 'Cuff', 'Kada']
-      },
-      {
-        name: 'Anklets',
-        subSubCategories: ['Silver', 'Beaded', 'Chain']
-      },
-      {
-        name: 'Nose Jewelry',
-        subSubCategories: ['Nose pins', 'Rings', 'Nath']
-      },
-      {
-        name: 'Hair/Head Jewelry',
-        subSubCategories: ['Maang tikka', 'Clips', 'Hairbands', 'Juda pins']
-      },
-      {
-        name: 'Other Accessories',
-        subSubCategories: ['Waist belts', 'Brooches', 'Toe rings', 'Armlets']
-      },
-      {
-        name: 'Eco-Friendly',
-        subSubCategories: ['Terracotta', 'Fabric', 'Wooden', 'Crochet', 'Quilling']
-      }
-    ]
-  },
-  {
-    category: 'Stationery',
-    subCategories: [
-      {
-        name: 'Writing Tools',
-        subSubCategories: ['Pens', 'Pencils', 'Markers', 'Highlighters', 'Erasers', 'Sharpeners']
-      },
-      {
-        name: 'Paper Products',
-        subSubCategories: ['Notebooks', 'Diaries', 'Sticky notes', 'Drawing books']
-      },
-      {
-        name: 'Office Supplies',
-        subSubCategories: ['Files', 'Clips', 'Staplers', 'Scissors', 'Glue', 'Tape']
-      },
-      {
-        name: 'Art Supplies',
-        subSubCategories: ['Crayons', 'Paints', 'Brushes', 'Colour pencils']
-      },
-      {
-        name: 'Math Tools',
-        subSubCategories: ['Geometry box', 'Calculator', 'Graph rulers']
-      },
-      {
-        name: 'Misc',
-        subSubCategories: ['ID holders', 'Whiteboards', 'Chalk', 'Packaging material']
-      }
-    ]
-  }
-];
-
+import axios from 'axios';
 
 // Reusable Sidebar Component
 const SidebarItem = ({ to, label, icon }) => (
@@ -374,20 +60,6 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
     )
   };
 
-  useEffect(() => {
-  const fetchProducts = async () => {
-    try {
-      const res = await axios.get('http://localhost:8080/products');
-      setFetchedProducts(res.data); // Set state here
-    } catch (error) {
-      console.error('Failed to fetch products:', error);
-    }
-  };
-
-  fetchProducts();
-}, []);
-
-
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
       localStorage.removeItem('token');
@@ -414,7 +86,6 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
           <SidebarItem to="/profile" label="Profile" icon={icons.profile} />
         </div>
 
-        {/* Logout Button at Bottom */}
         <div className="p-4 border-t">
           <button
             onClick={handleLogout}
@@ -436,7 +107,6 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
   );
 };
 
-// Enhanced Navbar Component
 const Navbar = ({ toggleSidebar }) => (
   <header className="sticky top-0 z-30 bg-white shadow-sm">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -464,27 +134,73 @@ const Navbar = ({ toggleSidebar }) => (
             onClick={toggleSidebar}
             className="w-5 h-5 cursor-pointer filter grayscale"
             whileHover={{ scale: 1.2 }}
-            style={{ display: 'block' }} // ✅ force visibility
+            style={{ display: 'block' }}
           />
-
         </div>
       </div>
     </div>
   </header>
 );
 
-
-// Main component
 const Categories = () => {
   const [cartItems, setCartItems] = useState([]);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(productData[0]);
-  const [selectedSubCategory, setSelectedSubCategory] = useState(productData[0].subCategories[0]);
-  const [selectedSubSubCategory, setSelectedSubSubCategory] = useState(productData[0].subCategories[0].subSubCategories[0]);
+  const [selectedCategory, setSelectedCategory] = useState('Household');
+  const [selectedSubCategory, setSelectedSubCategory] = useState('Bedroom');
   const [searchQuery, setSearchQuery] = useState('');
   const [confirmationMessage, setConfirmationMessage] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [wishlistItems, setWishlistItems] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  // Available categories structure
+  const categoryStructure = {
+    Household: {
+      subcategories: ['Bedroom', 'Living Room', 'Bathroom', 'Cleaning Supplies', 'Electrical & Misc']
+    },
+    Fashion: {
+      subcategories: ['Clothing', 'Accessories', 'Footwear', 'Materials']
+    },
+    Kitchen: {
+      subcategories: ['Cooking Appliances', 'Cookware', 'Utensils & Cutlery', 'Storage Containers', 'Cleaning', 'Food Basics', 'Prep Tools']
+    },
+    Cosmetics: {
+      subcategories: ['Makeup', 'Skincare', 'Haircare', 'Bodycare', 'Nailcare']
+    },
+    Organics: {
+      subcategories: ['Skincare & Beauty', 'Organic Food', 'Wellness', 'Home & Personal', 'Gardening', 'Eco Products']
+    },
+    Handcrafts: {
+      subcategories: ['Home Decor', 'Fashion Accessories', 'Traditional Crafts', 'Fabric Crafts', 'Gifts & Stationery', 'Kids & DIY', 'Kitchen Items']
+    },
+    Groceries: {
+      subcategories: ['Grains & Staples', 'Pulses', 'Oils & Ghee', 'Spices', 'Sweeteners', 'Beverages', 'Snacks', 'Essentials', 'Vegetables']
+    },
+    Jewellery: {
+      subcategories: ['Earrings', 'Necklaces', 'Rings', 'Bracelets/Bangles', 'Anklets', 'Nose Jewelry', 'Hair/Head Jewelry', 'Other Accessories', 'Eco-Friendly']
+    },
+    Stationery: {
+      subcategories: ['Writing Tools', 'Paper Products', 'Office Supplies', 'Art Supplies', 'Math Tools', 'Misc']
+    }
+  };
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/products');
+        setProducts(response.data || []); // Ensure we always have an array
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching products:', err);
+        setError('Failed to load products');
+        setLoading(false);
+        setProducts([]); // Set to empty array on error
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   useEffect(() => {
     const storedCart = localStorage.getItem('cart');
@@ -497,16 +213,6 @@ const Categories = () => {
     localStorage.setItem('cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const addToCart = (item) => {
-    const existing = cartItems.find(i => i.name === item.name);
-    const updatedCart = existing
-      ? cartItems.map(i => i.name === item.name ? { ...i, quantity: i.quantity + 1 } : i)
-      : [...cartItems, { ...item, quantity: 1 }];
-
-    setCartItems(updatedCart);
-    setConfirmationMessage(`${item.name} added to cart!`);
-    setTimeout(() => setConfirmationMessage(''), 2000);
-  };
   useEffect(() => {
     const storedWishlist = localStorage.getItem('wishlist');
     if (storedWishlist) {
@@ -514,28 +220,44 @@ const Categories = () => {
     }
   }, []);
 
-  const addToWishlist = (item) => {
-    const exists = wishlistItems.find(w => w.name === item.name);
+  const addToCart = (product) => {
+    const existing = cartItems.find(item => item.id === product.id);
+    const updatedCart = existing
+      ? cartItems.map(item => item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item)
+      : [...cartItems, { ...product, quantity: 1 }];
+
+    setCartItems(updatedCart);
+    setConfirmationMessage(`${product.name} added to cart!`);
+    setTimeout(() => setConfirmationMessage(''), 2000);
+  };
+
+  const addToWishlist = (product) => {
+    const exists = wishlistItems.find(item => item.id === product.id);
     if (!exists) {
-      const updated = [...wishlistItems, item];
+      const updated = [...wishlistItems, product];
       setWishlistItems(updated);
       localStorage.setItem('wishlist', JSON.stringify(updated));
-      toast.success(`❤️ ${item.name} added to wishlist!`);
+      toast.success(`❤️ ${product.name} added to wishlist!`);
     } else {
-      toast.info(`${item.name} is already in wishlist`);
+      toast.info(`${product.name} is already in wishlist`);
     }
   };
 
-
-
-  const filteredProducts = selectedSubCategory.subSubCategories.filter(product =>
-    product.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-
+  const filteredProducts = Array.isArray(products) 
+    ? products.filter(product => {
+        if (!product) return false; // Skip null/undefined products
+        const matchesCategory = product.category === selectedCategory;
+        const matchesSubCategory = product.subcategory === selectedSubCategory;
+        const matchesSearch = 
+          (product.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+          product.description?.toLowerCase().includes(searchQuery.toLowerCase()));
+        
+        return matchesCategory && matchesSubCategory && matchesSearch;
+      })
+    : [];
+    
   return (
     <div className="min-h-screen bg-white text-black font-josefin flex flex-col">
-      {/* Full-width Navbar */}
       <div className="w-full">
         <Navbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
       </div>
@@ -556,51 +278,34 @@ const Categories = () => {
       </AnimatePresence>
 
       <div className="flex flex-1">
-        {/* Desktop Sidebar - Fixed width and sticky */}
         <aside className="w-64 bg-gray-100 border-r p-4 hidden sm:block sticky top-0 h-[calc(100vh-64px)] overflow-auto">
           <h2 className="text-xl font-bold mb-4">Categories</h2>
           <ul>
-            {productData.map((cat, i) => (
-              <li key={i} className="mb-3">
+            {Object.keys(categoryStructure).map((category) => (
+              <li key={category} className="mb-3">
                 <button
-                  className={`w-full text-left font-semibold ${selectedCategory.category === cat.category ? 'text-blue-600' : 'hover:text-blue-400'}`}
+                  className={`w-full text-left font-semibold ${selectedCategory === category ? 'text-blue-600' : 'hover:text-blue-400'}`}
                   onClick={() => {
-                    setSelectedCategory(cat);
-                    setSelectedSubCategory(cat.subCategories[0]);
-                    setSelectedSubSubCategory(cat.subCategories[0].subSubCategories[0]);
+                    setSelectedCategory(category);
+                    setSelectedSubCategory(categoryStructure[category].subcategories[0]);
                     setSearchQuery('');
                   }}
                 >
-                  {cat.category}
+                  {category}
                 </button>
-                {selectedCategory.category === cat.category && (
+                {selectedCategory === category && (
                   <ul className="ml-4 mt-2">
-                    {cat.subCategories.map((sub, j) => (
-                      <li key={j} className="mb-1">
+                    {categoryStructure[category].subcategories.map((subcategory) => (
+                      <li key={subcategory} className="mb-1">
                         <button
-                          className={`text-sm ${selectedSubCategory.name === sub.name ? 'text-blue-500 font-semibold' : 'text-gray-700 hover:text-blue-400'}`}
+                          className={`text-sm ${selectedSubCategory === subcategory ? 'text-blue-500 font-semibold' : 'text-gray-700 hover:text-blue-400'}`}
                           onClick={() => {
-                            setSelectedSubCategory(sub);
-                            setSelectedSubSubCategory(sub.subSubCategories[0]);
+                            setSelectedSubCategory(subcategory);
                             setSearchQuery('');
                           }}
                         >
-                          {sub.name}
+                          {subcategory}
                         </button>
-                        {selectedSubCategory.name === sub.name && (
-                          <ul className="ml-4 mt-1">
-                            {sub.subSubCategories.map((prod, k) => (
-                              <li key={k}>
-                                <button
-                                  className={`text-xs ${selectedSubSubCategory === prod ? 'text-blue-400 font-medium' : 'text-gray-600 hover:text-blue-400'}`}
-                                  onClick={() => setSelectedSubSubCategory(prod)}
-                                >
-                                  {prod}
-                                </button>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
                       </li>
                     ))}
                   </ul>
@@ -610,9 +315,7 @@ const Categories = () => {
           </ul>
         </aside>
 
-        {/* Main Content Area */}
         <main className="flex-1 p-6 overflow-x-hidden">
-          {/* Mobile Category Button */}
           <div className="sm:hidden mb-4 text-right">
             <button
               onClick={() => setShowCategoryModal(true)}
@@ -624,7 +327,7 @@ const Categories = () => {
 
           <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
             <h1 className="text-2xl font-bold">
-              {selectedCategory.category} - {selectedSubCategory.name} - {selectedSubSubCategory}
+              {selectedCategory} - {selectedSubCategory}
             </h1>
             <input
               type="text"
@@ -636,38 +339,50 @@ const Categories = () => {
           </header>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {filteredProducts.map((prod, index) => (
-              <div key={index} className="border rounded-md p-4 shadow-sm hover:shadow-md transition-shadow">
-                <h3 className="font-semibold text-lg mb-2">{prod}</h3>
+            {loading ? (
+              <div className="col-span-full text-center py-8">Loading products...</div>
+            ) : filteredProducts.length > 0 ? (
+              filteredProducts.map((product) => (
+                <div key={product.id} className="border rounded-md p-4 shadow-sm hover:shadow-md transition-shadow">
+                  {product.image1 && (
+                    <img 
+                      src={`data:image/jpeg;base64,${product.image1}`} 
+                      alt={product.name}
+                      className="w-full h-40 object-cover mb-2 rounded"
+                    />
+                  )}
+                  
+                  <h3 className="font-semibold text-lg mb-1">{product.name}</h3>
+                  <p className="text-gray-600 text-sm mb-2 line-clamp-2">{product.description}</p>
+                  <p className="font-bold text-blue-600 mb-2">₹{product.price}</p>
 
-                <div className="flex flex-wrap gap-2 mt-3">
-                  <motion.button
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() =>
-                      addToCart({ id: index, name: prod, price: 299, image: 'https://via.placeholder.com/64' })
-                    }
-                    className="px-4 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 flex-1 min-w-[120px]"
-                  >
-                    Add to Cart
-                  </motion.button>
+                  <div className="flex flex-wrap gap-2 mt-3">
+                    <motion.button
+                      whileTap={{ scale: 0.9 }}
+                      onClick={() => addToCart(product)}
+                      className="px-4 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 flex-1 min-w-[120px]"
+                    >
+                      Add to Cart
+                    </motion.button>
 
-                  <button
-                    onClick={() =>
-                      addToWishlist({ id: index, name: prod, price: 299, image: 'https://via.placeholder.com/64' })
-
-                    }
-                    className="px-4 py-1 text-sm bg-pink-500 text-white rounded hover:bg-pink-600 flex-1 min-w-[120px]"
-                  >
-                    Add to Wishlist
-                  </button>
+                    <button
+                      onClick={() => addToWishlist(product)}
+                      className="px-4 py-1 text-sm bg-pink-500 text-white rounded hover:bg-pink-600 flex-1 min-w-[120px]"
+                    >
+                      Add to Wishlist
+                    </button>
+                  </div>
                 </div>
+              ))
+            ) : (
+              <div className="col-span-full text-center py-8">
+                No products found in this category.
               </div>
-            ))}
+            )}
           </div>
         </main>
       </div>
 
-      {/* Mobile Category Modal */}
       {showCategoryModal && (
         <div className="fixed inset-0 z-50 flex justify-center items-start pt-20 bg-grey bg-opacity-0 sm:hidden">
           <div className="bg-white w-11/12 max-w-sm p-4 rounded-lg shadow-lg overflow-auto max-h-[80vh]">
@@ -676,52 +391,33 @@ const Categories = () => {
               <button onClick={() => setShowCategoryModal(false)} className="text-gray-500 text-xl">✖</button>
             </div>
             <ul>
-              {productData.map((cat, i) => (
-                <li key={i} className="mb-3">
+              {Object.keys(categoryStructure).map((category) => (
+                <li key={category} className="mb-3">
                   <button
-                    className={`w-full text-left font-semibold ${selectedCategory.category === cat.category ? 'text-blue-600' : 'hover:text-blue-400'}`}
+                    className={`w-full text-left font-semibold ${selectedCategory === category ? 'text-blue-600' : 'hover:text-blue-400'}`}
                     onClick={() => {
-                      setSelectedCategory(cat);
-                      setSelectedSubCategory(cat.subCategories[0]);
-                      setSelectedSubSubCategory(cat.subCategories[0].subSubCategories[0]);
+                      setSelectedCategory(category);
+                      setSelectedSubCategory(categoryStructure[category].subcategories[0]);
                       setSearchQuery('');
                       setShowCategoryModal(false);
                     }}
                   >
-                    {cat.category}
+                    {category}
                   </button>
-                  {selectedCategory.category === cat.category && (
+                  {selectedCategory === category && (
                     <ul className="ml-4 mt-2">
-                      {cat.subCategories.map((sub, j) => (
-                        <li key={j} className="mb-1">
+                      {categoryStructure[category].subcategories.map((subcategory) => (
+                        <li key={subcategory} className="mb-1">
                           <button
-                            className={`text-sm ${selectedSubCategory.name === sub.name ? 'text-blue-500 font-semibold' : 'text-gray-700 hover:text-blue-400'}`}
+                            className={`text-sm ${selectedSubCategory === subcategory ? 'text-blue-500 font-semibold' : 'text-gray-700 hover:text-blue-400'}`}
                             onClick={() => {
-                              setSelectedSubCategory(sub);
-                              setSelectedSubSubCategory(sub.subSubCategories[0]);
+                              setSelectedSubCategory(subcategory);
                               setSearchQuery('');
                               setShowCategoryModal(false);
                             }}
                           >
-                            {sub.name}
+                            {subcategory}
                           </button>
-                          {selectedSubCategory.name === sub.name && (
-                            <ul className="ml-4 mt-1">
-                              {sub.subSubCategories.map((prod, k) => (
-                                <li key={k}>
-                                  <button
-                                    className={`text-xs ${selectedSubSubCategory === prod ? 'text-blue-400 font-medium' : 'text-gray-600 hover:text-blue-400'}`}
-                                    onClick={() => {
-                                      setSelectedSubSubCategory(prod);
-                                      setShowCategoryModal(false);
-                                    }}
-                                  >
-                                    {prod}
-                                  </button>
-                                </li>
-                              ))}
-                            </ul>
-                          )}
                         </li>
                       ))}
                     </ul>
