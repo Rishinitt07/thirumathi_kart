@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-
 // Reusable Sidebar Component
 const SidebarItem = ({ to, label, icon }) => (
     <Link
@@ -222,184 +221,243 @@ const Profile = () => {
             <Navbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
             <Sidebar isOpen={sidebarOpen} closeSidebar={() => setSidebarOpen(false)} />
 
-            <div
-                className={`pt-6 flex flex-col lg:flex-row max-w-7xl mx-auto px-4 gap-6 transition-[margin] duration-500 ease-in-out ${sidebarOpen ? 'lg:ml-48' : ''
-                    }`}
-            >
+            <div className={`pt-6 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 transition-[margin] duration-500 ease-in-out ${sidebarOpen ? 'lg:ml-64' : ''}`}>
+                <div className="flex flex-col lg:flex-row gap-6">
+                    {/* Profile Form - Takes full width on mobile, 2/3 on desktop */}
+                    <main className="w-full lg:w-2/3 bg-white rounded-lg shadow p-6">
+                        <h2 className="text-2xl font-bold mb-6 text-gray-800">Edit Profile</h2>
 
-
-                {/* Right Panel - Profile Form */}
-                <main className="w-full lg:w-3/4 bg-white rounded-lg shadow p-6">
-                    <h2 className="text-2xl font-bold mb-6 text-gray-800">Edit Profile</h2>
-
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Username</label>
-                        <input
-                            type="text"
-                            value={profile.username}
-                            disabled
-                            className="mt-1 w-full border px-3 py-2 rounded bg-gray-100"
-                        />
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <input
-                            name="firstName"
-                            placeholder="First Name"
-                            value={profile.firstName}
-                            onChange={handleChange}
-                            className="border px-3 py-2 rounded"
-                        />
-                        <input
-                            name="lastName"
-                            placeholder="Last Name"
-                            value={profile.lastName}
-                            onChange={handleChange}
-                            className="border px-3 py-2 rounded"
-                        />
-                    </div>
-
-                    <div className="mb-4">
-                        <select
-                            name="gender"
-                            value={profile.gender}
-                            onChange={handleChange}
-                            className="border px-3 py-2 rounded w-full"
-                        >
-                            <option value="">Select Gender</option>
-                            <option>Male</option>
-                            <option>Female</option>
-                            <option>Other</option>
-                        </select>
-                    </div>
-
-                    <div className="mb-4">
-                        <input
-                            name="email"
-                            type="email"
-                            placeholder="Email"
-                            value={profile.email}
-                            onChange={handleChange}
-                            className="border px-3 py-2 rounded w-full"
-                        />
-                        {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-                    </div>
-
-                    <div className="mb-4">
-                        <input
-                            name="mobile"
-                            placeholder="Mobile Number"
-                            value={profile.mobile}
-                            onChange={handleChange}
-                            maxLength="10"
-                            className="border px-3 py-2 rounded w-full"
-                        />
-                        {errors.mobile && <p className="text-red-500 text-sm">{errors.mobile}</p>}
-                    </div>
-
-                    <div className="mb-4">
-                        <textarea
-                            name="feedback"
-                            placeholder="Your feedback..."
-                            value={profile.feedback}
-                            onChange={handleChange}
-                            className="border px-3 py-2 rounded w-full"
-                        />
-                    </div>
-
-                    <button
-                        onClick={handleSubmit}
-                        className="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700"
-                    >
-                        Save Changes
-                    </button>
-                </main>
-
-                {/* User Guide Panel */}
-                <div className="w-full lg:w-1/4 mt-8 bg-white rounded-lg shadow-lg p-6 space-y-6 sticky top-4">
-                    {/* Header Section */}
-                    <div className="text-center border-b pb-6">
-                        <h1 className="text-2xl font-bold text-gray-800 mb-2">Thirumathi Kart</h1>
-                        <p className="text-gray-600">Your shopping companion</p>
-                    </div>
-
-                    {/* User Greeting */}
-                    <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
-                        <div className="bg-blue-100 p-2 rounded-full">
-                            <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
+                        {/* Profile Picture Section */}
+                        <div className="flex flex-col items-center mb-6">
+                            <div className="relative group">
+                                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-pink-300 to-purple-400 flex items-center justify-center overflow-hidden border-4 border-white shadow-lg">
+                                    {profile.username ? (
+                                        <span className="text-3xl font-bold text-white">
+                                            {profile.username.charAt(0).toUpperCase()}
+                                        </span>
+                                    ) : (
+                                        <svg
+                                            className="w-12 h-12 text-white"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                            />
+                                        </svg>
+                                    )}
+                                </div>
+                                <div className="absolute inset-0 rounded-full bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <label className="cursor-pointer">
+                                        <input type="file" className="hidden" />
+                                        <svg
+                                            className="w-8 h-8 text-white"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                                            />
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                                            />
+                                        </svg>
+                                    </label>
+                                </div>
+                            </div>
+                            
                         </div>
-                        <span className="font-medium">Hi Buyer</span>
-                    </div>
+                        <div className="mb-4">
+                            <label className="block text-sm font-medium text-gray-700">Username</label>
+                            <input
+                                type="text"
+                                value={profile.username}
+                                disabled
+                                className="mt-1 w-full border px-3 py-2 rounded bg-gray-100"
+                            />
+                        </div>
 
-                    {/* How to Shop Section */}
-                    <div>
-                        <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                            <span className="bg-blue-100 text-blue-600 w-6 h-6 rounded-full flex items-center justify-center text-sm">1</span>
-                            Shopping Guide
-                        </h3>
-                        <ul className="space-y-2 text-gray-600 text-sm pl-10">
-                            <li className="list-disc">Proceed to secure checkout process</li>
-                            <li className="list-disc">Multiple payment options available</li>
-                        </ul>
-                    </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <input
+                                    name="firstName"
+                                    placeholder="First Name"
+                                    value={profile.firstName}
+                                    onChange={handleChange}
+                                    className="border px-3 py-2 rounded w-full"
+                                />
+                                {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
+                            </div>
+                            <div>
+                                <input
+                                    name="lastName"
+                                    placeholder="Last Name"
+                                    value={profile.lastName}
+                                    onChange={handleChange}
+                                    className="border px-3 py-2 rounded w-full"
+                                />
+                                {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
+                            </div>
+                        </div>
 
-                    {/* Order Tracking Section */}
-                    <div>
-                        <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                            <span className="bg-blue-100 text-blue-600 w-6 h-6 rounded-full flex items-center justify-center text-sm">2</span>
-                            Order Tracking
-                        </h3>
-                        <ul className="space-y-2 text-gray-600 text-sm pl-10">
-                            <li className="list-disc">View real-time order status updates</li>
-                            <li className="list-disc">Receive email/SMS delivery notifications</li>
-                            <li className="list-disc">Directly contact seller for queries</li>
-                            <li className="list-disc">Track shipment with provided link</li>
-                        </ul>
-                    </div>
+                        <div className="mb-4">
+                            <select
+                                name="gender"
+                                value={profile.gender}
+                                onChange={handleChange}
+                                className="border px-3 py-2 rounded w-full"
+                            >
+                                <option value="">Select Gender</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Other</option>
+                            </select>
+                            {errors.gender && <p className="text-red-500 text-sm">{errors.gender}</p>}
+                        </div>
 
-                    {/* Returns & Support Section */}
-                    <div>
-                        <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                            <span className="bg-blue-100 text-blue-600 w-6 h-6 rounded-full flex items-center justify-center text-sm">3</span>
-                            Returns & Support
-                        </h3>
-                        <ul className="space-y-2 text-gray-600 text-sm pl-10">
-                            <li className="list-disc">Easy return initiation from order details</li>
-                            <li className="list-disc">7-day hassle-free return policy</li>
-                            <li className="list-disc">Quality guarantee on all products</li>
-                            <li className="list-disc">24/7 customer support available</li>
-                        </ul>
-                    </div>
+                        <div className="mb-4">
+                            <input
+                                name="email"
+                                type="email"
+                                placeholder="Email"
+                                value={profile.email}
+                                onChange={handleChange}
+                                className="border px-3 py-2 rounded w-full"
+                            />
+                            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+                        </div>
 
-                    {/* Support Section */}
-                    <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                        <h4 className="font-medium text-blue-800 mb-2">Need more help?</h4>
-                        <p className="text-sm text-blue-600 mb-3">Our support team is available 24/7</p>
-                        <div className="flex flex-col gap-2">
-                            <button className="w-full bg-white text-blue-600 border border-blue-200 py-2 px-4 rounded text-sm font-medium hover:bg-blue-100 transition flex items-center justify-center gap-2">
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        <div className="mb-4">
+                            <input
+                                name="mobile"
+                                placeholder="Mobile Number"
+                                value={profile.mobile}
+                                onChange={handleChange}
+                                maxLength="10"
+                                className="border px-3 py-2 rounded w-full"
+                            />
+                            {errors.mobile && <p className="text-red-500 text-sm">{errors.mobile}</p>}
+                        </div>
+
+                        <div className="mb-4">
+                            <textarea
+                                name="feedback"
+                                placeholder="Your feedback..."
+                                value={profile.feedback}
+                                onChange={handleChange}
+                                className="border px-3 py-2 rounded w-full"
+                            />
+                        </div>
+
+                        <button
+                            onClick={handleSubmit}
+                            className="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700"
+                        >
+                            Save Changes
+                        </button>
+                    </main>
+
+                    {/* User Guide Panel - Hidden on mobile, 1/3 on desktop */}
+                    <div className="w-full lg:w-1/3 bg-white rounded-lg shadow-lg p-6 space-y-6 lg:sticky lg:top-6 lg:h-fit">
+                        {/* Header Section */}
+                        <div className="text-center border-b pb-6">
+                            <h1 className="text-2xl font-bold text-gray-800 mb-2">Thirumathi Kart</h1>
+                            <p className="text-gray-600">Your shopping companion</p>
+                        </div>
+
+                        {/* User Greeting */}
+                        <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                            <div className="bg-blue-100 p-2 rounded-full">
+                                <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
-                                Call Support
-                            </button>
-                            <button className="w-full bg-blue-600 text-white py-2 px-4 rounded text-sm font-medium hover:bg-blue-700 transition flex items-center justify-center gap-2">
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-                                Email Us
-                            </button>
+                            </div>
+                            <span className="font-medium">Hi Buyer</span>
+                        </div>
+
+                        {/* How to Shop Section */}
+                        <div>
+                            <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                                <span className="bg-blue-100 text-blue-600 w-6 h-6 rounded-full flex items-center justify-center text-sm">1</span>
+                                Shopping Guide
+                            </h3>
+                            <ul className="space-y-2 text-gray-600 text-sm pl-10">
+                                <li className="list-disc">Proceed to secure checkout process</li>
+                                <li className="list-disc">Multiple payment options available</li>
+                            </ul>
+                        </div>
+
+                        {/* Order Tracking Section */}
+                        <div>
+                            <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                                <span className="bg-blue-100 text-blue-600 w-6 h-6 rounded-full flex items-center justify-center text-sm">2</span>
+                                Order Tracking
+                            </h3>
+                            <ul className="space-y-2 text-gray-600 text-sm pl-10">
+                                <li className="list-disc">View real-time order status updates</li>
+                                <li className="list-disc">Receive email/SMS delivery notifications</li>
+                                <li className="list-disc">Directly contact seller for queries</li>
+                                <li className="list-disc">Track shipment with provided link</li>
+                            </ul>
+                        </div>
+
+                        {/* Returns & Support Section */}
+                        <div>
+                            <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                                <span className="bg-blue-100 text-blue-600 w-6 h-6 rounded-full flex items-center justify-center text-sm">3</span>
+                                Returns & Support
+                            </h3>
+                            <ul className="space-y-2 text-gray-600 text-sm pl-10">
+                                <li className="list-disc">Easy return initiation from order details</li>
+                                <li className="list-disc">7-day hassle-free return policy</li>
+                                <li className="list-disc">Quality guarantee on all products</li>
+                                <li className="list-disc">24/7 customer support available</li>
+                            </ul>
+                        </div>
+
+                        {/* Support Section */}
+                        <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                            <h4 className="font-medium text-blue-800 mb-2">Need more help?</h4>
+                            <p className="text-sm text-blue-600 mb-3">Our support team is available 24/7</p>
+                            <div className="flex flex-col gap-2">
+                                <button className="w-full bg-white text-blue-600 border border-blue-200 py-2 px-4 rounded text-sm font-medium hover:bg-blue-100 transition flex items-center justify-center gap-2">
+                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                    </svg>
+                                    Call Support
+                                </button>
+                                <button className="w-full bg-blue-600 text-white py-2 px-4 rounded text-sm font-medium hover:bg-blue-700 transition flex items-center justify-center gap-2">
+                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                    Email Us
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <ToastContainer position="top-center" autoClose={2000} />
-                <footer className="mt-65 text-center text-sm py-3 text-gray-500 border-t">
-                    Copyright © 2025 Thirumathi Kart. All Rights Reserved.
-                </footer>
             </div>
+
+            <footer className="bg-white py-4 border-t">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500">
+                    Copyright © 2025 Thirumathi Kart. All Rights Reserved.
+                </div>
+            </footer>
+
+            <ToastContainer position="top-center" autoClose={2000} />
         </div>
     );
 }
+
 export default Profile;

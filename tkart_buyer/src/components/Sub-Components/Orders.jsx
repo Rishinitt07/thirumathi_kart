@@ -224,7 +224,7 @@ const OrderCard = ({ order, expanded, onToggle }) => {
                 </div>
                 <div className="flex justify-between mt-2">
                   <span className="text-sm text-gray-600">Payment Method:</span>
-                  <span className="text-sm font-medium">{order.paymentMethod || 'Credit Card'}</span>
+                  <span className="text-sm font-medium">{order.paymentMethod || 'Cash on Delivery'}</span>
                 </div>
               </div>
 
