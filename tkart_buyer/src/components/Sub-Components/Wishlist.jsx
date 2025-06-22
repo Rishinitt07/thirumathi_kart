@@ -175,8 +175,9 @@ const Wishlist = () => {
     alert(`${item.name} added to cart!`);
   };
 
-  return (
-    <div className="min-h-screen bg-gray-100 font-josefin">
+return (
+  <div className="min-h-screen font-josefin bg-[url('https://www.transparenttextures.com/patterns/white-leather.png')] bg-cover bg-fixed">
+    <div className="min-h-screen bg-white/30 backdrop-blur-md">
       <Navbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
       <Sidebar isOpen={sidebarOpen} closeSidebar={() => setSidebarOpen(false)} />
       <main className="max-w-7xl mx-auto p-6">
@@ -196,7 +197,6 @@ const Wishlist = () => {
                     {'★'.repeat(item.rating)}{'☆'.repeat(5 - item.rating)}
                   </p>
                   <p className="text-gray-700 font-medium mt-2">₹ {item.price || 'N/A'}</p>
-
                 </div>
                 <div className="flex gap-3 mt-4">
                   <button
@@ -220,9 +220,9 @@ const Wishlist = () => {
       <footer className="mt-99 text-center text-sm py-3 text-gray-500 border-t">
         Copyright © 2025 Thirumathi Kart. All Rights Reserved.
       </footer>
-
     </div>
-  );
-};
+  </div>
+);
+}
 
 export default Wishlist;

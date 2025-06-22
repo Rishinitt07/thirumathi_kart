@@ -144,12 +144,15 @@ const Navbar = ({ toggleSidebar }) => (
 
 
 const categoryData = [
+  { name: 'Household', icon: '🏠' },
   { name: 'Fashion', icon: '👗' },
-  { name: 'Grocery', icon: '🛒' },
-  { name: 'Home', icon: '🏠' },
-  { name: 'Books', icon: '📚' },
-  { name: 'Toys', icon: '🧸' },
-  { name: 'Beauty', icon: '💄' }
+  { name: 'Kitchen', icon: '🔪' },
+  { name: 'Cosmetics', icon: '💄' },
+  { name: 'Organics', icon: '🌿' },
+  { name: 'Handcrafts', icon: '🧶' },
+  { name: 'Groceries', icon: '🛒' },
+  { name: 'Jewellery', icon: '💍' },
+  { name: 'Stationery', icon: '📝' }
 ];
 
 const CategorySection = () => {

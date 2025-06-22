@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+
 // Reusable Sidebar Component
 const SidebarItem = ({ to, label, icon }) => (
   <Link
@@ -74,7 +75,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
         className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transition-all duration-300 z-40 flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
       >
-        <div className="h-16 flex items-center px-6 border-b">
+        <div className="h-16 flex items-center px-6 border-w">
           <h2 className="text-xl font-bold">Menu</h2>
         </div>
         <div className="flex-1 p-4 space-y-2 overflow-y-auto">
@@ -243,19 +244,19 @@ const Categories = () => {
     }
   };
 
-  const filteredProducts = Array.isArray(products) 
+  const filteredProducts = Array.isArray(products)
     ? products.filter(product => {
-        if (!product) return false; // Skip null/undefined products
-        const matchesCategory = product.category === selectedCategory;
-        const matchesSubCategory = product.subcategory === selectedSubCategory;
-        const matchesSearch = 
-          (product.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      if (!product) return false; // Skip null/undefined products
+      const matchesCategory = product.category === selectedCategory;
+      const matchesSubCategory = product.subcategory === selectedSubCategory;
+      const matchesSearch =
+        (product.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
           product.description?.toLowerCase().includes(searchQuery.toLowerCase()));
-        
-        return matchesCategory && matchesSubCategory && matchesSearch;
-      })
+
+      return matchesCategory && matchesSubCategory && matchesSearch;
+    })
     : [];
-    
+
   return (
     <div className="min-h-screen bg-white text-black font-josefin flex flex-col">
       <div className="w-full">
@@ -267,18 +268,32 @@ const Categories = () => {
       <AnimatePresence>
         {confirmationMessage && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-2 rounded shadow-lg z-50"
+            initial={{ opacity: 0, scale: 0.8, y: -20 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              y: 0,
+              boxShadow: "0 0 20px rgba(74, 222, 128, 0.7)" // Glow effect (green)
+            }}
+            exit={{ opacity: 0, scale: 0.9, y: -20 }}
+            transition={{
+              type: "spring",
+              damping: 10,
+              stiffness: 100
+            }}
+            className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50"
           >
-            {confirmationMessage}
+            <div className="bg-white/20 backdrop-blur-lg rounded-xl p-4 border border-white/30 shadow-lg">
+              <div className="text-white font-medium text-sm sm:text-base">
+                {confirmationMessage}
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
 
       <div className="flex flex-1">
-        <aside className="w-64 bg-gray-100 border-r p-4 hidden sm:block sticky top-0 h-[calc(100vh-64px)] overflow-auto">
+        <aside className="w-64 bg-gray-100 border-w p-4 hidden sm:block sticky top-0 h-[calc(100vh-64px)] overflow-auto">
           <h2 className="text-xl font-bold mb-4">Categories</h2>
           <ul>
             {Object.keys(categoryStructure).map((category) => (
@@ -342,38 +357,80 @@ const Categories = () => {
             {loading ? (
               <div className="col-span-full text-center py-8">Loading products...</div>
             ) : filteredProducts.length > 0 ? (
-              filteredProducts.map((product) => (
-                <div key={product.id} className="border rounded-md p-4 shadow-sm hover:shadow-md transition-shadow">
-                  {product.image1 && (
-                    <img 
-                      src={`data:image/jpeg;base64,${product.image1}`} 
-                      alt={product.name}
-                      className="w-full h-40 object-cover mb-2 rounded"
+              <>
+                {filteredProducts.map((product) => (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      y: 0,
+                      background: "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.9) 100%)",
+                      boxShadow: "0 4px 15px rgba(100, 100, 255, 0.2)"
+                    }}
+                    whileHover={{
+                      scale: 1.02,
+                      boxShadow: "0 8px 25px rgba(100, 100, 255, 0.3)",
+                      background: "linear-gradient(135deg, rgba(255,255,255,0.88) 0%, rgba(240,240,255,0.92) 100%)"
+                    }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 15
+                    }}
+                    className="border border-white/30 rounded-md p-4 shadow-sm relative overflow-hidden backdrop-blur-sm"
+                  >
+                    {/* Subtle glow overlay */}
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-br from-blue-100/20 to-pink-100/20 opacity-0 pointer-events-none"
+                      animate={{
+                        opacity: [0, 0.2, 0]
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        repeatDelay: 3
+                      }}
                     />
-                  )}
-                  
-                  <h3 className="font-semibold text-lg mb-1">{product.name}</h3>
-                  <p className="text-gray-600 text-sm mb-2 line-clamp-2">{product.description}</p>
-                  <p className="font-bold text-blue-600 mb-2">₹{product.price}</p>
 
-                  <div className="flex flex-wrap gap-2 mt-3">
-                    <motion.button
-                      whileTap={{ scale: 0.9 }}
-                      onClick={() => addToCart(product)}
-                      className="px-4 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 flex-1 min-w-[120px]"
-                    >
-                      Add to Cart
-                    </motion.button>
+                    {/* Card content (unchanged but now semi-transparent) */}
+                    {product.image1 && (
+                      <motion.img
+                        src={`data:image/jpeg;base64,${product.image1}`}
+                        alt={product.name}
+                        className="w-full h-40 object-cover mb-2 rounded"
+                        whileHover={{ scale: 1.03 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    )}
 
-                    <button
-                      onClick={() => addToWishlist(product)}
-                      className="px-4 py-1 text-sm bg-pink-500 text-white rounded hover:bg-pink-600 flex-1 min-w-[120px]"
-                    >
-                      Add to Wishlist
-                    </button>
-                  </div>
-                </div>
-              ))
+                    <div className="relative z-10"> {/* Ensure text stays readable */}
+                      <h3 className="font-semibold text-lg mb-1">{product.name}</h3>
+                      <p className="text-gray-600 text-sm mb-2 line-clamp-2">{product.description}</p>
+                      <p className="font-bold text-blue-600 mb-2">₹{product.price}</p>
+
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        <motion.button
+                          whileTap={{ scale: 0.9 }}
+                          onClick={() => addToCart(product)}
+                          className="px-4 py-1 text-sm bg-blue-500/90 text-white rounded hover:bg-blue-600 flex-1 min-w-[120px]"
+                        >
+                          Add to Cart
+                        </motion.button>
+
+                        <motion.button
+                          whileTap={{ scale: 0.9 }}
+                          onClick={() => addToWishlist(product)}
+                          className="px-4 py-1 text-sm bg-pink-500/90 text-white rounded hover:bg-pink-600 flex-1 min-w-[120px]"
+                        >
+                          Add to Wishlist
+                        </motion.button>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </>
             ) : (
               <div className="col-span-full text-center py-8">
                 No products found in this category.
