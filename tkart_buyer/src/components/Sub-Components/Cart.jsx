@@ -7,12 +7,12 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
-
 // Reusable Sidebar Component
 const SidebarItem = ({ to, label, icon }) => (
   <Link
     to={to}
     className="flex items-center gap-3 px-5 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+    style={{ fontFamily: "'Roboto Serif', serif" }}
   >
     <span className="text-lg text-pink-500">{icon}</span>
     <span className="font-medium">{label}</span>
@@ -76,7 +76,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
         className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transition-all duration-300 z-40 flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
       >
-        <div className="h-16 flex items-center px-6 border-b">
+        <div className="h-16 flex items-center px-6 border-b" style={{ fontFamily: "'Roboto Serif', serif" }}>
           <h2 className="text-xl font-bold">Menu</h2>
         </div>
         <div className="flex-1 p-4 space-y-2 overflow-y-auto">
@@ -93,6 +93,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
           <button
             onClick={handleLogout}
             className="w-full flex items-center gap-3 px-5 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+            style={{ fontFamily: "'Roboto Serif', serif" }}
           >
             <span className="text-lg text-red-600">{icons.logout}</span>
             <span className="font-medium">Logout</span>
@@ -112,7 +113,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
 
 // Enhanced Navbar Component
 const Navbar = ({ toggleSidebar }) => (
-  <header className="sticky top-0 z-30 bg-white shadow-sm">
+  <header className="sticky top-0 z-30 bg-white shadow-sm" style={{ fontFamily: "'Roboto Serif', serif" }}>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex justify-between items-center h-16">
         <div className="flex items-center">
@@ -138,15 +139,13 @@ const Navbar = ({ toggleSidebar }) => (
             onClick={toggleSidebar}
             className="w-5 h-5 cursor-pointer filter grayscale"
             whileHover={{ scale: 1.2 }}
-            style={{ display: 'block' }} // ✅ force visibility
+            style={{ display: 'block' }}
           />
-
         </div>
       </div>
     </div>
   </header>
 );
-
 
 const MyCart = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -204,7 +203,7 @@ const MyCart = () => {
       toast.warn("Your cart is empty.");
       return;
     }
-    setShowModal(true); // open modal first
+    setShowModal(true);
   };
 
   const handleConfirmOrder = async () => {
@@ -226,7 +225,6 @@ const MyCart = () => {
         },
       });
 
-
       toast.success("✅ Order placed successfully!");
       setCart([]);
       localStorage.removeItem("cart");
@@ -238,7 +236,7 @@ const MyCart = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 font-josefin">
+    <div className="min-h-screen flex flex-col bg-gray-50" style={{ fontFamily: "'Roboto Serif', serif" }}>
       <Navbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
       <Sidebar isOpen={sidebarOpen} closeSidebar={() => setSidebarOpen(false)} />
 
@@ -250,6 +248,7 @@ const MyCart = () => {
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
           className="border rounded-full px-4 py-2 text-sm w-full mb-4"
+          style={{ fontFamily: "'Roboto Serif', serif" }}
         />
 
         {filteredCart.length === 0 ? (
@@ -267,9 +266,19 @@ const MyCart = () => {
                 <p className="text-gray-700">₹{item.price}</p>
                 <div className="flex items-center gap-2 mt-1">
                   <span className="text-sm text-gray-600">Qty:</span>
-                  <button onClick={() => updateQty(item.id, -1)} className="px-2 py-1 border rounded text-sm hover:bg-gray-100">−</button>
+                  <button 
+                    onClick={() => updateQty(item.id, -1)} 
+                    className="px-2 py-1 border rounded text-sm hover:bg-gray-100"
+                  >
+                    −
+                  </button>
                   <span className="text-sm">{item.qty}</span>
-                  <button onClick={() => updateQty(item.id, 1)} className="px-2 py-1 border rounded text-sm hover:bg-gray-100">+</button>
+                  <button 
+                    onClick={() => updateQty(item.id, 1)} 
+                    className="px-2 py-1 border rounded text-sm hover:bg-gray-100"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
               <button
@@ -304,8 +313,11 @@ const MyCart = () => {
       <ToastContainer position="top-center" autoClose={3000} />
 
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-transparent bg-opacity-40">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm h-[500px] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+          <div 
+            className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm h-[500px] overflow-y-auto"
+            style={{ fontFamily: "'Roboto Serif', serif" }}
+          >
             <h2 className="text-lg font-semibold mb-4">Enter Delivery Information</h2>
 
             <input
@@ -358,7 +370,6 @@ const MyCart = () => {
             >
               <option value="">Select Payment Method</option>
               <option value="cod">Cash on Delivery</option>
-
             </select>
 
             <div className="flex justify-end gap-3">
@@ -378,8 +389,6 @@ const MyCart = () => {
           </div>
         </div>
       )}
-
-
     </div>
   );
 };

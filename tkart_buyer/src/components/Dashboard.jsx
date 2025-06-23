@@ -38,12 +38,12 @@ const Dashboard = () => {
       <Navbar />
       <div className="relative h-[100vh] w-full flex justify-center items-center bg-gradient-to-br from-white via-gray-100 to-gray-200">
         <motion.h1
-          initial={{ opacity: 0, x: -150 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, scale: 0.8 }}  // Starts slightly smaller and invisible
+          animate={{ opacity: 1, scale: 1 }}    // Grows to full size and fades in
           transition={{
-            duration: 1.2,
-            ease: 'easeOut',
-            type: 'tween'
+            duration: 1.5,                     // Slower animation (1.5 seconds)
+            ease: "easeOut",                   // Smooth easing (no bounce)
+            type: "tween"                      // Linear transition (not springy)
           }}
           className="text-6xl md:text-7xl lg:text-8xl text-black font-bold tracking-wide drop-shadow-xl text-center px-4"
           style={{ fontFamily: "'Bebas Neue', sans-serif" }}
@@ -54,7 +54,6 @@ const Dashboard = () => {
       <footer className="mt-0 text-center text-sm py-3 text-gray-500 border-t">
         Copyright © 2025 Thirumathi Kart. All Rights Reserved.
       </footer>
-
     </>
   );
 };
