@@ -46,20 +46,21 @@ const Sidebar = ({ isOpen, closeSidebar }) => (
 const Navbar = ({ toggleSidebar }) => (
   <div style={styles.navbar}>
     <div style={styles.logoContainer}>
+      <img
+        src="https://cdn-icons-png.flaticon.com/128/3917/3917065.png"
+        alt="Menu"
+        onClick={toggleSidebar}
+        style={styles.menuIconLeft}
+      />
       <img src={tklogo} alt="Logo" style={styles.logo} />
       <span style={styles.logoText}>Thirumathi Kart</span>
     </div>
     <div style={styles.rightMenu}>
       <span style={styles.adminText}>Hi! Admin</span>
-      <img
-        src="https://cdn-icons-png.flaticon.com/128/3917/3917065.png"
-        alt="Menu"
-        onClick={toggleSidebar}
-        style={styles.menuIcon}
-      />
     </div>
   </div>
 );
+
 
 const Home = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -112,7 +113,7 @@ const Home = () => {
               </div>
               <div className="max-w-md">
                 <img
-                  src="https://thirumathikart.nitt.edu/assets/img/tklogo.png"
+                  src={tklogo}
                   alt="ThirumathiKart Illustration"
                   className="w-full h-auto"
                 />
@@ -181,7 +182,20 @@ const styles = {
     zIndex: 1001,
     backgroundColor: 'white',
   },
-  logoContainer: { display: 'flex', alignItems: 'center', gap: '10px' },
+  logoContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+  },
+  
+  menuIconLeft: {
+    width: '20px',
+    height: '20px',
+    cursor: 'pointer',
+    filter: 'grayscale(100%)',
+    marginRight: '10px',
+  },
+  
   logo: { width: '40px', height: '40px' },
   logoText: { fontSize: '22px', fontWeight: 'bold', color: 'black', fontFamily: "'Josefin Sans', sans-serif" },
   rightMenu: { display: 'flex', alignItems: 'center', gap: '15px' },

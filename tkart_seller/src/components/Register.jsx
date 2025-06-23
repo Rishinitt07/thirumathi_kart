@@ -1,104 +1,113 @@
-// Register.jsx
-
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { BiUser } from "react-icons/bi";
-import { AiOutlineLock } from "react-icons/ai";
-import axios from "axios";
-import { Bounce, ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { BiUser } from 'react-icons/bi';
+import { AiOutlineLock } from 'react-icons/ai';
+import axios from 'axios';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import bgimg from './bgimg.png'; // ✅ Update path if needed
 
 const Register = () => {
-  const [name, setName] = useState("");
-  const [user, setUser] = useState("");
-  const [pass, setPass] = useState("");
+  const [name, setName] = useState('');
+  const [user, setUser] = useState('');
+  const [pass, setPass] = useState('');
   const navigate = useNavigate();
 
   const notify = (msg) => {
     toast.error(msg, {
-      position: "top-right",
+      position: 'top-right',
       autoClose: 5000,
-      theme: "light",
+      theme: 'light',
       transition: Bounce,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
-    if (!name) return notify("Enter your Name");
-    if (!user) return notify("Enter the Username");
-    if (!pass) return notify("Enter the Password");
+    if (!name) return notify('Enter your Full Name');
+    if (!user) return notify('Enter the Username');
+    if (!pass) return notify('Enter the Password');
 
     axios
-      .post("http://localhost:8080/info", {
+      .post('http://localhost:8080/info', {
         name: name,
         username: user,
         password: pass,
       })
       .then((res) => {
         console.log(res.data);
-        navigate("/login");
+        navigate('/login');
       })
       .catch((err) => {
         console.error(err);
-        toast.error("Registration failed", {
-          position: "top-right",
-          autoClose: 5000,
-          theme: "light",
-        });
+        notify('Registration failed');
       });
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-white">
-      <div className="w-full max-w-md p-8 rounded-lg shadow-lg border border-gray-200 bg-white">
-        <h1 className="text-3xl font-semibold text-center text-blue-900 mb-8">Create an Account</h1>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="relative">
-            <input
-              type="text"
-              required
-              className="w-full border border-gray-300 rounded-md py-2 px-4 pl-10 focus:outline-none focus:border-blue-500"
-              placeholder="Full Name"
-              onChange={(e) => setName(e.target.value)}
-            />
-            <BiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
-          </div>
+    <div className="relative h-screen w-full overflow-hidden">
+      {/* Background */}
+      <div
+        className="absolute inset-0 bg-cover bg-center filter blur-none scale-105"
+        style={{ backgroundImage: `url(${bgimg})` }}
+      ></div>
 
-          <div className="relative">
-            <input
-              type="text"
-              required
-              className="w-full border border-gray-300 rounded-md py-2 px-4 pl-10 focus:outline-none focus:border-blue-500"
-              placeholder="Username"
-              onChange={(e) => setUser(e.target.value)}
-            />
-            <BiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
-          </div>
+      {/* Foreground Glass */}
+      <div className="relative z-10 flex justify-center items-center h-full">
+        <div className="w-full max-w-md p-8 rounded-xl border border-white/20 bg-white/20 backdrop-blur-lg shadow-[0_0_3px_rgba(0,0,0,0.2)]">
+          <h1 className="text-3xl font-semibold text-center text-blue-900 mb-8">
+            Create an Account
+          </h1>
 
-          <div className="relative">
-            <input
-              type="password"
-              required
-              className="w-full border border-gray-300 rounded-md py-2 px-4 pl-10 focus:outline-none focus:border-blue-500"
-              placeholder="Password"
-              onChange={(e) => setPass(e.target.value)}
-            />
-            <AiOutlineLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
-          </div>
+          <form onSubmit={handleRegister} className="space-y-6">
+            <div className="relative">
+              <input
+                type="text"
+                required
+                className="w-full border border-gray-300/40 rounded-md py-2 px-4 pl-10 focus:outline-none focus:border-blue-500 bg-white/40 backdrop-blur-sm"
+                placeholder="Full Name"
+                onChange={(e) => setName(e.target.value)}
+              />
+              <BiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600" />
+            </div>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300"
-          >
-            Register
-          </button>
+            <div className="relative">
+              <input
+                type="text"
+                required
+                className="w-full border border-gray-300/40 rounded-md py-2 px-4 pl-10 focus:outline-none focus:border-blue-500 bg-white/40 backdrop-blur-sm"
+                placeholder="Username"
+                onChange={(e) => setUser(e.target.value)}
+              />
+              <BiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600" />
+            </div>
 
-          <p className="text-center text-gray-600">
-            Already have an account?{" "}
-            <Link to="/login" className="text-blue-600 hover:underline">Login</Link>
-          </p>
-        </form>
+            <div className="relative">
+              <input
+                type="password"
+                required
+                className="w-full border border-gray-300/40 rounded-md py-2 px-4 pl-10 focus:outline-none focus:border-blue-500 bg-white/40 backdrop-blur-sm"
+                placeholder="Password"
+                onChange={(e) => setPass(e.target.value)}
+              />
+              <AiOutlineLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600" />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300"
+            >
+              Register
+            </button>
+
+            <p className="text-center text-gray-700">
+              Already have an account?{' '}
+              <Link to="/login" className="text-blue-600 hover:underline">
+                Login
+              </Link>
+            </p>
+          </form>
+        </div>
       </div>
       <ToastContainer />
     </div>
