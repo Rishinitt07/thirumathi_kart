@@ -39,20 +39,22 @@ const Sidebar = ({ isOpen, closeSidebar }) => (
 const Navbar = ({ toggleSidebar }) => (
   <div style={styles.navbar}>
     <div style={styles.logoContainer}>
+      <img
+        src="https://cdn-icons-png.flaticon.com/128/3917/3917065.png"
+        alt="Menu"
+        onClick={toggleSidebar}
+        style={styles.menuIconLeft}
+      />
       <img src={tklogo} alt="Logo" style={styles.logo} />
       <span style={styles.logoText}>Thirumathi Kart</span>
     </div>
     <div style={styles.rightMenu}>
       <span style={styles.adminText}>Hi! Admin</span>
-      <img
-        src="https://cdn-icons-png.flaticon.com/128/3917/3917065.png"
-        alt="Menu"
-        onClick={toggleSidebar}
-        style={styles.menuIcon}
-      />
     </div>
   </div>
 );
+
+
 
 const MyProducts = () => {
   const [products, setProducts] = useState([]);
@@ -165,7 +167,20 @@ const styles = {
     display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 20px',
     position: 'sticky', top: 0, zIndex: 1001, background:'white',
   },
-  logoContainer: { display: 'flex', alignItems: 'center', gap: '10px' },
+  logoContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+  },
+  
+  menuIconLeft: {
+    width: '20px',
+    height: '20px',
+    cursor: 'pointer',
+    filter: 'grayscale(100%)',
+    marginRight: '10px',
+  },
+  
   logo: { width: '40px', height: '40px' },
   logoText: { fontSize: '22px', fontWeight: 'bold' },
   rightMenu: { display: 'flex', alignItems: 'center', gap: '15px' },
