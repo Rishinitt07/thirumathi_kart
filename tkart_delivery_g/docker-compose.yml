@@ -1,0 +1,46 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: tkart_backend
+    ports:
+      - "8080:8080"
+    networks:
+      - tkart_network
+
+  buyer_frontend:
+    build:
+      context: ./tkart_buyer
+      dockerfile: Dockerfile
+    container_name: tkart_buyer
+    ports:
+      - "3000:80"
+    networks:
+      - tkart_network
+
+  seller_frontend:
+    build:
+      context: ./tkart_seller
+      dockerfile: Dockerfile
+    container_name: tkart_seller
+    ports:
+      - "3001:80"
+    networks:
+      - tkart_network
+
+  delivery_frontend:
+    build:
+      context: ./tkart_delivery
+      dockerfile: Dockerfile
+    container_name: tkart_delivery
+    ports:
+      - "3002:80"
+    networks:
+      - tkart_network
+
+networks:
+  tkart_network:
+    driver: bridge
