@@ -405,7 +405,7 @@ CREATE TABLE IF NOT EXISTS order_items (
 	// ✅ Add CORS middleware
 	corsHandler := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:5174"},
-		AllowedMethods:   []string{"GET", "POST", "OPTIONS", "PUT", "DELETE"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Content-Type", "Authorization"},
 		AllowCredentials: true,
 	}).Handler(mux)
