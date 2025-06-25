@@ -11,7 +11,7 @@ import Orders from './components/Sub-Components/Orders';
 
 function App() {
   return (
-    <div className="font-sans">
+    <div className="font-sans" style={{ fontFamily: 'Josefin Sans, sans-serif' }}>
       <Routes>
         <Route path='/' element={<Dashboard />} />
         <Route path='/login' element={<Login />} />
