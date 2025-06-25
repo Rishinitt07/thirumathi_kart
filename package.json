@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@fontsource/josefin-sans": "^5.2.6"
+    "@fontsource/josefin-sans": "^5.2.6",
+    "react-hot-toast": "^2.5.2"
   }
 }

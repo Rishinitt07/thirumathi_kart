@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -483,12 +485,12 @@ const styles = {
     height: '40px',
   },
   logoText: {
-    fontFamily: 'poppins',
-    fontSize: '22px',
-    fontWeight: 'bold',
-    color: '#333',
-    fontFamily: "'Josefin Sans', sans-serif",
-  },
+  fontSize: '22px',
+  fontWeight: 'bold',
+  color: '#333',
+  fontFamily: "'Josefin Sans', sans-serif",
+},
+
   rightMenu: {
     display: 'flex',
     alignItems: 'center',
