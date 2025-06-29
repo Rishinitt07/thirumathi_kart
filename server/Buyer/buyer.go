@@ -374,7 +374,9 @@ func main() {
 CREATE TABLE IF NOT EXISTS orders (
     id SERIAL PRIMARY KEY,
     username TEXT,
-    items JSONB,
+    phone TEXT,
+    address TEXT,
+    pincode TEXT,
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
