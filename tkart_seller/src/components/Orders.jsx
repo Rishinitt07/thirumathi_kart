@@ -1,8 +1,7 @@
-// Orders.jsx
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import tklogo from './tklogo.png';
+import React from 'react';
 import { jsPDF } from 'jspdf';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const fakeOrders = [
   {
@@ -11,7 +10,7 @@ const fakeOrders = [
     productImage: 'https://via.placeholder.com/100',
     quantity: 2,
     price: 500,
-    customerName: 'Priya mari',
+    customerName: 'Priya Mari',
     customerMobile: '9876543210',
     customerAddress: '123, MG Road, Chennai, Tamil Nadu',
     orderDate: '2025-06-12',
@@ -29,45 +28,9 @@ const fakeOrders = [
   },
 ];
 
-const SidebarItem = ({ to, label }) => (
-  <Link to={to} style={styles.menuItem}>
-    {label}
-  </Link>
-);
-
-const Sidebar = () => (
-  <div style={styles.sidebar}>
-    <SidebarItem to="/home" label="Home" />
-    <SidebarItem to="/upload" label="Add Product" />
-    <SidebarItem to="/myproducts" label="My Product" />
-    <SidebarItem to="/orders" label="Orders" />
-    <SidebarItem to="/profile" label="Profile" />
-  </div>
-);
-
-const Navbar = ({ toggleSidebar }) => (
-  <div style={styles.navbar}>
-    <div style={styles.logoContainer}>
-      <img
-        src="https://cdn-icons-png.flaticon.com/128/3917/3917065.png"
-        alt="Menu"
-        onClick={toggleSidebar}
-        style={styles.menuIconLeft}
-      />
-      <img src={tklogo} alt="Logo" style={styles.logo} />
-      <span style={styles.logoText}>Thirumathi Kart</span>
-    </div>
-    <div style={styles.rightMenu}>
-      <span style={styles.adminText}>Hi! Admin</span>
-    </div>
-  </div>
-);
-
-
 const Orders = () => {
   const generateInvoice = (order) => {
     const doc = new jsPDF();
-
     doc.setFontSize(18);
     doc.text('INVOICE', 105, 20, null, null, 'center');
 
@@ -76,106 +39,70 @@ const Orders = () => {
     doc.text(`Order Date: ${order.orderDate}`, 20, 37);
 
     doc.text('BILL TO:', 20, 50);
-    doc.text(`${order.customerName}`, 20, 57);
-    doc.text(`${order.customerAddress}`, 20, 64);
+    doc.text(order.customerName, 20, 57);
+    doc.text(order.customerAddress, 20, 64);
     doc.text(`Mobile: ${order.customerMobile}`, 20, 71);
 
     doc.text('PRODUCT DETAILS:', 20, 85);
     doc.text(`Name: ${order.productName}`, 20, 92);
     doc.text(`Quantity: ${order.quantity}`, 20, 99);
     doc.text(`Price per unit: ₹${order.price}`, 20, 106);
-    const total = order.quantity * order.price;
-    const gst = total * 0.18;
-    const grandTotal = total + gst;
 
-    doc.text(`Subtotal: ₹${total.toFixed(2)}`, 20, 120);
+    const subtotal = order.quantity * order.price;
+    const gst = subtotal * 0.18;
+    const total = subtotal + gst;
+
+    doc.text(`Subtotal: ₹${subtotal.toFixed(2)}`, 20, 120);
     doc.text(`GST (18%): ₹${gst.toFixed(2)}`, 20, 127);
-    doc.text(`Total: ₹${grandTotal.toFixed(2)}`, 20, 134);
+    doc.text(`Total: ₹${total.toFixed(2)}`, 20, 134);
 
     doc.text('From: Thirumathi Kart, NIT-Trichy', 20, 150);
     doc.text('Email: hello@reallygreatsite.com', 20, 157);
 
     doc.save(`${order.orderId}_invoice.pdf`);
+    toast.success("Invoice downloaded");
   };
 
   return (
-    <div style={styles.container}>
-      <Navbar />
-      <div style={styles.bodyWrapper}>
-        <Sidebar />
-        <div style={styles.contentArea}>
-          <h2 style={styles.title}>Orders</h2>
-          <div style={styles.orderList}>
-            {fakeOrders.map((order, index) => (
-              <div key={index} style={styles.orderCard}>
-                <img src={order.productImage} alt={order.productName} style={styles.productImage} />
+    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white py-10 px-4 font-josefin">
+      <div className="max-w-5xl mx-auto">
+        <h2 className="text-2xl font-bold text-pink-700 mb-6 text-center">My Orders</h2>
+
+        <div className="flex flex-col gap-6">
+          {fakeOrders.map((order, index) => (
+            <div key={index} className="bg-white border border-pink-100 shadow rounded-lg p-5 flex flex-col sm:flex-row gap-4">
+              <img
+                src={order.productImage}
+                alt={order.productName}
+                className="w-28 h-28 object-cover rounded-lg border"
+              />
+
+              <div className="flex flex-col justify-between">
                 <div>
-                  <p><strong>Order ID:</strong> {order.orderId}</p>
-                  <p><strong>Product:</strong> {order.productName}</p>
-                  <p><strong>Quantity:</strong> {order.quantity}</p>
-                  <p><strong>Price:</strong> ₹{order.price}</p>
-                  <p><strong>Customer:</strong> {order.customerName}</p>
-                  <p><strong>Mobile:</strong> {order.customerMobile}</p>
-                  <p><strong>Address:</strong> {order.customerAddress}</p>
-                  <p><strong>Date:</strong> {order.orderDate}</p>
-                  <button onClick={() => generateInvoice(order)} style={styles.printButton}>Print Invoice</button>
+                  <p className="text-sm text-gray-700"><strong>Order ID:</strong> {order.orderId}</p>
+                  <p className="text-sm text-gray-700"><strong>Product:</strong> {order.productName}</p>
+                  <p className="text-sm text-gray-700"><strong>Quantity:</strong> {order.quantity}</p>
+                  <p className="text-sm text-gray-700"><strong>Price:</strong> ₹{order.price}</p>
+                  <p className="text-sm text-gray-700"><strong>Customer:</strong> {order.customerName}</p>
+                  <p className="text-sm text-gray-700"><strong>Mobile:</strong> {order.customerMobile}</p>
+                  <p className="text-sm text-gray-700"><strong>Address:</strong> {order.customerAddress}</p>
+                  <p className="text-sm text-gray-700"><strong>Date:</strong> {order.orderDate}</p>
                 </div>
+
+                <button
+                  onClick={() => generateInvoice(order)}
+                  className="mt-3 w-max bg-pink-600 text-white px-4 py-2 text-sm rounded hover:bg-pink-700"
+                >
+                  Download Invoice
+                </button>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
+      <ToastContainer position="top-center" autoClose={2000} />
     </div>
   );
-};
-
-const styles = {
-  container: { minHeight: '100vh', backgroundColor: '#f7fafc' },
-  navbar: {
-    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-    padding: '10px 20px', backgroundColor: 'white', borderBottom: '1px solid #ddd',
-    boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
-  },
-  logoContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-  },
-  
-  menuIconLeft: {
-    width: '20px',
-    height: '20px',
-    cursor: 'pointer',
-    filter: 'grayscale(100%)',
-    marginRight: '10px',
-  },
-  
-  logo: { width: '40px', height: '40px' },
-  logoText: { fontSize: '22px', fontWeight: 'bold', fontFamily: "'Josefin Sans', sans-serif" },
-  adminText: { fontSize: '14px', fontFamily: "'Josefin Sans', sans-serif" },
-  bodyWrapper: { display: 'flex' },
-  sidebar: {
-    width: '200px', backgroundColor: '#fff', borderRight: '1px solid #ddd',
-    padding: '20px', boxShadow: '0 2px 6px rgba(0,0,0,0.05)', height: 'calc(100vh - 60px)',
-  },
-  menuItem: {
-    display: 'block', padding: '10px 0', textDecoration: 'none',
-    color: '#333', fontFamily: "'Josefin Sans', sans-serif",
-  },
-  contentArea: {
-    flex: 1, padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center',
-  },
-  title: { fontSize: '24px', fontWeight: 'bold', marginBottom: '20px' },
-  orderList: { display: 'flex', flexDirection: 'column', gap: '20px', width: '100%', maxWidth: '800px' },
-  orderCard: {
-    backgroundColor: 'white', padding: '20px', borderRadius: '10px', boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
-    display: 'flex', gap: '20px',
-  },
-  productImage: { width: '100px', height: '100px', objectFit: 'cover', borderRadius: '10px' },
-  printButton: {
-    marginTop: '10px', backgroundColor: '#3182ce', color: 'white',
-    padding: '8px 12px', border: 'none', borderRadius: '5px', cursor: 'pointer'
-  },
 };
 
 export default Orders;

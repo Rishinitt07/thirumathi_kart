@@ -1,22 +1,21 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { BiUser } from "react-icons/bi";
-import { AiOutlineLock } from "react-icons/ai";
+import { AiOutlineUser, AiOutlineLock } from "react-icons/ai";
 import axios from 'axios';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import bgimg from './bgimg.png'; // ✅ Adjust if needed
+import tklogo from './tklogo.png';
 
 const Login = () => {
-  const [user, setUser] = useState('');
-  const [pass, setPass] = useState('');
+  const [identifier, setIdentifier] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const show2 = () => {
+  const showErrorToast = () => {
     toast.error('Invalid Credentials', {
       position: "top-right",
-      autoClose: 5000,
-      theme: "light",
+      autoClose: 4000,
+      theme: "dark",
       transition: Bounce,
     });
   };
@@ -25,84 +24,103 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-
-    axios.post('http://localhost:8080/login', { username: user, password: pass })
+    axios.post('http://localhost:8080/login', {
+      identifier: identifier,
+      password: password,
+    })
       .then(res => {
         if (res.data.token) {
           localStorage.setItem('token', res.data.token);
           navigate('/home');
         } else {
-          show2();
+          showErrorToast();
         }
       })
       .catch(err => {
         console.log(err);
-        show2();
+        showErrorToast();
       });
   };
 
   return (
-    <div className="relative h-screen w-full overflow-hidden">
-      {/* Background with blur effect */}
-      <div
-        className="absolute inset-0 bg-cover bg-center filter blur-none scale-105"
-        style={{ backgroundImage: `url(${bgimg})` }}
-      ></div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-pink-50 to-white py-10 px-4">
+      <div className="bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
+        
+        {/* Left Panel */}
+        <div className="md:w-1/2 bg-gradient-to-br from-pink-600 to-rose-500 text-white flex flex-col justify-center items-center p-10">
+          <h2 className="text-3xl font-bold mb-4">New Here?</h2>
+          <p className="text-center text-sm mb-6">
+            To create a new account, please register first
+          </p>
+          <Link to="/register">
+            <button className="bg-white text-pink-600 px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition">
+              SIGN UP
+            </button>
+          </Link>
+        </div>
 
-      {/* Foreground content */}
-      <div className="relative z-10 flex justify-center items-center h-full">
-        <div className="w-full max-w-md p-8 rounded-xl border border-white/20 bg-white/20 backdrop-blur-lg shadow-[0_0_3px_rgba(0,0,0,0.2)]">
-          <h1 className="text-3xl font-semibold text-center text-blue-900 mb-8">
-            Login to Your Account
-          </h1>
+        {/* Right Panel */}
+        <div className="md:w-1/2 p-10 bg-white">
+          <h2 className="text-2xl font-bold text-pink-600 text-center mb-4">
+            Login
+          </h2>
 
-          <form onSubmit={handleLogin} className="space-y-6">
-            <div className="relative">
+          <form onSubmit={handleLogin} className="space-y-4">
+            {/* Identifier */}
+            <div className="flex items-center border border-gray-300 rounded px-3 py-2">
+              <AiOutlineUser className="text-gray-400 mr-2" />
               <input
                 type="text"
+                name="identifier"
+                placeholder="Email or Phone"
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
+                className="w-full focus:outline-none"
                 required
-                className="w-full border border-gray-300/40 rounded-md py-2 px-4 pl-10 focus:outline-none focus:border-blue-500 bg-white/40 backdrop-blur-sm"
-                placeholder="Username"
-                onChange={(e) => setUser(e.target.value)}
               />
-              <BiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600" />
             </div>
 
-            <div className="relative">
+            {/* Password */}
+            <div className="flex items-center border border-gray-300 rounded px-3 py-2">
+              <AiOutlineLock className="text-gray-400 mr-2" />
               <input
                 type="password"
-                required
-                className="w-full border border-gray-300/40 rounded-md py-2 px-4 pl-10 focus:outline-none focus:border-blue-500 bg-white/40 backdrop-blur-sm"
+                name="password"
                 placeholder="Password"
-                onChange={(e) => setPass(e.target.value)}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full focus:outline-none"
+                required
               />
-              <AiOutlineLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600" />
             </div>
 
-            <div className="flex justify-between items-center text-sm text-gray-700">
+            <div className="flex justify-between items-center text-sm text-pink-600">
               <label className="flex items-center gap-2">
-                <input type="checkbox" />
+                <input type="checkbox" className="accent-pink-500" />
                 Remember Me
               </label>
-              <Link to="#" className="text-blue-500 hover:underline">Forgot Password?</Link>
+              <Link to="#" className="hover:underline">Forgot Password?</Link>
             </div>
 
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300"
+              className="w-full bg-gradient-to-br from-pink-600 to-rose-500 text-white font-semibold py-2 rounded-full mt-2 transition"
             >
               Login
             </button>
 
-            <p className="text-center text-gray-700">
-              New Here?{" "}
-              <Link to="/register" className="text-blue-600 hover:underline">
-                Create an account
-              </Link>
-            </p>
+            <div className="text-center mt-6">
+              <span className="text-pink-700 text-sm">
+                Don't have an account?{" "}
+                <Link to="/register" className="font-medium text-pink-600 hover:underline">
+                  Register Now
+                </Link>
+              </span>
+            </div>
           </form>
         </div>
       </div>
+
       <ToastContainer />
     </div>
   );
