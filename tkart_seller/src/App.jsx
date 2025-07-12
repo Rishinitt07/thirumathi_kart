@@ -9,6 +9,7 @@ import Orders from './components/Orders';            // Seller Orders
 import Profile from './components/Profile';          // Seller Profile
 import MyProducts from './components/MyProducts';    // Seller's own listings
 import About from './components/About.jsx'
+import EditProduct from './components/EditProduct'; // Edit Product (optional)
 
 // 🔐 ProtectedRoute wrapper
 const ProtectedRoute = ({ children }) => {
@@ -34,6 +35,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/upload" element={<Upload />} />
           <Route path="/myproducts" element={<MyProducts />} />
+          <Route path="/edit-product/:id" element={<EditProduct />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/about" element={<About />} />

@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import tklogo from './tklogo.png';
-import bgimg from './bgimg.png';
+
 
 const Dashboard = () => {
   return (

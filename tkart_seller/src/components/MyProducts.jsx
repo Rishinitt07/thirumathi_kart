@@ -1,169 +1,122 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { BsStarFill } from 'react-icons/bs';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MyProducts = () => {
   const [products, setProducts] = useState([]);
-  const [editingProduct, setEditingProduct] = useState(null);
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
   const fetchProducts = () => {
-    axios.get('http://localhost:8080/products', {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then(res => {
+    axios
+      .get('http://localhost:8080/products', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
         setProducts(Array.isArray(res.data) ? res.data : []);
         setLoading(false);
       })
-      .catch(err => {
-        console.error('Failed to fetch products', err);
-        setError('Failed to load your products.');
+      .catch((err) => {
+        console.error('Error fetching products', err);
+        toast.error('❌ Failed to load products');
         setLoading(false);
       });
   };
 
-  const updateStock = (id, inStock) => {
-    axios.put(`http://localhost:8080/products/${id}/stock`, {
-      in_stock: inStock
-    }, {
-      headers: { Authorization: `Bearer ${token}` },
-    }).then(fetchProducts)
-      .catch(err => console.error('Failed to update stock', err));
-  };
-
-  const updatePrice = (id, price) => {
-    axios.put(`http://localhost:8080/products/${id}/price`, {
-      price: parseFloat(price)
-    }, {
-      headers: { Authorization: `Bearer ${token}` },
-    }).then(fetchProducts)
-      .catch(err => console.error('Failed to update price', err));
-  };
-
-  const handleEditChange = (e) => {
-    const { name, value } = e.target;
-    setEditingProduct(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleEditSubmit = async () => {
-    try {
-      const formData = new FormData();
-      for (const [key, value] of Object.entries(editingProduct)) {
-        formData.append(key, value);
-      }
-
-      await axios.post("http://localhost:8080/upload", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data"
-        }
-      });
-
-      setEditingProduct(null);
-      fetchProducts();
-    } catch (err) {
-      console.error("Edit failed", err);
-      alert("Failed to update product");
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this product?')) {
+      axios
+        .delete(`http://localhost:8080/products/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then(() => {
+          toast.success('✅ Product deleted');
+          fetchProducts();
+        })
+        .catch((err) => {
+          console.error('Failed to delete product', err);
+          toast.error('❌ Delete failed');
+        });
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white p-6 font-josefin">
-      <h2 className="text-2xl font-bold text-pink-700 mb-6 text-center">My Products</h2>
+    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white font-josefin pb-10">
+      <div className="max-w-7xl mx-auto px-4 pt-10">
+        <h2 className="text-3xl font-bold text-center text-pink-700 mb-8">
+          My Products
+        </h2>
 
-      {loading ? (
-        <div className="text-center text-gray-500">Loading products...</div>
-      ) : error ? (
-        <div className="text-center text-red-500 mb-4">{error}</div>
-      ) : products.length === 0 ? (
-        <div className="text-center text-gray-600 text-lg">You haven't uploaded any products yet.</div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {products.map(product => (
-            <div key={product.id} className="bg-white rounded-xl overflow-hidden border border-pink-100 hover:shadow-md transition-shadow">
-              <div className="relative h-48 bg-pink-50 overflow-hidden">
-                <img
-                  src={`data:image/jpeg;base64,${product.image1}`}
-                  alt={product.name}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute top-2 left-2 bg-pink-500 text-white text-xs px-2 py-1 rounded">
-                  {product.in_stock ? "In Stock" : "Out of Stock"}
-                </div>
-              </div>
-
-              <div className="p-4 space-y-2">
-                <span className="text-xs text-pink-500">{product.category}</span>
-                <h3 className="font-medium text-gray-800 line-clamp-1">{product.name}</h3>
-
-                <div className="flex items-center justify-between text-sm text-gray-600">
-                  <span>Qty: {product.quantity}</span>
-                  <div className="flex items-center gap-1 text-yellow-500">
-                    <BsStarFill className="text-xs" />
-                    <span className="text-xs text-gray-500">4.5</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-600">₹</span>
-                  <input
-                    type="number"
-                    value={product.price}
-                    onChange={e => updatePrice(product.id, e.target.value)}
-                    className="border px-2 py-1 rounded w-24 text-sm"
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-pulse">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="h-64 bg-white rounded-xl shadow-md border border-pink-100"></div>
+            ))}
+          </div>
+        ) : products.length === 0 ? (
+          <p className="text-center text-gray-600">No products uploaded yet.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {products.map((product) => (
+              <div
+                key={product.id}
+                className="bg-white border border-pink-100 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition"
+              >
+                <div className="relative h-48 bg-pink-50">
+                  <img
+                    src={product.image1 ? `data:image/jpeg;base64,${product.image1}` : '/placeholder.jpg'}
+                    alt={product.name}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                   />
-                </div>
-
-                <div className="flex items-center gap-2 mt-2">
-                  <input
-                    type="checkbox"
-                    checked={product.in_stock}
-                    onChange={e => updateStock(product.id, e.target.checked)}
-                    className="accent-pink-600"
-                  />
-                  <span className="text-sm text-gray-700">
-                    {product.in_stock ? 'In Stock' : 'Mark Out of Stock'}
+                  <span className={`absolute top-2 left-2 text-xs px-2 py-1 rounded text-white ${product.in_stock ? 'bg-green-500' : 'bg-red-500'}`}>
+                    {product.in_stock ? 'In Stock' : 'Out of Stock'}
                   </span>
                 </div>
 
-                <button
-                  className="w-full mt-3 py-2 bg-pink-100 text-pink-600 rounded-lg font-medium hover:bg-pink-200 transition-colors"
-                  onClick={() => setEditingProduct({ ...product })}
-                >
-                  Edit Product
-                </button>
+                <div className="p-4 space-y-2">
+                  <span className="text-xs text-pink-500">{product.category} / {product.subcategory}</span>
+                  <h3 className="font-medium text-gray-800 line-clamp-1">
+                    {product.name}
+                  </h3>
+
+                  <div className="flex justify-between text-sm text-gray-600">
+                    <span>Qty: {product.quantity} {product.unit}</span>
+                    <span className="flex items-center gap-1 text-yellow-500">
+                      <BsStarFill className="text-xs" /> 4.5
+                    </span>
+                  </div>
+
+                  <p className="text-pink-700 font-bold text-lg">₹{product.price}</p>
+
+                  <div className="flex gap-2 pt-2">
+                    <button
+                      onClick={() => navigate(`/edit-product/${product.id}`)}
+                      className="flex-1 bg-pink-100 text-pink-600 py-1 rounded hover:bg-pink-200 text-sm"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(product.id)}
+                      className="flex-1 bg-red-100 text-red-600 py-1 rounded hover:bg-red-200 text-sm"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* ✨ Edit Modal */}
-      {editingProduct && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-6 w-full max-w-lg shadow-lg relative">
-            <h3 className="text-lg font-semibold mb-4 text-pink-700">Edit Product</h3>
-
-            <input name="name" value={editingProduct.name} onChange={handleEditChange} placeholder="Name" className="w-full border mb-2 px-4 py-2 rounded" />
-            <input name="category" value={editingProduct.category} onChange={handleEditChange} placeholder="Category" className="w-full border mb-2 px-4 py-2 rounded" />
-            <input name="subcategory" value={editingProduct.subcategory} onChange={handleEditChange} placeholder="Subcategory" className="w-full border mb-2 px-4 py-2 rounded" />
-            <input name="price" value={editingProduct.price} onChange={handleEditChange} placeholder="Price" className="w-full border mb-2 px-4 py-2 rounded" />
-            <input name="quantity" value={editingProduct.quantity} onChange={handleEditChange} placeholder="Quantity" className="w-full border mb-2 px-4 py-2 rounded" />
-            <textarea name="description" value={editingProduct.description} onChange={handleEditChange} placeholder="Description" className="w-full border mb-4 px-4 py-2 rounded" />
-
-            <div className="flex justify-end gap-4">
-              <button onClick={() => setEditingProduct(null)} className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300">Cancel</button>
-              <button onClick={handleEditSubmit} className="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700">Update</button>
-            </div>
+            ))}
           </div>
-        </div>
-      )}
+        )}
+      </div>
+      <ToastContainer position="top-right" autoClose={2000} />
     </div>
   );
 };

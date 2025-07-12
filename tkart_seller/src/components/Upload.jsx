@@ -6,19 +6,126 @@ import "react-toastify/dist/ReactToastify.css";
 // Sample categories
 const categoriesData = [
   {
-    category: "Clothing",
+    category: "Beauty and Healthcare",
     subCategories: [
-      { name: "Men" },
-      { name: "Women" }
+      { name: "Essential Oils" },
+      { name: "Hair Care" },
+      { name: "Makeup" },
+      { name: "Organic Skincare" },
+      { name: "Personal Hygiene" },
+      { name: "Soaps & Body Wash" },
+      { name: "Wellness Supplements" }
     ]
   },
   {
-    category: "Accessories",
+    category: "Clothing",
     subCategories: [
-      { name: "Jewellery" }
+      { name: "Blouses" },
+      { name: "Dresses" },
+      { name: "Ethnic Wear" },
+      { name: "Footwear" },
+      { name: "Kids Wear" },
+      { name: "Men’s Wear" },
+      { name: "Sarees" },
+      { name: "Shirts & Tops" },
+      { name: "Women’s Wear" }
+    ]
+  },
+  {
+    category: "Fashion",
+    subCategories: [
+      { name: "Bags & Purses" },
+      { name: "Caps & Hats" },
+      { name: "Eyewear" },
+      { name: "Footwear" },
+      { name: "Scarves & Stoles" },
+      { name: "Watches" }
+    ]
+  },
+  {
+    category: "Fashion and Jewellery",
+    subCategories: [
+      { name: "Anklets" },
+      { name: "Bangles & Bracelets" },
+      { name: "Earrings" },
+      { name: "Necklaces" },
+      { name: "Rings" },
+      { name: "Traditional Sets" }
+    ]
+  },
+  {
+    category: "Food",
+    subCategories: [
+      { name: "Bakery" },
+      { name: "Beverages" },
+      { name: "Dry Fruits & Nuts" },
+      { name: "Homemade Snacks" },
+      { name: "Pickles & Chutneys" },
+      { name: "Ready-to-Eat" },
+      { name: "Spices & Masala" },
+      { name: "Staples & Grains" }
+    ]
+  },
+  {
+    category: "Groceries",
+    subCategories: [
+      { name: "Atta & Flours" },
+      { name: "Dals & Pulses" },
+      { name: "Edible Oils" },
+      { name: "Organic Products" },
+      { name: "Rice & Grains" },
+      { name: "Salt & Sugar" },
+      { name: "Spices & Condiments" },
+      { name: "Tea & Coffee" }
+    ]
+  },
+  {
+    category: "Handicraft",
+    subCategories: [
+      { name: "Bamboo Crafts" },
+      { name: "Handmade Bags" },
+      { name: "Handmade Home Decor" },
+      { name: "Pottery" },
+      { name: "Terracotta Items" },
+      { name: "Wood Carvings" }
+    ]
+  },
+  {
+    category: "Office Code",
+    subCategories: [
+      { name: "Chairs" },
+      { name: "Desks" },
+      { name: "Filing Products" },
+      { name: "Laptop Stands" },
+      { name: "Lighting" },
+      { name: "Stationery" },
+      { name: "Storage Solutions" }
+    ]
+  },
+  {
+    category: "Organic Fruits and Vegetables",
+    subCategories: [
+      { name: "Fruits" },
+      { name: "Leafy Greens" },
+      { name: "Organic Juices" },
+      { name: "Root Vegetables" },
+      { name: "Seasonal Produce" },
+      { name: "Vegetables" }
+    ]
+  },
+  {
+    category: "Others",
+    subCategories: [
+      { name: "Books" },
+      { name: "DIY Kits" },
+      { name: "Gift Items" },
+      { name: "Home Cleaning" },
+      { name: "Pet Supplies" },
+      { name: "Toys & Games" }
     ]
   }
 ];
+
 
 const Upload = () => {
   const [form, setForm] = useState({

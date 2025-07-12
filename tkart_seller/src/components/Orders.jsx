@@ -1,13 +1,16 @@
 import React from 'react';
 import { jsPDF } from 'jspdf';
 import { ToastContainer, toast } from 'react-toastify';
+import { FiDownload } from 'react-icons/fi';
 import 'react-toastify/dist/ReactToastify.css';
+import bag from './bag.jpeg'
+import honey from './honey.jpeg'
 
 const fakeOrders = [
   {
     orderId: 'TK43256546',
     productName: 'Handcrafted Bag',
-    productImage: 'https://via.placeholder.com/100',
+    productImage: bag,
     quantity: 2,
     price: 500,
     customerName: 'Priya Mari',
@@ -18,7 +21,7 @@ const fakeOrders = [
   {
     orderId: 'TK43256547',
     productName: 'Organic Honey',
-    productImage: 'https://via.placeholder.com/100',
+    productImage: honey,
     quantity: 1,
     price: 300,
     customerName: 'Dhanya Dharun',
@@ -60,44 +63,61 @@ const Orders = () => {
     doc.text('Email: hello@reallygreatsite.com', 20, 157);
 
     doc.save(`${order.orderId}_invoice.pdf`);
-    toast.success("Invoice downloaded");
+    toast.success("✅ Invoice downloaded");
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white py-10 px-4 font-josefin">
-      <div className="max-w-5xl mx-auto">
-        <h2 className="text-2xl font-bold text-pink-700 mb-6 text-center">My Orders</h2>
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-3xl font-bold text-center text-pink-700 mb-10">Orders</h2>
 
-        <div className="flex flex-col gap-6">
-          {fakeOrders.map((order, index) => (
-            <div key={index} className="bg-white border border-pink-100 shadow rounded-lg p-5 flex flex-col sm:flex-row gap-4">
-              <img
-                src={order.productImage}
-                alt={order.productName}
-                className="w-28 h-28 object-cover rounded-lg border"
-              />
+        <div className="grid gap-6">
+          {fakeOrders.map((order, index) => {
+            const total = order.quantity * order.price * 1.18;
 
-              <div className="flex flex-col justify-between">
-                <div>
-                  <p className="text-sm text-gray-700"><strong>Order ID:</strong> {order.orderId}</p>
-                  <p className="text-sm text-gray-700"><strong>Product:</strong> {order.productName}</p>
-                  <p className="text-sm text-gray-700"><strong>Quantity:</strong> {order.quantity}</p>
-                  <p className="text-sm text-gray-700"><strong>Price:</strong> ₹{order.price}</p>
-                  <p className="text-sm text-gray-700"><strong>Customer:</strong> {order.customerName}</p>
-                  <p className="text-sm text-gray-700"><strong>Mobile:</strong> {order.customerMobile}</p>
-                  <p className="text-sm text-gray-700"><strong>Address:</strong> {order.customerAddress}</p>
-                  <p className="text-sm text-gray-700"><strong>Date:</strong> {order.orderDate}</p>
+            return (
+              <div
+                key={index}
+                className="bg-white border border-pink-100 rounded-2xl shadow-lg flex flex-col sm:flex-row transition-all duration-300 hover:shadow-2xl"
+              >
+                {/* Image */}
+                <div className="w-full h-60 sm:w-60 sm:h-auto flex-shrink-0">
+                <img
+                  src={order.productImage}
+                  alt={order.productName}
+                  className="w-full h-full object-cover rounded-t-2xl sm:rounded-tr-none sm:rounded-l-2xl hover:scale-105 transition-transform duration-300"
+                 />
+               </div>
+
+                {/* Details */}
+                <div className="flex flex-col justify-between p-5 text-sm text-gray-700 w-full">
+                  <div className="space-y-1">
+                    <p className="text-gray-600"><strong>Order ID:</strong> {order.orderId}</p>
+                    <p className="text-gray-600"><strong>Product:</strong> {order.productName}</p>
+                    <p className="text-gray-600"><strong>Quantity:</strong> {order.quantity}</p>
+                    <p className="text-gray-600">
+                      <strong>Total:</strong> ₹{total.toFixed(2)} <span className="text-xs text-gray-400">(incl. GST)</span>
+                    </p>
+                  </div>
+
+                  <div className="mt-3 space-y-1 text-gray-600">
+                    <p><strong>Customer:</strong> {order.customerName}</p>
+                    <p><strong>Mobile:</strong> {order.customerMobile}</p>
+                    <p><strong>Address:</strong> {order.customerAddress}</p>
+                    <p><strong>Date:</strong> {order.orderDate}</p>
+                  </div>
+
+                  <button
+                    onClick={() => generateInvoice(order)}
+                    className="mt-4 w-fit flex items-center gap-2 bg-pink-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-pink-700"
+                  >
+                    <FiDownload className="text-base" />
+                    Download Invoice
+                  </button>
                 </div>
-
-                <button
-                  onClick={() => generateInvoice(order)}
-                  className="mt-3 w-max bg-pink-600 text-white px-4 py-2 text-sm rounded hover:bg-pink-700"
-                >
-                  Download Invoice
-                </button>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
       <ToastContainer position="top-center" autoClose={2000} />
