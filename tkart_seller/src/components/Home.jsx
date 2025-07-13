@@ -135,7 +135,7 @@ const Home = () => {
     <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white">
       <main className="container mx-auto px-4 py-6">
         {/* Hero + Stats */}
-        <div className="relative rounded-2xl overflow-hidden mb-8 p-6 h-auto bg-gradient-to-r from-pink-400 to-rose-400 text-white grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="relative rounded-2xl overflow-hidden mb-8 p-6 h-auto bg-gradient-to-r from-pink-500 to-rose-500 text-white grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="md:col-span-2 space-y-4">
             <h1 className="text-2xl font-bold">Seller Dashboard</h1>
             <p className="text-white/90">Monitor your products, sales and earnings from one place.</p>
@@ -237,7 +237,7 @@ const Home = () => {
 
         
 
-        {/* Trending */}
+     
         {/* My Products */}
         <section className="mb-10">
           <div className="flex items-center justify-between mb-4">
@@ -280,6 +280,7 @@ const Home = () => {
             ))}
           </div>
         </section>
+        
 
       </main>
     </div>
