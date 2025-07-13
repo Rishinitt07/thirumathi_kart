@@ -8,29 +8,6 @@ import {
 } from 'react-icons/fa';
 import heroImage from './tklogo.png'; // Ensure this path is correct
 
-// ✅ Navbar Component (unchanged)
-const Navbar = () => (
-  <nav className="bg-white shadow-md px-4 py-3 sticky top-0 z-50">
-    <div className="max-w-7xl mx-auto flex justify-between items-center">
-      <Link to="/" className="flex items-center space-x-3">
-        <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">
-          <span className="text-pink-600 text-xl font-bold">TK</span>
-        </div>
-        <h1 className="text-xl font-bold text-pink-700 hidden sm:block">TKart</h1>
-      </Link>
-
-      <div className="flex items-center space-x-4">
-        <Link to="/login">
-          <button className="flex bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-full text-sm items-center">
-            <FaUser className="mr-2" />
-            Login
-          </button>
-        </Link>
-      </div>
-    </div>
-  </nav>
-);
-
 // ✅ Enhanced Hero Section with Image
 const HeroSection = () => (
   <section className="relative bg-gradient-to-r from-pink-50 to-pink-100 py-12 px-4 overflow-hidden">
@@ -209,10 +186,9 @@ const Footer = () => (
   </footer>
 );
 
-// ✅ Main Dashboard
+// ✅ Main Dashboard (without Navbar)
 const Dashboard = () => (
   <div className="min-h-screen flex flex-col font-sans">
-    <Navbar />
     <main className="flex-grow">
       <HeroSection />
       <FeaturesSection />
