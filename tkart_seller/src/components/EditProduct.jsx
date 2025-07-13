@@ -24,7 +24,6 @@ const EditProduct = () => {
   const [previews, setPreviews] = useState([null, null, null, null]);
   const [loading, setLoading] = useState(true);
 
-  // 🔽 Fetch product data
   useEffect(() => {
     axios.get("http://localhost:8080/products", {
       headers: { Authorization: `Bearer ${token}` },
@@ -46,20 +45,15 @@ const EditProduct = () => {
         setPreviews(imgKeys.map(key => product[key] ? `data:image/jpeg;base64,${product[key]}` : null));
       } else {
         toast.error("❌ Product not found");
-        navigate("/my-products");
+        navigate("/myproducts");
       }
     }).catch(() => toast.error("❌ Failed to load product"))
       .finally(() => setLoading(false));
   }, [id]);
 
-  // 🔽 Set subcategories when category changes
   useEffect(() => {
     const selected = categoriesData.find(c => c.category === form.category);
-    if (selected) {
-      setSubCategories(selected.subCategories);
-    } else {
-      setSubCategories([]);
-    }
+    setSubCategories(selected ? selected.subCategories : []);
   }, [form.category]);
 
   const handleChange = (e) => {
@@ -93,7 +87,7 @@ const EditProduct = () => {
         }
       });
       toast.success("✅ Product updated!");
-      setTimeout(() => navigate("/my-products"), 1500);
+      setTimeout(() => navigate("/myproducts"), 1500);  // ✅ fixed route
     } catch (err) {
       console.error(err);
       toast.error("❌ Update failed");
@@ -107,14 +101,11 @@ const EditProduct = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-pink-50 to-white px-4 py-12 font-josefin">
       <div className="w-full max-w-4xl bg-white rounded-3xl shadow-xl overflow-hidden">
-
-        {/* Header */}
         <div className="bg-gradient-to-br from-pink-600 to-rose-500 h-32 flex items-center justify-center">
           <h2 className="text-white text-2xl font-bold">Edit Product</h2>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-
           {/* Images */}
           <div className="sm:col-span-2 grid grid-cols-2 sm:grid-cols-4 gap-4">
             {previews.map((img, i) => (
@@ -130,7 +121,6 @@ const EditProduct = () => {
             ))}
           </div>
 
-          {/* Text Inputs */}
           <input name="name" value={form.name} onChange={handleChange} placeholder="Product Name" className="border border-pink-200 rounded px-4 py-2" required />
           <input name="price" value={form.price} onChange={handleChange} type="number" placeholder="Price" className="border border-pink-200 rounded px-4 py-2" required />
           <input name="quantity" value={form.quantity} onChange={handleChange} type="number" placeholder="Quantity" className="border border-pink-200 rounded px-4 py-2" required />
@@ -164,7 +154,6 @@ const EditProduct = () => {
           </div>
         </form>
       </div>
-
       <ToastContainer position="top-right" autoClose={2000} />
     </div>
   );
