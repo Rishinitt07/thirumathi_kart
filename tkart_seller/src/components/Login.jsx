@@ -61,6 +61,10 @@ const Login = () => {
 
         {/* Right Panel */}
         <div className="md:w-1/2 p-10 bg-white">
+          {/* Logo */}
+           <div className="flex justify-center mb-4">
+           <img src={tklogo} alt="Thirumathi Kart Logo" className="h-20 w-20" />
+           </div>
           <h2 className="text-2xl font-bold text-pink-600 text-center mb-4">
             Login
           </h2>

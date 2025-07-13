@@ -205,9 +205,13 @@ const Upload = () => {
       <div className="w-full max-w-4xl bg-white rounded-3xl shadow-xl overflow-hidden font-josefin">
         
         {/* Header */}
-        <div className="bg-gradient-to-br from-pink-600 to-rose-500 h-32 flex items-center justify-center">
-          <h2 className="text-white text-2xl font-bold">Upload Product</h2>
-        </div>
+<div className="bg-gradient-to-br from-pink-600 to-rose-500 h-32 flex flex-col items-center justify-center text-center px-4">
+  <h2 className="text-white text-2xl font-bold">Upload Product</h2>
+  <p className="text-white text-sm mt-1">
+    Upload your creations and connect with thousands of customers
+  </p>
+</div>
+
 
         <form onSubmit={handleSubmit} className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
           

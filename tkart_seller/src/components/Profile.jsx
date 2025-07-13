@@ -114,9 +114,10 @@ const Profile = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-pink-50 to-white px-4 py-12">
       <div className="w-full max-w-3xl bg-white rounded-3xl shadow-xl overflow-hidden font-josefin">
         {/* Header */}
-        <div className="relative bg-gradient-to-br from-pink-600 to-rose-500 h-40 flex items-center justify-center">
-          <div className="text-white text-2xl font-bold">My Profile</div>
+        <div className="relative bg-gradient-to-br from-pink-600 to-rose-500 h-30 flex flex-col items-center justify-center text-center px-4">
+        <h2 className="text-white text-2xl font-bold -mt-9">My Profile</h2>
         </div>
+
 
         {/* Avatar + Upload */}
         <div className="relative flex justify-center -mt-14">
