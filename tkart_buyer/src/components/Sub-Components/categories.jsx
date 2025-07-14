@@ -59,66 +59,65 @@ const Categories = () => {
   const [brandFilters, setBrandFilters] = useState([]);
   const [discountFilter, setDiscountFilter] = useState(false);
 
-  const categoryStructure = {
-    'All': { subcategories: ['All'], icon: '🛍️', colors: [], sizes: [], brands: [] },
-    'Food': {
-      subcategories: ['All', 'Snacks', 'Beverages', 'Packaged Foods'],
-      icon: '🍎',
-      colors: [],
-      sizes: ['Small', 'Medium', 'Large'],
-      brands: ['HealthyBites', 'TasteGood', 'PureEats'],
-    },
-    'Clothing': {
-      subcategories: ['All', 'Men', 'Women', 'Kids'],
-      icon: '👕',
-      colors: ['Red', 'Blue', 'Green', 'Black', 'White'],
-      sizes: ['XS', 'S', 'M', 'L', 'XL'],
-      brands: ['StyleTrend', 'UrbanWear', 'ClassicFit'],
-    },
-    'Handcrafts': {
-      subcategories: ['All', 'Pottery', 'Textiles', 'Woodwork'],
-      icon: '🖌️',
-      colors: ['Brown', 'Blue', 'Red', 'Natural'],
-      sizes: ['Small', 'Medium', 'Large'],
-      brands: ['CraftWorks', 'ArtisanHub', 'HandmadeHaven'],
-    },
-    'Fashion and Jewellery': {
-      subcategories: ['All', 'Necklaces', 'Rings', 'Bracelets', 'Clothing'],
-      icon: '💍',
-      colors: ['Gold', 'Silver', 'Rose Gold', 'Black'],
-      sizes: ['One Size', 'Adjustable'],
-      brands: ['GlamourGlow', 'ChicShine', 'ElegantCraft'],
-    },
-    'Beauty and Healthcare': {
-      subcategories: ['All', 'Skincare', 'Haircare', 'Wellness'],
-      icon: '💆‍♀️',
-      colors: [],
-      sizes: ['Standard', 'Travel'],
-      brands: ['PureCare', 'GlowUp', 'WellnessPro'],
-    },
-    'Office Code': {
-      subcategories: ['All', 'Stationery', 'Electronics', 'Furniture'],
-      icon: '💼',
-      colors: ['Black', 'White', 'Gray'],
-      sizes: ['Standard', 'Compact'],
-      brands: ['OfficePro', 'WorkSmart', 'ErgoDesign'],
-    },
-    'Organic Fruits and Vegetables': {
-      subcategories: ['All', 'Fruits', 'Vegetables', 'Mixed Baskets'],
-      icon: '🥕',
-      colors: [],
-      sizes: ['Small', 'Medium', 'Large'],
-      brands: ['FarmFresh', 'GreenHarvest', 'OrganicFields'],
-    },
-    'Others': {
-      subcategories: ['All', 'Miscellaneous'],
-      icon: '📦',
-      colors: [],
-      sizes: [],
-      brands: ['Generic', 'VarietyCo'],
-    },
-  };
-
+const categoryStructure = {
+  'All': { subcategories: ['All'], icon: '🛍️', colors: [], sizes: [], brands: [] },
+  'Food': {
+    subcategories: ['All', 'Snacks', 'Beverages', 'Packaged Foods'],
+    icon: '🍎',
+    colors: [],
+    sizes: ['Small', 'Medium', 'Large'],
+    brands: ['HealthyBites', 'TasteGood', 'PureEats'],
+  },
+  'Clothing': {
+    subcategories: ['All', 'Men', 'Women', 'Kids'],
+    icon: '👕',
+    colors: ['Red', 'Blue', 'Green', 'Black', 'White'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    brands: ['StyleTrend', 'UrbanWear', 'ClassicFit'],
+  },
+  'Handcrafts': {
+    subcategories: ['All', 'Pottery', 'Textiles', 'Woodwork'],
+    icon: '🖌️',
+    colors: ['Brown', 'Blue', 'Red', 'Natural'],
+    sizes: ['Small', 'Medium', 'Large'],
+    brands: ['CraftWorks', 'ArtisanHub', 'HandmadeHaven'],
+  },
+  'Fashion and Jewellery': {
+    subcategories: ['All', 'Necklaces', 'Rings', 'Bracelets', 'Clothing'],
+    icon: '💍',
+    colors: ['Gold', 'Silver', 'Rose Gold', 'Black'],
+    sizes: ['One Size', 'Adjustable'],
+    brands: ['GlamourGlow', 'ChicShine', 'ElegantCraft'],
+  },
+  'Beauty and Healthcare': {
+    subcategories: ['All', 'Skincare', 'Haircare', 'Wellness'],
+    icon: '💆‍♀️',
+    colors: [],
+    sizes: ['Standard', 'Travel'],
+    brands: ['PureCare', 'GlowUp', 'WellnessPro'],
+  },
+  'Office Code': {
+    subcategories: ['All', 'Stationery', 'Electronics', 'Furniture'],
+    icon: '💼',
+    colors: ['Black', 'White', 'Gray'],
+    sizes: ['Standard', 'Compact'],
+    brands: ['OfficePro', 'WorkSmart', 'ErgoDesign'],
+  },
+  'Organic Fruits and Vegetables': {
+    subcategories: ['All', 'Fruits', 'Vegetables', 'Mixed Baskets'],
+    icon: '🥕',
+    colors: [],
+    sizes: ['Small', 'Medium', 'Large'],
+    brands: ['FarmFresh', 'GreenHarvest', 'OrganicFields'],
+  },
+  'Others': {
+    subcategories: ['All', 'Miscellaneous'],
+    icon: '📦',
+    colors: [],
+    sizes: [],
+    brands: ['Generic', 'VarietyCo'],
+  },
+};
   const availableFilters = useMemo(() => {
     return categoryStructure[selectedCategory] || { colors: [], sizes: [], brands: [] };
   }, [selectedCategory]);
