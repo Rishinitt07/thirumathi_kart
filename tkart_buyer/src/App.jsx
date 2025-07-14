@@ -9,6 +9,7 @@ import Wishlist from './components/Sub-Components/Wishlist';
 import Cart from './components/Sub-Components/Cart';
 import Orders from './components/Sub-Components/Orders';
 import About from './components/About.jsx';
+import Dashboard from './components/Dashboard.jsx';
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
@@ -26,6 +27,7 @@ function App() {
         {/* Public routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/" element={<Dashboard />} />
         
         {/* Protected routes wrapped with Layout */}
         <Route element={
@@ -33,7 +35,7 @@ function App() {
             <Layout />
           </ProtectedRoute>
         }>
-          <Route path="/" element={<Home />} />
+          
           <Route path="/home" element={<Home />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/profile" element={<Profile />} />
