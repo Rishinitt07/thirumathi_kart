@@ -192,6 +192,63 @@ func GetProfileHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(profile)
 }
 
+func GetProductsHandler(w http.ResponseWriter, r *http.Request) {
+	// Extract query parameters (category & subcategory filtering)
+	category := r.URL.Query().Get("category")
+	subcategory := r.URL.Query().Get("subcategory")
+
+	var rows *sql.Rows
+	var err error
+
+	// Query based on filters (if provided)
+	if category != "" && subcategory != "" {
+		rows, err = db.Query(`
+            SELECT id, name, price, image, category, subcategory 
+            FROM products 
+            WHERE category = $1 AND subcategory = $2`,
+			category, subcategory)
+	} else if category != "" {
+		rows, err = db.Query(`
+            SELECT id, name, price, image, category, subcategory 
+            FROM products 
+            WHERE category = $1`,
+			category)
+	} else {
+		rows, err = db.Query(`
+            SELECT id, name, price, image, category, subcategory 
+            FROM products`)
+	}
+
+	if err != nil {
+		http.Error(w, "Error fetching products", http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
+
+	type Product struct {
+		ID          int     `json:"id"`
+		Name        string  `json:"name"`
+		Price       float64 `json:"price"`
+		Image       string  `json:"image"`
+		Category    string  `json:"category"`
+		Subcategory string  `json:"subcategory"`
+	}
+
+	var products []Product
+	for rows.Next() {
+		var p Product
+		err := rows.Scan(&p.ID, &p.Name, &p.Price, &p.Image, &p.Category, &p.Subcategory)
+		if err != nil {
+			http.Error(w, "Error reading product data", http.StatusInternalServerError)
+			return
+		}
+		products = append(products, p)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(products)
+}
+
 func UpdateProfileHandler(w http.ResponseWriter, r *http.Request) {
 	username, err := GetUsernameFromToken(r)
 	if err != nil {
@@ -387,6 +444,20 @@ CREATE TABLE IF NOT EXISTS order_items (
   image TEXT
 );
 `
+	createProductsTable := `
+CREATE TABLE IF NOT EXISTS products (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    price FLOAT NOT NULL,
+    category TEXT,
+    subcategory TEXT,
+    image TEXT
+);
+`
+	_, err = db.Exec(createProductsTable)
+	if err != nil {
+		panic(err)
+	}
 
 	_, err = db.Exec(createOrdersTable)
 	if err != nil {
@@ -401,6 +472,7 @@ CREATE TABLE IF NOT EXISTS order_items (
 	mux.Handle("/profile/update", AuthMiddleware(http.HandlerFunc(UpdateProfileHandler)))
 	mux.Handle("/orders", AuthMiddleware(http.HandlerFunc(GetOrdersHandler)))
 	mux.Handle("/orders/place", AuthMiddleware(http.HandlerFunc(PlaceOrderHandler)))
+	mux.HandleFunc("/products", GetProductsHandler)
 
 	// ✅ Add CORS middleware
 	corsHandler := cors.New(cors.Options{

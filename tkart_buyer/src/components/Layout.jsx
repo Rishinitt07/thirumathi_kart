@@ -12,13 +12,23 @@ import {
   FiHeart, 
   FiXCircle,
   FiChevronDown,
-  FiChevronUp,
+  FiInfo,
   FiLogOut
 } from 'react-icons/fi';
 import tklogo from './tklogo.png';
 
-// Enhanced SidebarItem with active state and animations
-const SidebarItem = React.memo(({ to, label, icon, isActive, hasSubmenu, isExpanded, onClick }) => {
+// Error boundary for sidebar items
+const withErrorBoundary = (Component) => (props) => {
+  try {
+    return <Component {...props} />;
+  } catch (error) {
+    console.error('Component error:', error);
+    return null;
+  }
+};
+
+// Enhanced SidebarItem with error boundary and prop validation
+const SidebarItem = withErrorBoundary(React.memo(({ to, label, icon, isActive, hasSubmenu, isExpanded, onClick }) => {
   const location = useLocation();
   const active = isActive || location.pathname === to;
   
@@ -30,6 +40,7 @@ const SidebarItem = React.memo(({ to, label, icon, isActive, hasSubmenu, isExpan
         className={`flex items-center justify-between px-5 py-3 rounded-lg transition-colors ${
           active ? 'bg-pink-100 text-pink-700' : 'text-gray-700 hover:bg-pink-50'
         }`}
+        aria-current={active ? 'page' : undefined}
       >
         <div className="flex items-center gap-3">
           <span className={`text-lg ${active ? 'text-pink-600' : 'text-pink-500'}`}>
@@ -41,6 +52,7 @@ const SidebarItem = React.memo(({ to, label, icon, isActive, hasSubmenu, isExpan
           <motion.span 
             animate={{ rotate: isExpanded ? 180 : 0 }}
             className="text-gray-400"
+            aria-hidden="true"
           >
             <FiChevronDown size={18} />
           </motion.span>
@@ -48,25 +60,32 @@ const SidebarItem = React.memo(({ to, label, icon, isActive, hasSubmenu, isExpan
       </Link>
     </motion.div>
   );
-});
+}));
 
-// Optimized Sidebar with performance enhancements
+// Sidebar component with enhanced reliability
 const Sidebar = ({ isOpen, closeSidebar }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [expandedItems, setExpandedItems] = useState({});
   const [cartCount, setCartCount] = useState(0);
 
-  // Cart count synchronization
+  // Cart count synchronization with cleanup
   useEffect(() => {
     const updateCartCount = () => {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      setCartCount(cart.length);
+      try {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        setCartCount(cart.length);
+      } catch (error) {
+        console.error('Error reading cart data:', error);
+        setCartCount(0);
+      }
     };
     
     updateCartCount();
-    window.addEventListener('storage', updateCartCount);
-    return () => window.removeEventListener('storage', updateCartCount);
+    const storageListener = () => updateCartCount();
+    
+    window.addEventListener('storage', storageListener);
+    return () => window.removeEventListener('storage', storageListener);
   }, []);
 
   const toggleItem = (itemKey) => {
@@ -78,25 +97,26 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
 
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
-      // Clear all user-related data from localStorage and sessionStorage
-      ['token', 'userData', 'cart', 'wishlist'].forEach(item => {
-        localStorage.removeItem(item);
-        sessionStorage.removeItem(item);
-      });
-      
-      // Clear all sessionStorage to ensure session expiration
-      sessionStorage.clear();
-      
-      toast.success("Logged out successfully", {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        theme: "colored",
-      });
-      
-      // Redirect to login page
-      navigate('/login');
-      window.dispatchEvent(new Event('storage'));
+      try {
+        // Clear user data more safely
+        ['token', 'userData', 'cart', 'wishlist'].forEach(item => {
+          localStorage.removeItem(item);
+          sessionStorage.removeItem(item);
+        });
+        
+        toast.success("Logged out successfully", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          theme: "colored",
+        });
+        
+        navigate('/login');
+        window.dispatchEvent(new Event('storage'));
+      } catch (error) {
+        console.error('Logout error:', error);
+        toast.error("Failed to log out. Please try again.");
+      }
     }
   };
 
@@ -153,6 +173,12 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
       label: 'Profile',
       icon: <FiUser className="w-5 h-5" />,
       to: '/profile'
+    },
+    {
+      key: 'about',
+      label: 'About Us',
+      icon: <FiInfo className="w-5 h-5" />,
+      to: '/about'
     }
   ];
 
@@ -166,6 +192,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
             exit={{ opacity: 0 }}
             onClick={closeSidebar}
             className="fixed inset-0 bg-black/20 z-30 md:hidden"
+            role="presentation"
           />
           <motion.div
             initial={{ x: '-100%' }}
@@ -173,6 +200,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
             exit={{ x: '-100%' }}
             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
             className="fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-40 flex flex-col"
+            aria-modal="true"
           >
             <div className="h-16 flex items-center px-6 border-b border-pink-100">
               <h2 className="text-xl font-bold text-pink-700">Menu</h2>
@@ -185,10 +213,10 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
               </button>
             </div>
 
-            {/* Prominent Logout Button at the top */}
             <button
               onClick={handleLogout}
               className="flex items-center gap-3 px-5 py-3 mx-4 my-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors border border-red-100"
+              aria-label="Logout"
             >
               <FiLogOut className="w-5 h-5" />
               <span className="font-medium">Logout</span>
@@ -232,19 +260,26 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
   );
 };
 
-// Optimized Navbar with cart count
-const Navbar = React.memo(({ toggleSidebar }) => {
+// Navbar component with error boundary
+const Navbar = withErrorBoundary(React.memo(({ toggleSidebar }) => {
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     const updateCartCount = () => {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      setCartCount(cart.length);
+      try {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        setCartCount(cart.length);
+      } catch (error) {
+        console.error('Error reading cart data:', error);
+        setCartCount(0);
+      }
     };
     
     updateCartCount();
-    window.addEventListener('storage', updateCartCount);
-    return () => window.removeEventListener('storage', updateCartCount);
+    const storageListener = () => updateCartCount();
+    
+    window.addEventListener('storage', storageListener);
+    return () => window.removeEventListener('storage', storageListener);
   }, []);
 
   return (
@@ -252,14 +287,14 @@ const Navbar = React.memo(({ toggleSidebar }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <Link to="/home" className="flex items-center">
+            <Link to="/home" className="flex items-center" aria-label="Home">
               <img src={tklogo} alt="Logo" className="h-8 w-8" />
               <span className="ml-2 text-xl font-bold text-pink-700">Thirumathi Kart</span>
             </Link>
           </div>
           <div className="flex items-center space-x-4">
             <span className="text-sm text-pink-600 hidden sm:inline">Hi! Buyer</span>
-            <Link to="/cart" className="p-1 text-pink-600 hover:text-pink-700 relative">
+            <Link to="/cart" className="p-1 text-pink-600 hover:text-pink-700 relative" aria-label="Cart">
               <FiShoppingCart className="h-6 w-6" />
               {cartCount > 0 && (
                 <motion.span 
@@ -287,22 +322,29 @@ const Navbar = React.memo(({ toggleSidebar }) => {
       </div>
     </header>
   );
-});
+}));
 
-// Enhanced MobileBottomNav with active state
-const MobileBottomNav = React.memo(() => {
+// MobileBottomNav with error boundary
+const MobileBottomNav = withErrorBoundary(React.memo(() => {
   const location = useLocation();
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     const updateCartCount = () => {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      setCartCount(cart.length);
+      try {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        setCartCount(cart.length);
+      } catch (error) {
+        console.error('Error reading cart data:', error);
+        setCartCount(0);
+      }
     };
     
     updateCartCount();
-    window.addEventListener('storage', updateCartCount);
-    return () => window.removeEventListener('storage', updateCartCount);
+    const storageListener = () => updateCartCount();
+    
+    window.addEventListener('storage', storageListener);
+    return () => window.removeEventListener('storage', storageListener);
   }, []);
 
   const navItems = [
@@ -312,7 +354,7 @@ const MobileBottomNav = React.memo(() => {
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
       </svg>
     ), label: 'Categories' },
-    { path: '/Categories', icon: <FiSearch />, label: 'Search' },
+    { path: '/Home', icon: <FiSearch />, label: 'Search' },
     { path: '/cart', icon: (
       <div className="relative">
         <FiShoppingCart />
@@ -345,6 +387,7 @@ const MobileBottomNav = React.memo(() => {
             className={`flex flex-col items-center justify-center p-1 transition-colors ${
               location.pathname === item.path ? 'text-pink-500' : 'text-gray-600 hover:text-pink-500'
             }`}
+            aria-label={item.label}
           >
             <div className="text-xl">{item.icon}</div>
             <span className="text-xs mt-0.5">{item.label}</span>
@@ -353,14 +396,13 @@ const MobileBottomNav = React.memo(() => {
       </div>
     </motion.div>
   );
-});
+}));
 
-// Main Layout Component
+// Main Layout Component with error handling
 const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
 
-  // Close sidebar when route changes
   useEffect(() => {
     setSidebarOpen(false);
   }, [location.pathname]);
