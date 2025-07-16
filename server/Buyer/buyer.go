@@ -193,35 +193,6 @@ func UpdateProfileHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]string{"message": "Profile updated"})
 }
 
-func GetProductsHandler(w http.ResponseWriter, r *http.Request) {
-	sellerURL := "http://localhost:8080/products"
-
-	// Forward the Authorization header if needed
-	req, err := http.NewRequest("GET", sellerURL, nil)
-	if err != nil {
-		http.Error(w, "Failed to create request", http.StatusInternalServerError)
-		return
-	}
-	req.Header = r.Header.Clone()
-
-	client := &http.Client{Timeout: 10 * time.Second}
-	resp, err := client.Do(req)
-	if err != nil {
-		http.Error(w, "Failed to reach seller backend", http.StatusBadGateway)
-		return
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		http.Error(w, "Error from seller backend", resp.StatusCode)
-		return
-	}
-
-	// Stream seller response directly
-	w.Header().Set("Content-Type", "application/json")
-	io.Copy(w, resp.Body)
-}
-
 func GetOrdersHandler(w http.ResponseWriter, r *http.Request) {
 	username, err := GetUsernameFromToken(r)
 	if err != nil {
@@ -321,6 +292,33 @@ func PlaceOrderHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]string{"message": "Order placed successfully"})
 }
 
+func GetProductsHandler(w http.ResponseWriter, r *http.Request) {
+	sellerURL := "http://localhost:8080/products"
+
+	req, err := http.NewRequest("GET", sellerURL, nil)
+	if err != nil {
+		http.Error(w, "Failed to create request", http.StatusInternalServerError)
+		return
+	}
+	req.Header = r.Header.Clone()
+
+	client := &http.Client{Timeout: 10 * time.Second}
+	resp, err := client.Do(req)
+	if err != nil {
+		http.Error(w, "Failed to reach seller backend", http.StatusBadGateway)
+		return
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		http.Error(w, "Error from seller backend", resp.StatusCode)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	io.Copy(w, resp.Body)
+}
+
 func main() {
 	initDB()
 	defer db.Close()
@@ -368,7 +366,7 @@ func main() {
 	mux.Handle("/profile/update", AuthMiddleware(http.HandlerFunc(UpdateProfileHandler)))
 	mux.Handle("/orders", AuthMiddleware(http.HandlerFunc(GetOrdersHandler)))
 	mux.Handle("/orders/place", AuthMiddleware(http.HandlerFunc(PlaceOrderHandler)))
-	mux.Handle("/products", AuthMiddleware(http.HandlerFunc(GetProductsHandler)))
+	mux.HandleFunc("/products", GetProductsHandler)
 
 	// ✅ Enable CORS
 	corsHandler := cors.New(cors.Options{
