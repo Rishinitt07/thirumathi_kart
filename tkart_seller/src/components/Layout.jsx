@@ -50,6 +50,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
             <FiXCircle className="text-gray-500" size={20} />
           </button>
         </div>
+        
         <div className="flex-1 p-4 space-y-2 overflow-y-auto">
         <SidebarItem to="/home" label="Home" icon={icons.home} onClick={closeSidebar} />
           <SidebarItem to="/upload" label="Add Product" icon={icons.upload} onClick={closeSidebar} />
@@ -57,16 +58,18 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
           <SidebarItem to="/orders" label="Orders" icon={icons.orders} onClick={closeSidebar} />
           <SidebarItem to="/profile" label="Profile" icon={icons.profile} onClick={closeSidebar} />
           <SidebarItem to="/about" label="about" icon={icons.about} onClick={closeSidebar} />
-        </div>
-        <div className="p-4 border-t border-pink-100">
+
+          
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-5 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+            className="w-full flex items-center gap-3 px-5 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors border border-red-100"
           >
             <span className="text-lg">{icons.logout}</span>
             <span className="font-medium">Logout</span>
           </button>
+       
         </div>
+        
       </div>
       {isOpen && (
         <div
