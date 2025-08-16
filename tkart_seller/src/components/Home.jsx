@@ -239,47 +239,53 @@ const Home = () => {
 
      
         {/* My Products */}
-        <section className="mb-10">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-gray-800">My Products</h2>
-            <Link to="/myproducts" className="text-pink-600 flex items-center text-sm">
-              View All <FiChevronRight className="ml-1" />
+<section className="mb-10">
+  <div className="flex items-center justify-between mb-4">
+    <h2 className="text-xl font-bold text-gray-800">My Products</h2>
+    <Link to="/myproducts" className="text-pink-600 flex items-center text-sm">
+      View All <FiChevronRight className="ml-1" />
+    </Link>
+  </div>
+
+  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    {(Array.isArray(myProducts) && myProducts.length > 0) ? (
+      myProducts.slice(0, 4).map((product) => (
+        <div key={product.id} className="bg-white rounded-xl overflow-hidden border border-pink-100 hover:shadow-md transition-shadow">
+          <div className="relative h-48 bg-pink-50 overflow-hidden">
+            {product.image1 ? (
+              <img
+                src={`data:image/jpeg;base64,${product.image1}`}
+                alt={product.name}
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-gray-400">No Image</div>
+            )}
+            <div className="absolute top-2 left-2 bg-pink-500 text-white text-xs px-2 py-1 rounded">
+              {product.quantity} in stock
+            </div>
+          </div>
+          <div className="p-4">
+            <span className="text-xs text-pink-500">{product.category}</span>
+            <h3 className="font-medium text-gray-800 line-clamp-1 my-1">{product.name}</h3>
+            <div className="flex items-end">
+              <span className="text-lg font-bold text-pink-600">₹{product.price}</span>
+            </div>
+            <Link
+              to="/myproducts"
+              className="w-full mt-3 block text-center py-2 bg-pink-100 text-pink-600 rounded-lg font-medium hover:bg-pink-200 transition-colors"
+            >
+              View
             </Link>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {myProducts.slice(0, 4).map((product) => (
-              <div key={product.id} className="bg-white rounded-xl overflow-hidden border border-pink-100 hover:shadow-md transition-shadow">
-                <div className="relative h-48 bg-pink-50 overflow-hidden">
-                  {product.image1 ? (
-                    <img
-                      src={`data:image/jpeg;base64,${product.image1}`}
-                      alt={product.name}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-gray-400">No Image</div>
-                  )}
-                  <div className="absolute top-2 left-2 bg-pink-500 text-white text-xs px-2 py-1 rounded">
-                    {product.quantity} in stock
-                  </div>
-                </div>
-                <div className="p-4">
-                  <span className="text-xs text-pink-500">{product.category}</span>
-                  <h3 className="font-medium text-gray-800 line-clamp-1 my-1">{product.name}</h3>
-                  <div className="flex items-end">
-                    <span className="text-lg font-bold text-pink-600">₹{product.price}</span>
-                  </div>
-                  <Link
-                    to="/myproducts"
-                    className="w-full mt-3 block text-center py-2 bg-pink-100 text-pink-600 rounded-lg font-medium hover:bg-pink-200 transition-colors"
-                  >
-                    View
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+        </div>
+      ))
+    ) : (
+      <p className="col-span-full text-center text-gray-500">No products available</p>
+    )}
+  </div>
+</section>
+
         
 
       </main>
