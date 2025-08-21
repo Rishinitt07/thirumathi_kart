@@ -11,7 +11,7 @@ import Orders from './components/Sub-Components/Orders';
 import About from './components/About.jsx';
 import Dashboard from './components/Dashboard.jsx';
 
-// Protected Route component
+
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('token');
   if (!token) {
@@ -24,18 +24,18 @@ function App() {
   return (
     <div className="font-sans" style={{ fontFamily: 'Josefin Sans, sans-serif' }}>
       <Routes>
-        {/* Public routes */}
+
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<Dashboard />} />
-        
-        {/* Protected routes wrapped with Layout */}
+
+
         <Route element={
           <ProtectedRoute>
             <Layout />
           </ProtectedRoute>
         }>
-          
+
           <Route path="/home" element={<Home />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/profile" element={<Profile />} />
@@ -45,7 +45,7 @@ function App() {
           <Route path="/about" element={<About />} />
         </Route>
 
-        {/* Redirect to home for unknown routes */}
+
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
