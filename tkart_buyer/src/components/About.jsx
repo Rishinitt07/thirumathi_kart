@@ -1,16 +1,15 @@
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const UserGuidePanel = () => (
   <div className="w-full bg-white rounded-xl shadow-lg p-6 space-y-6 border border-pink-100 font-sans">
-    {/* Header with decorative elements */}
     <div className="text-center border-b border-pink-100 pb-6 relative">
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full"></div>
-      <h1 className="text-2xl font-bold text-pink-700 mb-2 font-serif tracking-tight">Shopping Guide</h1>
+      <h1 className="text-2xl font-bold text-pink-700 mb-2 font-serif tracking-tight">
+        Shopping Guide
+      </h1>
       <p className="text-pink-600 font-medium">Your complete shopping companion</p>
     </div>
-    
-    {/* User greeting card */}
     <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-pink-50 to-rose-50 rounded-lg border border-pink-100">
       <div className="bg-white p-2 rounded-full shadow-sm">
         <svg className="w-5 h-5 text-pink-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -22,12 +21,12 @@ const UserGuidePanel = () => (
         <p className="text-xs text-pink-600">Find answers to common questions</p>
       </div>
     </div>
-
-    {/* Guide sections with improved typography */}
     <div className="space-y-6">
       <div>
         <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-3">
-          <span className="bg-pink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">1</span>
+          <span className="bg-pink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">
+            1
+          </span>
           Shopping Process
         </h3>
         <ul className="space-y-3 text-gray-600 text-sm pl-12">
@@ -45,10 +44,11 @@ const UserGuidePanel = () => (
           </li>
         </ul>
       </div>
-
       <div>
         <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-3">
-          <span className="bg-pink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">2</span>
+          <span className="bg-pink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">
+            2
+          </span>
           Order Tracking
         </h3>
         <ul className="space-y-3 text-gray-600 text-sm pl-12">
@@ -66,10 +66,11 @@ const UserGuidePanel = () => (
           </li>
         </ul>
       </div>
-
       <div>
         <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-3">
-          <span className="bg-pink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">3</span>
+          <span className="bg-pink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">
+            3
+          </span>
           Returns & Support
         </h3>
         <ul className="space-y-3 text-gray-600 text-sm pl-12">
@@ -88,8 +89,6 @@ const UserGuidePanel = () => (
         </ul>
       </div>
     </div>
-
-    {/* Support CTA with enhanced buttons */}
     <div className="bg-gradient-to-br from-pink-50 to-rose-50 p-5 rounded-xl border border-pink-100">
       <h4 className="font-semibold text-gray-800 mb-2 text-center">Need more help?</h4>
       <p className="text-sm text-gray-600 mb-4 text-center">Our support team is available 24/7</p>
@@ -114,10 +113,9 @@ const UserGuidePanel = () => (
 const About = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white">
-      {/* Hero Section */}
       <div className="relative bg-gradient-to-r from-pink-600 to-rose-500 py-20 px-4 sm:px-6 lg:px-8 text-white overflow-hidden">
         <div className="max-w-7xl mx-auto text-center relative z-10">
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -139,8 +137,8 @@ const About = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-8"
           >
-            <Link 
-              to="/Home" 
+            <Link
+              to="/Home"
               className="inline-block bg-white text-pink-600 px-8 py-3 rounded-full font-medium hover:bg-pink-50 transition duration-300"
             >
               Start Shopping
@@ -151,8 +149,6 @@ const About = () => {
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white to-transparent"></div>
         </div>
       </div>
-
-      {/* Our Story Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-pink-700 mb-4">Our Story</h2>
@@ -165,9 +161,9 @@ const About = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <img 
-              src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-              alt="Our Team" 
+            <img
+              src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Our Team"
               className="rounded-lg shadow-xl w-full h-auto"
             />
           </motion.div>
@@ -179,13 +175,10 @@ const About = () => {
           >
             <h3 className="text-2xl font-semibold text-gray-800 mb-4">From Humble Beginnings</h3>
             <p className="text-gray-600 mb-4">
-              Founded in 2023, Thirumathi Kart began as a small initiative to support women entrepreneurs in rural Tamil Nadu. 
-              What started as a local marketplace has now grown into a thriving e-commerce platform connecting thousands of 
-              women artisans with customers nationwide.
+              Founded in 2023, Thirumathi Kart began as a small initiative to support women entrepreneurs in rural Tamil Nadu. What started as a local marketplace has now grown into a thriving e-commerce platform connecting thousands of women artisans with customers nationwide.
             </p>
             <p className="text-gray-600 mb-6">
-              Our mission is simple: to create economic opportunities for women while providing customers with authentic, 
-              high-quality products that tell a story.
+              Our mission is simple: to create economic opportunities for women while providing customers with authentic, high-quality products that tell a story.
             </p>
             <div className="flex flex-wrap gap-4">
               <div className="bg-pink-50 px-4 py-3 rounded-lg">
@@ -204,8 +197,6 @@ const About = () => {
           </motion.div>
         </div>
       </div>
-
-      {/* Values Section */}
       <div className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -253,15 +244,15 @@ const About = () => {
                 <div className="bg-pink-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   {value.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">{value.title}</h3>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                  {value.title}
+                </h3>
                 <p className="text-gray-600">{value.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </div>
-
-      {/* How It Works Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-pink-700 mb-4">How It Works</h2>
@@ -312,38 +303,41 @@ const About = () => {
                 {item.step}
               </div>
               <div className="flex items-center justify-center mb-4">
-                <div className="bg-pink-100 p-3 rounded-full">
-                  {item.icon}
-                </div>
+                <div className="bg-pink-100 p-3 rounded-full">{item.icon}</div>
               </div>
-              <h3 className="text-xl font-semibold text-center text-gray-800 mb-2">{item.title}</h3>
+              <h3 className="text-xl font-semibold text-center text-gray-800 mb-2">
+                {item.title}
+              </h3>
               <p className="text-gray-600 text-center">{item.description}</p>
             </motion.div>
           ))}
         </div>
       </div>
-
-      {/* Testimonials */}
       <div className="bg-pink-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-pink-700 mb-4">What Our Customers Say</h2>
+            <h2 className="text-3xl font-bold text-pink-700 mb-4">
+              What Our Customers Say
+            </h2>
             <div className="w-24 h-1 bg-pink-500 mx-auto"></div>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                quote: "The quality of products on Thirumathi Kart is unmatched. I love knowing my purchases support women artisans directly.",
+                quote:
+                  "The quality of products on Thirumathi Kart is unmatched. I love knowing my purchases support women artisans directly.",
                 author: "Priya M.",
                 role: "Loyal Customer"
               },
               {
-                quote: "As a seller, this platform has transformed my business. I've been able to reach customers across India!",
+                quote:
+                  "As a seller, this platform has transformed my business. I've been able to reach customers across India!",
                 author: "Lakshmi R.",
                 role: "Artisan Partner"
               },
               {
-                quote: "Excellent customer service and fast delivery. The stories behind each product make shopping here special.",
+                quote:
+                  "Excellent customer service and fast delivery. The stories behind each product make shopping here special.",
                 author: "Ananya K.",
                 role: "New Customer"
               }
@@ -377,25 +371,25 @@ const About = () => {
             ))}
           </div>
         </div>
-        <UserGuidePanel/>
+        <UserGuidePanel />
       </div>
-
-      {/* CTA Section */}
       <div className="bg-gradient-to-r from-pink-600 to-rose-500 py-16 px-4 sm:px-6 lg:px-8 text-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Experience Thirumathi Kart?</h2>
+          <h2 className="text-3xl font-bold mb-4">
+            Ready to Experience Thirumathi Kart?
+          </h2>
           <p className="text-xl mb-8 max-w-3xl mx-auto">
             Join thousands of customers supporting women artisans across India
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link 
-              to="/Login" 
+            <Link
+              to="/Login"
               className="bg-white text-pink-600 px-8 py-3 rounded-full font-medium hover:bg-pink-50 transition duration-300"
             >
               Shop Now
             </Link>
-            <Link 
-              to="/Register" 
+            <Link
+              to="/Register"
               className="bg-transparent border-2 border-white px-8 py-3 rounded-full font-medium hover:bg-white hover:text-pink-600 transition duration-300"
             >
               Create Account
