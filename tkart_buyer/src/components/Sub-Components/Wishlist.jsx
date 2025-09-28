@@ -4,9 +4,9 @@ import { toast, ToastContainer } from "react-toastify";
 import { motion } from "framer-motion";
 import "react-toastify/dist/ReactToastify.css";
 
-// Single wishlist item card
+
 const WishlistCard = ({ item, onRemove, onAddToCart }) => {
-  // Render star rating as filled and empty stars
+  
   const stars = "★".repeat(item.rating) + "☆".repeat(5 - item.rating);
 
   return (
