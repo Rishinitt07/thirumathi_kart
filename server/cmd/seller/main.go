@@ -23,6 +23,8 @@ import (
 )
 
 var db *sql.DB
+var buyerDB *sql.DB
+var deliveryDB *sql.DB
 
 func initDB() {
 	var err error
@@ -34,7 +36,25 @@ func initDB() {
 	if err = db.Ping(); err != nil {
 		panic(err)
 	}
-	fmt.Println("✅ Connected to PostgreSQL")
+
+	buyerConnStr := "user=postgres password=dharun123 dbname=buyerdb sslmode=disable"
+	buyerDB, err = sql.Open("postgres", buyerConnStr)
+	if err != nil {
+		panic(err)
+	}
+	if err = buyerDB.Ping(); err != nil {
+		panic(err)
+	}
+	
+	deliveryConnStr := "user=postgres password=dharun123 dbname=deliverydb sslmode=disable"
+	deliveryDB, err = sql.Open("postgres", deliveryConnStr)
+	if err != nil {
+		panic(err)
+	}
+	if err = deliveryDB.Ping(); err != nil {
+		panic(err)
+	}
+	fmt.Println("✅ Connected to PostgreSQL (Seller, Buyer, Delivery)")
 }
 
 func generateSecretKey() string {
@@ -825,9 +845,155 @@ func GetSellerInfoHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(seller)
 }
 
+func GetSellerOrdersHandler(w http.ResponseWriter, r *http.Request) {
+	claims, err := getClaimsFromRequest(r)
+	if err != nil {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+
+	sellerMobile := claims.Mobile
+
+	query := `
+		SELECT o.id, o.date, o.phone, o.address, o.city, o.state, o.pincode, o.payment_method, o.status, o.total, u.name, o.items
+		FROM orders o
+		JOIN users u ON o.username = u.username
+		WHERE o.items @> $1
+		ORDER BY o.date DESC
+	`
+	
+	// Fast JSONB containment search for the seller's mobile
+	searchJSON := fmt.Sprintf(`[{"seller_mobile": "%s"}]`, sellerMobile)
+	
+	rows, err := buyerDB.Query(query, searchJSON)
+	if err != nil {
+		fmt.Println("Error querying buyer orders:", err)
+		http.Error(w, "Failed to retrieve orders", http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
+
+	var orders []map[string]interface{}
+	for rows.Next() {
+		var id int
+		var date time.Time
+		var phone, address, city, state, pincode, paymentMethod, status, buyerName, itemsJSON string
+		var total float64
+
+		if err := rows.Scan(&id, &date, &phone, &address, &city, &state, &pincode, &paymentMethod, &status, &total, &buyerName, &itemsJSON); err != nil {
+			fmt.Println("Scan error:", err)
+			continue
+		}
+
+		// Parse the items
+		var items []map[string]interface{}
+		if err := json.Unmarshal([]byte(itemsJSON), &items); err != nil {
+			fmt.Println("JSON unmarshal error:", err)
+			continue
+		}
+
+		// Filter items to only those belonging to this seller
+		var sellerItems []map[string]interface{}
+		for _, item := range items {
+			if sm, ok := item["seller_mobile"].(string); ok && sm == sellerMobile {
+				sellerItems = append(sellerItems, item)
+			}
+		}
+
+		// If no items match (false positive on LIKE), skip
+		if len(sellerItems) == 0 {
+			continue
+		}
+
+		var deliveryName, deliveryPhone, deliveryStatus string
+		
+		// Query delivery info
+		deliveryQuery := `
+			SELECT u.name, u.phone, do.status 
+			FROM delivery_orders do
+			JOIN users u ON do.delivery_user = u.username
+			WHERE do.order_id = $1
+			ORDER BY do.updated_at DESC LIMIT 1
+		`
+		err = deliveryDB.QueryRow(deliveryQuery, id).Scan(&deliveryName, &deliveryPhone, &deliveryStatus)
+		if err != nil && err != sql.ErrNoRows {
+			fmt.Println("Error fetching delivery info:", err)
+		}
+
+		if deliveryStatus == "completed" && status != "Delivered" {
+			status = "Delivered"
+			buyerDB.Exec("UPDATE orders SET status = 'Delivered' WHERE id = $1", id)
+		}
+
+		order := map[string]interface{}{
+			"id":              id,
+			"orderId":         fmt.Sprintf("TK%05d", id),
+			"date":            date,
+			"phone":           phone,
+			"address":         address,
+			"city":            city,
+			"state":           state,
+			"pincode":         pincode,
+			"payment_method":  paymentMethod,
+			"status":          status,
+			"buyer_name":      buyerName,
+			"items":           sellerItems,
+			"delivery_name":   deliveryName,
+			"delivery_phone":  deliveryPhone,
+			"delivery_status": deliveryStatus,
+		}
+		orders = append(orders, order)
+	}
+
+	if orders == nil {
+		orders = []map[string]interface{}{}
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(orders)
+}
+
+func UpdateOrderStatusHandler(w http.ResponseWriter, r *http.Request) {
+	claims, err := getClaimsFromRequest(r)
+	if err != nil {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+
+	id := strings.TrimPrefix(r.URL.Path, "/orders/")
+	id = strings.TrimSuffix(id, "/status")
+
+	var body struct {
+		Status string `json:"status"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	// Fast JSONB containment search for the seller's mobile to ensure they have an item in this order
+	searchJSON := fmt.Sprintf(`[{"seller_mobile": "%s"}]`, claims.Mobile)
+
+	res, err := buyerDB.Exec("UPDATE orders SET status=$1 WHERE id=$2 AND items @> $3", body.Status, id, searchJSON)
+	if err != nil {
+		http.Error(w, "Failed to update status: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+	
+	rowsAffected, _ := res.RowsAffected()
+	if rowsAffected == 0 {
+		http.Error(w, "Order not found or unauthorized", http.StatusNotFound)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{"message": "Status updated successfully"})
+}
+
 func main() {
 	initDB()
 	defer db.Close()
+	defer buyerDB.Close()
 
 	_, err := db.Exec(`CREATE TABLE IF NOT EXISTS users (
         mobile TEXT PRIMARY KEY,
@@ -888,6 +1054,16 @@ func main() {
 	mux.Handle("/account", AuthMiddleware(http.HandlerFunc(DeleteAccountHandler)))
 	mux.HandleFunc("/public/products", GetAllProductsHandler)
 	mux.HandleFunc("/public/seller", GetSellerInfoHandler)
+	
+	mux.Handle("/orders", AuthMiddleware(http.HandlerFunc(GetSellerOrdersHandler)))
+	mux.Handle("/orders/", AuthMiddleware(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodPut && strings.HasSuffix(r.URL.Path, "/status") {
+			UpdateOrderStatusHandler(w, r)
+		} else {
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		}
+	})))
+
 	mux.Handle("/products", AuthMiddleware(http.HandlerFunc(GetMyProductsHandler)))
 	mux.Handle("/products/", AuthMiddleware(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {

@@ -341,15 +341,17 @@ const categoryStructure = {
   const addToCart = (product, qty = 1) => {
     const existingItem = cart.find(item => item.id === product.id);
     let updatedCart;
+    const discountedPrice = (product.price || 0) * (1 - (product.discount || 0) / 100);
+
     if (existingItem) {
       updatedCart = cart.map(item =>
         item.id === product.id ? { ...item, qty: item.qty + qty } : item
       );
     } else {
-      updatedCart = [...cart, { ...product, qty }];
+      updatedCart = [...cart, { ...product, price: discountedPrice, originalPrice: product.price, qty }];
     }
     setCart(updatedCart);
-    toast.success(`${qty} ${product.name} added to cart`);
+    void 0;
     ReactGA.event({ category: 'Cart', action: 'Add', label: product.name, value: product.price });
   };
 
@@ -357,10 +359,10 @@ const categoryStructure = {
     const exists = wishlist.some(item => item.id === product.id);
     if (exists) {
       setWishlist(wishlist.filter(item => item.id !== product.id));
-      toast.info(`${product.name} removed from wishlist`);
+      void 0;
     } else {
       setWishlist([...wishlist, product]);
-      toast.success(`${product.name} added to wishlist`);
+      void 0;
       ReactGA.event({ category: 'Wishlist', action: 'Add', label: product.name });
     }
   };
@@ -374,14 +376,14 @@ const categoryStructure = {
     const exists = compareProducts.some(item => item.id === product.id);
     if (exists) {
       setCompareProducts(compareProducts.filter(item => item.id !== product.id));
-      toast.info(`${product.name} removed from comparison`);
+      void 0;
     } else {
       if (compareProducts.length >= 3) {
-        toast.error('You can compare up to 3 products at a time');
+        void 0;
         return;
       }
       setCompareProducts([...compareProducts, product]);
-      toast.success(`${product.name} added to comparison`);
+      void 0;
       setShowCompareBar(true);
     }
   };
@@ -494,10 +496,10 @@ const categoryStructure = {
           <div className="flex flex-col md:flex-row gap-8">
             <aside className="hidden md:block w-72 flex-shrink-0">
               <div className="bg-white p-6 rounded-lg shadow-sm sticky top-8 space-y-6">
-                <h2 className="text-xl font-semibold mb-2">Filters</h2>
+                <h2 className="text-xl font-normal mb-2">Filters</h2>
 
                 <div>
-                  <h3 className="text-lg font-semibold mb-3">Categories</h3>
+                  <h3 className="text-lg font-normal mb-3">Categories</h3>
                   <ul className="space-y-2">
                     {Object.keys(categoryStructure).map((category) => (
                       <li key={category}>
@@ -519,7 +521,7 @@ const categoryStructure = {
                             {categoryStructure[category].subcategories.map((subcat) => (
                               <li key={subcat}>
                                 <button
-                                  className={`w-full text-left px-3 py-1 text-sm rounded-md ${selectedSubcategory === subcat ? 'text-hotpink-600 font-medium' : 'hover:text-gray-800'}`}
+                                  className={`w-full text-left px-3 py-1 text-sm rounded-md ${selectedSubcategory === subcat ? 'text-hotpink-600 font-normal' : 'hover:text-gray-800'}`}
                                   onClick={() => setSelectedSubcategory(subcat)}
                                 >
                                   {subcat}
@@ -534,7 +536,7 @@ const categoryStructure = {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold mb-3">Price Range</h3>
+                  <h3 className="text-lg font-normal mb-3">Price Range</h3>
                   <div className="px-2">
                     <div className="flex justify-between mb-2">
                       <span className="text-sm">₹{priceRange[0]}</span>
@@ -553,7 +555,7 @@ const categoryStructure = {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold mb-3">Availability</h3>
+                  <h3 className="text-lg font-normal mb-3">Availability</h3>
                   <div className="space-y-2">
                     {['all', 'in-stock', 'out-of-stock'].map((option) => (
                       <label key={option} className="flex items-center space-x-2">
@@ -573,7 +575,7 @@ const categoryStructure = {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold mb-3">Customer Rating</h3>
+                  <h3 className="text-lg font-normal mb-3">Customer Rating</h3>
                   <div className="space-y-2">
                     {[4, 3, 2, 1].map((stars) => (
                       <label key={stars} className="flex items-center space-x-2">
@@ -601,7 +603,7 @@ const categoryStructure = {
 
                 {availableFilters.colors.length > 0 && (
                   <div>
-                    <h3 className="text-lg font-semibold mb-3">Colors</h3>
+                    <h3 className="text-lg font-normal mb-3">Colors</h3>
                     <div className="flex flex-wrap gap-2">
                       {availableFilters.colors.map((color) => (
                         <button
@@ -628,7 +630,7 @@ const categoryStructure = {
 
                 {availableFilters.sizes.length > 0 && (
                   <div>
-                    <h3 className="text-lg font-semibold mb-3">Sizes</h3>
+                    <h3 className="text-lg font-normal mb-3">Sizes</h3>
                     <div className="flex flex-wrap gap-2">
                       {availableFilters.sizes.map((size) => (
                         <button
@@ -653,7 +655,7 @@ const categoryStructure = {
 
                 {availableFilters.brands.length > 0 && (
                   <div>
-                    <h3 className="text-lg font-semibold mb-3">Brands</h3>
+                    <h3 className="text-lg font-normal mb-3">Brands</h3>
                     <div className="space-y-2">
                       {availableFilters.brands.map((brand) => (
                         <label key={brand} className="flex items-center space-x-2">
@@ -684,12 +686,12 @@ const categoryStructure = {
                       onChange={() => setDiscountFilter(!discountFilter)}
                       className="text-hotpink-600 focus:ring-hotpink-500"
                     />
-                    <span className="font-medium">Discounted Items Only</span>
+                    <span className="font-normal">Discounted Items Only</span>
                   </label>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold mb-3">Sort By</h3>
+                  <h3 className="text-lg font-normal mb-3">Sort By</h3>
                   <select
                     className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-hotpink-500 focus:border-hotpink-500"
                     value={sortOption}
@@ -755,7 +757,7 @@ const categoryStructure = {
                     </div>
                     <div className="space-y-6">
                       <div>
-                        <h3 className="text-lg font-semibold mb-3">Categories</h3>
+                        <h3 className="text-lg font-normal mb-3">Categories</h3>
                         <ul className="space-y-2">
                           {Object.keys(categoryStructure).map((category) => (
                             <li key={category}>
@@ -777,7 +779,7 @@ const categoryStructure = {
                                   {categoryStructure[category].subcategories.map((subcat) => (
                                     <li key={subcat}>
                                       <button
-                                        className={`w-full text-left px-3 py-1 text-sm rounded-md ${selectedSubcategory === subcat ? 'text-hotpink-600 font-medium' : 'hover:text-gray-800'}`}
+                                        className={`w-full text-left px-3 py-1 text-sm rounded-md ${selectedSubcategory === subcat ? 'text-hotpink-600 font-normal' : 'hover:text-gray-800'}`}
                                         onClick={() => setSelectedSubcategory(subcat)}
                                       >
                                         {subcat}
@@ -792,7 +794,7 @@ const categoryStructure = {
                       </div>
 
                       <div>
-                        <h3 className="text-lg font-semibold mb-3">Price Range</h3>
+                        <h3 className="text-lg font-normal mb-3">Price Range</h3>
                         <div className="px-2">
                           <div className="flex justify-between mb-2">
                             <span className="text-sm">₹{priceRange[0]}</span>
@@ -811,7 +813,7 @@ const categoryStructure = {
                       </div>
 
                       <div>
-                        <h3 className="text-lg font-semibold mb-3">Availability</h3>
+                        <h3 className="text-lg font-normal mb-3">Availability</h3>
                         <div className="space-y-2">
                           {['all', 'in-stock', 'out-of-stock'].map((option) => (
                             <label key={option} className="flex items-center space-x-2">
@@ -831,7 +833,7 @@ const categoryStructure = {
                       </div>
 
                       <div>
-                        <h3 className="text-lg font-semibold mb-3">Customer Rating</h3>
+                        <h3 className="text-lg font-normal mb-3">Customer Rating</h3>
                         <div className="space-y-2">
                           {[4, 3, 2, 1].map((stars) => (
                             <label key={stars} className="flex items-center space-x-2">
@@ -859,7 +861,7 @@ const categoryStructure = {
 
                       {availableFilters.colors.length > 0 && (
                         <div>
-                          <h3 className="text-lg font-semibold mb-3">Colors</h3>
+                          <h3 className="text-lg font-normal mb-3">Colors</h3>
                           <div className="flex flex-wrap gap-2">
                             {availableFilters.colors.map((color) => (
                               <button
@@ -886,7 +888,7 @@ const categoryStructure = {
 
                       {availableFilters.sizes.length > 0 && (
                         <div>
-                          <h3 className="text-lg font-semibold mb-3">Sizes</h3>
+                          <h3 className="text-lg font-normal mb-3">Sizes</h3>
                           <div className="flex flex-wrap gap-2">
                             {availableFilters.sizes.map((size) => (
                               <button
@@ -911,7 +913,7 @@ const categoryStructure = {
 
                       {availableFilters.brands.length > 0 && (
                         <div>
-                          <h3 className="text-lg font-semibold mb-3">Brands</h3>
+                          <h3 className="text-lg font-normal mb-3">Brands</h3>
                           <div className="space-y-2">
                             {availableFilters.brands.map((brand) => (
                               <label key={brand} className="flex items-center space-x-2">
@@ -942,12 +944,12 @@ const categoryStructure = {
                             onChange={() => setDiscountFilter(!discountFilter)}
                             className="text-hotpink-600 focus:ring-hotpink-500"
                           />
-                          <span className="font-medium">Discounted Items Only</span>
+                          <span className="font-normal">Discounted Items Only</span>
                         </label>
                       </div>
 
                       <div>
-                        <h3 className="text-lg font-semibold mb-3">Sort By</h3>
+                        <h3 className="text-lg font-normal mb-3">Sort By</h3>
                         <select
                           className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-hotpink-500 focus:border-hotpink-500"
                           value={sortOption}
@@ -994,7 +996,7 @@ const categoryStructure = {
             <main className="flex-1">
               {recentlyViewed.length > 0 && (
                 <div className="mb-8">
-                  <h2 className="text-xl font-semibold mb-4">Recently Viewed</h2>
+                  <h2 className="text-xl font-normal mb-4">Recently Viewed</h2>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                     {recentlyViewed.map((product) => (
                       <div key={product.id} className="bg-white rounded-lg shadow-sm overflow-hidden">
@@ -1020,7 +1022,7 @@ const categoryStructure = {
                           </button>
                         </div>
                         <div className="p-3">
-                          <h3 className="font-medium text-sm mb-1 truncate">{product.name}</h3>
+                          <h3 className="font-normal text-sm mb-1 truncate">{product.name}</h3>
                           <div className="flex items-center justify-between">
                             <span className="font-normal text-hotpink-600">
                               ₹{(product.price * (1 - product.discount / 100)).toFixed(2)}
@@ -1040,7 +1042,7 @@ const categoryStructure = {
 
               <div className="mb-8">
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-semibold">
+                  <h2 className="text-xl font-normal">
                     {selectedCategory === 'All' ? 'All Products' : selectedCategory}
                     {selectedSubcategory !== 'All' && ` / ${selectedSubcategory}`}
                   </h2>
@@ -1089,7 +1091,7 @@ const categoryStructure = {
                         <div className="p-4">
                           <div className="flex justify-between items-start mb-1">
                             <h3
-                              className="font-medium text-sm hover:text-hotpink-600 cursor-pointer line-clamp-2"
+                              className="font-normal text-sm hover:text-hotpink-600 cursor-pointer line-clamp-2"
                               onClick={() => openQuickView(product)}
                             >
                               {product.name}
@@ -1136,7 +1138,7 @@ const categoryStructure = {
                   </div>
                 ) : (
                   <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-                    <h3 className="text-lg font-medium mb-2">No products found</h3>
+                    <h3 className="text-lg font-normal mb-2">No products found</h3>
                     <p className="text-gray-600 mb-4">Try adjusting your filters or search query</p>
                     <button
                       onClick={() => {
@@ -1290,7 +1292,7 @@ const categoryStructure = {
                           </span>
                         )}
                         {quickViewProduct.discount > 0 && (
-                          <span className="ml-2 bg-hotpink-100 text-hotpink-800 text-xs font-semibold px-2 py-1 rounded">
+                          <span className="ml-2 bg-hotpink-100 text-hotpink-800 text-xs font-normal px-2 py-1 rounded">
                             {quickViewProduct.discount}% OFF
                           </span>
                         )}
@@ -1300,7 +1302,7 @@ const categoryStructure = {
                       </div>
                       {quickViewProduct.colors?.length > 0 && (
                         <div className="mb-4">
-                          <h3 className="text-sm font-medium mb-2">Color:</h3>
+                          <h3 className="text-sm font-normal mb-2">Color:</h3>
                           <div className="flex space-x-2">
                             {quickViewProduct.colors.map((color, idx) => (
                               <button
@@ -1316,7 +1318,7 @@ const categoryStructure = {
                       )}
                       {quickViewProduct.sizes?.length > 0 && (
                         <div className="mb-4">
-                          <h3 className="text-sm font-medium mb-2">Size:</h3>
+                          <h3 className="text-sm font-normal mb-2">Size:</h3>
                           <div className="flex flex-wrap gap-2">
                             {quickViewProduct.sizes.map((size) => (
                               <button
@@ -1330,7 +1332,7 @@ const categoryStructure = {
                         </div>
                       )}
                       <div className="mb-6">
-                        <h3 className="text-sm font-medium mb-2">Quantity:</h3>
+                        <h3 className="text-sm font-normal mb-2">Quantity:</h3>
                         <div className="flex items-center">
                           <button
                             onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
@@ -1358,7 +1360,7 @@ const categoryStructure = {
                             setQuickViewProduct(null);
                           }}
                           disabled={quickViewProduct.stock <= 0}
-                          className={`flex-1 py-3 px-6 rounded-md font-medium ${
+                          className={`flex-1 py-3 px-6 rounded-md font-normal ${
                             quickViewProduct.stock <= 0 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-hotpink-600 text-white hover:bg-hotpink-700'
                           }`}
                         >
@@ -1381,19 +1383,19 @@ const categoryStructure = {
                       <div className="mt-6 pt-6 border-t">
                         <div className="grid grid-cols-2 gap-4 text-sm">
                           <div>
-                            <h3 className="font-medium mb-1">Category:</h3>
+                            <h3 className="font-normal mb-1">Category:</h3>
                             <p className="text-gray-600 capitalize">{quickViewProduct.category}</p>
                           </div>
                           <div>
-                            <h3 className="font-medium mb-1">Brand:</h3>
+                            <h3 className="font-normal mb-1">Brand:</h3>
                             <p className="text-gray-600">{quickViewProduct.brand || 'N/A'}</p>
                           </div>
                           <div>
-                            <h3 className="font-medium mb-1">SKU:</h3>
+                            <h3 className="font-normal mb-1">SKU:</h3>
                             <p className="text-gray-600">{quickViewProduct.sku || 'N/A'}</p>
                           </div>
                           <div>
-                            <h3 className="font-medium mb-1">Weight:</h3>
+                            <h3 className="font-normal mb-1">Weight:</h3>
                             <p className="text-gray-600">{quickViewProduct.weight || 'N/A'}</p>
                           </div>
                         </div>
@@ -1444,7 +1446,7 @@ const categoryStructure = {
               <div className="max-w-7xl mx-auto px-4 py-3">
                 <div className="flex justify-between items-center">
                   <div className="flex items-center space-x-4">
-                    <h3 className="font-medium">Compare Products ({compareProducts.length}/3)</h3>
+                    <h3 className="font-normal">Compare Products ({compareProducts.length}/3)</h3>
                     <div className="flex space-x-2">
                       {compareProducts.map((product) => (
                         <div key={product.id} className="flex items-center bg-gray-100 rounded px-2 py-1">

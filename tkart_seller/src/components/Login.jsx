@@ -12,12 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const showErrorToast = () => {
-    toast.error('Invalid Credentials', {
-      position: "top-right",
-      autoClose: 4000,
-      theme: "dark",
-      transition: Bounce,
-    });
+    void 0;
   };
 
   axios.defaults.withCredentials = true;

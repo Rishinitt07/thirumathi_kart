@@ -80,12 +80,12 @@ const Register = () => {
         {/* Left Panel */}
         <div className="md:w-1/2 bg-gradient-to-br from-hotpink-400 to-hotpink-600 text-white flex flex-col justify-center items-center p-10 relative">
           <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/3"></div>
-          <h2 className="text-4xl font-bold mb-4 z-10 drop-shadow-sm">Welcome Back!</h2>
+          <h2 className="text-4xl font-normal mb-4 z-10 drop-shadow-sm">Welcome Back!</h2>
           <p className="text-center text-white/90 text-lg mb-8 z-10">
             To keep connected with us please login with your personal info
           </p>
           <Link to="/login" className="z-10">
-            <button className="bg-white text-hotpink-600 px-8 py-3 rounded-full font-bold shadow-lg hover:bg-hotpink-50 transition-all duration-300 transform hover:-translate-y-1">
+            <button className="bg-white text-hotpink-600 px-8 py-3 rounded-full font-normal shadow-lg hover:bg-hotpink-50 transition-all duration-300 transform hover:-translate-y-1">
               SIGN IN
             </button>
           </Link>
@@ -98,7 +98,7 @@ const Register = () => {
             <img src={tklogo} alt="Thirumathi Kart Logo" className="h-24 w-24 drop-shadow-md" />
             </div>
 
-          <h2 className="text-3xl font-extrabold text-hotpink-600 text-center mb-8">
+          <h2 className="text-3xl font-normal text-hotpink-600 text-center mb-8">
             Create Account
           </h2>
 
@@ -113,7 +113,7 @@ const Register = () => {
                   placeholder="First Name"
                   value={form.firstName}
                   onChange={handleChange}
-                  className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium"
+                  className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-normal"
                   required
                 />
               </div>
@@ -124,7 +124,7 @@ const Register = () => {
                   placeholder="Last Name"
                   value={form.lastName}
                   onChange={handleChange}
-                  className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium"
+                  className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-normal"
                   required
                 />
               </div>
@@ -140,7 +140,7 @@ const Register = () => {
                 value={form.mobile}
                 onChange={handleChange}
                 disabled={otpVerified}
-                className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium disabled:opacity-50"
+                className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-normal disabled:opacity-50"
                 required
               />
               {otpVerified ? (
@@ -149,7 +149,7 @@ const Register = () => {
                 <button
                   type="button"
                   onClick={handleSendOtp}
-                  className="absolute right-2 bg-hotpink-100 text-hotpink-600 px-3 py-1 rounded-lg text-sm font-semibold hover:bg-hotpink-200 transition-colors"
+                  className="absolute right-2 bg-hotpink-100 text-hotpink-600 px-3 py-1 rounded-lg text-sm font-normal hover:bg-hotpink-200 transition-colors"
                 >
                   {otpSent ? "Resend" : "Send OTP"}
                 </button>
@@ -166,13 +166,13 @@ const Register = () => {
                     placeholder="Enter 6-digit OTP"
                     value={otp}
                     onChange={(e) => setOtp(e.target.value)}
-                    className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium tracking-widest"
+                    className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-normal tracking-widest"
                   />
                 </div>
                 <button
                   type="button"
                   onClick={handleVerifyOtp}
-                  className="bg-hotpink-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-hotpink-600 transition-colors shadow-md"
+                  className="bg-hotpink-500 text-white px-6 py-3 rounded-xl font-normal hover:bg-hotpink-600 transition-colors shadow-md"
                 >
                   Verify
                 </button>
@@ -188,7 +188,7 @@ const Register = () => {
                 placeholder="Password"
                 value={form.password}
                 onChange={handleChange}
-                className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium"
+                className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-normal"
                 required
               />
             </div>
@@ -197,7 +197,7 @@ const Register = () => {
             <button
               type="submit"
               disabled={!otpVerified}
-              className={`w-full py-3 mt-6 text-lg font-bold rounded-full shadow-lg transition-all duration-300 transform ${
+              className={`w-full py-3 mt-6 text-lg font-normal rounded-full shadow-lg transition-all duration-300 transform ${
                 otpVerified 
                   ? 'bg-hotpink-600 text-white hover:bg-hotpink-500 hover:-translate-y-1' 
                   : 'bg-gray-300 text-gray-500 cursor-not-allowed'

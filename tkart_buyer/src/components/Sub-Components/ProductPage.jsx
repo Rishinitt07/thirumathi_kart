@@ -13,7 +13,7 @@ const ProductCard = ({ item, onClick }) => (
     <div className="w-full aspect-square bg-gray-50 rounded-xl overflow-hidden mb-4 relative border-b border-gray-50">
       <img src={item.images?.[0] || 'https://placehold.co/400x400'} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
     </div>
-    <h3 className="font-semibold text-gray-800 line-clamp-2 text-sm min-h-[40px] group-hover:text-hotpink-600 transition-colors">{item.name}</h3>
+    <h3 className="font-normal text-gray-800 line-clamp-2 text-sm min-h-[40px] group-hover:text-hotpink-600 transition-colors">{item.name}</h3>
     <p className="font-normal text-gray-900 mt-2">
       ₹{((item.price || 0) * (1 - (item.discount || 0) / 100)).toLocaleString()}
     </p>
@@ -75,11 +75,11 @@ const ProductPage = () => {
           // Read it back (excluding current product for display)
           setRecentlyViewed(updatedViewed.filter(p => p.id.toString() !== foundProduct.id.toString()).slice(0, 5));
         } else {
-          toast.error("Product not found");
+          void 0;
         }
       } catch (err) {
         console.error('Error fetching product:', err);
-        toast.error("Failed to load product details.");
+        void 0;
       } finally {
         setLoading(false);
       }
@@ -97,27 +97,29 @@ const ProductPage = () => {
       
       // Enforce single seller rule
       if (storedCart.length > 0 && storedCart[0].seller_mobile !== product.seller_mobile) {
-        toast.error("You can only add items from one seller at a time.");
+        void 0;
         return;
       }
 
       const existing = storedCart.find(item => item.id === product.id);
       
       let updatedCart;
+      const discountedPrice = (product.price || 0) * (1 - (product.discount || 0) / 100);
+
       if (existing) {
         updatedCart = storedCart.map(item => 
           item.id === product.id ? { ...item, qty: item.qty + quantity } : item
         );
       } else {
-        updatedCart = [...storedCart, { ...product, qty: quantity }];
+        updatedCart = [...storedCart, { ...product, price: discountedPrice, originalPrice: product.price, qty: quantity }];
       }
       
       localStorage.setItem('cart', JSON.stringify(updatedCart));
       syncCartToDB(updatedCart);
       window.dispatchEvent(new Event('storage'));
-      toast.success(`${product.name} added to cart!`);
+      void 0;
     } catch (error) {
-      toast.error('Failed to add to cart.');
+      void 0;
     }
   };
 
@@ -151,7 +153,7 @@ const ProductPage = () => {
       {/* Top Navigation Bar */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center gap-4">
-          <button onClick={() => navigate(-1)} className="text-gray-500 hover:text-hotpink-600 flex items-center gap-2 font-medium transition-colors">
+          <button onClick={() => navigate(-1)} className="text-gray-500 hover:text-hotpink-600 flex items-center gap-2 font-normal transition-colors">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             Back
           </button>
@@ -218,7 +220,7 @@ const ProductPage = () => {
                   </>
                 )}
               </div>
-              <p className="text-sm text-gray-500 font-medium">Inclusive of all taxes</p>
+              <p className="text-sm text-gray-500 font-normal">Inclusive of all taxes</p>
             </div>
 
             <div className="prose prose-sm text-gray-600 mb-8 max-w-none">
@@ -228,19 +230,19 @@ const ProductPage = () => {
 
             <div className="grid grid-cols-2 gap-4 text-sm mb-8 border-t border-b border-gray-100 py-6">
               <div>
-                <p className="text-gray-500 mb-1 font-medium">Brand</p>
+                <p className="text-gray-500 mb-1 font-normal">Brand</p>
                 <p className="font-normal text-gray-900">{product.brand || 'N/A'}</p>
               </div>
               <div>
-                <p className="text-gray-500 mb-1 font-medium">SKU</p>
+                <p className="text-gray-500 mb-1 font-normal">SKU</p>
                 <p className="font-normal text-gray-900">{product.sku || 'N/A'}</p>
               </div>
               <div>
-                <p className="text-gray-500 mb-1 font-medium">Weight</p>
+                <p className="text-gray-500 mb-1 font-normal">Weight</p>
                 <p className="font-normal text-gray-900">{product.weight || 'N/A'}</p>
               </div>
               <div>
-                <p className="text-gray-500 mb-1 font-medium">Availability</p>
+                <p className="text-gray-500 mb-1 font-normal">Availability</p>
                 <p className={`font-normal ${(product.stock || 0) > 0 ? 'text-green-600' : 'text-red-500'}`}>
                   {(product.stock || 0) > 0 ? `In Stock (${product.stock})` : 'Out of Stock'}
                 </p>
@@ -250,27 +252,27 @@ const ProductPage = () => {
             {/* Seller Info Section */}
             <div className="mb-10 bg-orange-50/50 p-6 rounded-2xl border border-orange-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h3 className="text-sm text-gray-500 mb-2 uppercase tracking-wide font-semibold flex items-center gap-2">
+                <h3 className="text-sm text-gray-500 mb-2 uppercase tracking-wide font-normal flex items-center gap-2">
                   🏪 Sold by
                 </h3>
                 <div className="flex flex-col gap-1">
                   <div className="flex items-center gap-3">
-                    <span className="font-medium text-gray-900 text-lg">{product.seller_name || 'Seller'}</span>
-                    <span className="text-sm bg-green-100 text-green-800 px-2 py-0.5 rounded-md flex items-center gap-1 font-medium">
+                    <span className="font-normal text-gray-900 text-lg">{product.seller_name || 'Seller'}</span>
+                    <span className="text-sm bg-green-100 text-green-800 px-2 py-0.5 rounded-md flex items-center gap-1 font-normal">
                       ⭐ 4.8
                     </span>
                   </div>
                   <span className="text-sm text-gray-600 flex items-center gap-1.5 mt-1">
                     📍 {product.seller_district ? `${product.seller_district}, ${product.seller_state}` : 'Location Unavailable'}
                   </span>
-                  <span className="text-sm text-hotpink-600 font-medium flex items-center gap-1.5 mt-1">
+                  <span className="text-sm text-hotpink-600 font-normal flex items-center gap-1.5 mt-1">
                     ✔ Women Entrepreneur
                   </span>
                 </div>
               </div>
               <button 
                 onClick={() => navigate(`/store/${product.seller_mobile}`)} 
-                className="px-6 py-2.5 bg-white border border-gray-200 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors shadow-sm whitespace-nowrap"
+                className="px-6 py-2.5 bg-white border border-gray-200 text-gray-700 font-normal rounded-xl hover:bg-gray-50 transition-colors shadow-sm whitespace-nowrap"
               >
                 Visit Store
               </button>

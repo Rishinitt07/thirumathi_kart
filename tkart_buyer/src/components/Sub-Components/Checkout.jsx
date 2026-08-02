@@ -37,7 +37,7 @@ const Checkout = () => {
     
     // Check for old cart format missing seller details and clear if needed
     if (storedCart.length > 0 && !storedCart[0].seller_name) {
-      toast.warn("Your cart was outdated and has been cleared. Please add items again.");
+      void 0;
       localStorage.removeItem('cart');
       setCart([]);
       setTimeout(() => navigate('/cart'), 2000);
@@ -45,7 +45,7 @@ const Checkout = () => {
     }
 
     if (storedCart.length === 0) {
-      toast.warn("Your cart is empty. Redirecting...");
+      void 0;
       setTimeout(() => navigate('/cart'), 2000);
     }
     setCart(storedCart);
@@ -78,7 +78,7 @@ const Checkout = () => {
   const handleConfirmOrder = async () => {
     const selectedAddress = addresses.find(a => a.id === selectedAddressId);
     if (!selectedAddress) {
-      toast.error('Please select a delivery address.');
+      void 0;
       return;
     }
 
@@ -95,11 +95,11 @@ const Checkout = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       });
 
-      toast.success('Success! Your order has been placed.');
+      void 0;
       localStorage.removeItem('cart');
       setTimeout(() => navigate('/orders'), 2000);
     } catch (err) {
-      toast.error('Oh no! Something went wrong. Please try placing your order again.');
+      void 0;
     }
   };
 
@@ -110,8 +110,8 @@ const Checkout = () => {
 
       <div className="w-full max-w-7xl">
         <div className="mb-8 flex items-center justify-between">
-          <h1 className="text-3xl font-semibold text-gray-900">Checkout</h1>
-          <button onClick={() => navigate('/cart')} className="text-hotpink-600 hover:underline font-medium">Return to Cart</button>
+          <h1 className="text-3xl font-normal text-gray-900">Checkout</h1>
+          <button onClick={() => navigate('/cart')} className="text-hotpink-600 hover:underline font-normal">Return to Cart</button>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8 items-start">
@@ -119,14 +119,14 @@ const Checkout = () => {
           <div className="flex-1 w-full flex flex-col gap-8">
             
             <div className="bg-white p-6 sm:p-10 rounded-2xl shadow-sm border border-gray-100">
-              <h2 className="text-2xl font-semibold mb-2 text-gray-900">Delivery Address</h2>
+              <h2 className="text-2xl font-normal mb-2 text-gray-900">Delivery Address</h2>
               <p className="text-gray-500 mb-8 text-base">Where should we deliver your order?</p>
 
               <div className="flex flex-col gap-5">
                 {addresses.length === 0 ? (
                   <div className="p-8 border-2 border-dashed border-gray-300 rounded-2xl text-center text-gray-500">
                     <p className="mb-4 text-lg">No addresses found.</p>
-                    <button onClick={() => window.location.href = '/profile'} className="px-6 py-2 bg-hotpink-50 text-hotpink-600 rounded-xl font-medium">Go to Profile to Add Address</button>
+                    <button onClick={() => window.location.href = '/profile'} className="px-6 py-2 bg-hotpink-50 text-hotpink-600 rounded-xl font-normal">Go to Profile to Add Address</button>
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -135,12 +135,12 @@ const Checkout = () => {
                         <input type="radio" name="address" checked={selectedAddressId === addr.id} onChange={() => setSelectedAddressId(addr.id)} className="mt-1 w-5 h-5 text-hotpink-600 focus:ring-hotpink-500 accent-hotpink-500 cursor-pointer" />
                         <div className="flex-1">
                           <div className="flex justify-between items-start mb-2">
-                            <span className="font-semibold text-gray-900 flex items-center gap-2 text-lg">
+                            <span className="font-normal text-gray-900 flex items-center gap-2 text-lg">
                               {addr.tag}
                             </span>
-                            <span className="text-sm text-hotpink-600 font-medium cursor-pointer hover:underline" onClick={(e) => { e.preventDefault(); navigate('/profile'); }}>Edit</span>
+                            <span className="text-sm text-hotpink-600 font-normal cursor-pointer hover:underline" onClick={(e) => { e.preventDefault(); navigate('/profile'); }}>Edit</span>
                           </div>
-                          <p className="font-medium text-gray-800 text-base mb-1">{addr.fullName} <span className="text-gray-500 ml-2">{addr.mobile}</span></p>
+                          <p className="font-normal text-gray-800 text-base mb-1">{addr.fullName} <span className="text-gray-500 ml-2">{addr.mobile}</span></p>
                           <p className="text-base text-gray-600 leading-relaxed">
                             {addr.houseNo}, {addr.street}, {addr.area}<br/>
                             {addr.city}, {addr.state} - {addr.pincode}
@@ -151,7 +151,7 @@ const Checkout = () => {
                   </div>
                 )}
                 
-                <button className="flex items-center justify-center gap-2 py-4 border-2 border-dashed border-gray-300 rounded-2xl text-hotpink-600 font-medium hover:bg-gray-50 hover:border-hotpink-300 transition-colors mt-2 text-lg" onClick={() => window.location.href = '/profile'}>
+                <button className="flex items-center justify-center gap-2 py-4 border-2 border-dashed border-gray-300 rounded-2xl text-hotpink-600 font-normal hover:bg-gray-50 hover:border-hotpink-300 transition-colors mt-2 text-lg" onClick={() => window.location.href = '/profile'}>
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
                   Add New Address
                 </button>
@@ -159,7 +159,7 @@ const Checkout = () => {
 
               <div className="mt-8 bg-green-50 p-5 rounded-2xl flex items-center justify-between border border-green-100">
                 <div>
-                  <p className="text-base text-green-800 font-medium flex items-center gap-2">
+                  <p className="text-base text-green-800 font-normal flex items-center gap-2">
                     <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" /><path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3z" /><path d="M14 5h-3v8h3.05a2.5 2.5 0 014.5.9V10l-2-5h-2.5z" /></svg>
                     Estimated Delivery: Tomorrow
                   </p>
@@ -169,13 +169,13 @@ const Checkout = () => {
             </div>
 
             <div className="bg-white p-6 sm:p-10 rounded-2xl shadow-sm border border-gray-100">
-              <h3 className="text-2xl font-semibold text-gray-900 flex items-center gap-2 mb-6">
+              <h3 className="text-2xl font-normal text-gray-900 flex items-center gap-2 mb-6">
                 💵 Payment Method
               </h3>
               <div className="flex items-center gap-4 bg-gray-50 p-5 rounded-2xl border border-gray-200">
                 <input type="radio" checked readOnly className="w-6 h-6 text-hotpink-600 accent-hotpink-500" />
                 <div>
-                  <p className="text-lg font-medium text-gray-900">Cash on Delivery</p>
+                  <p className="text-lg font-normal text-gray-900">Cash on Delivery</p>
                   <p className="text-base text-gray-500 mt-1">Pay ₹{total.toLocaleString()} at delivery</p>
                 </div>
               </div>
@@ -186,7 +186,7 @@ const Checkout = () => {
           {/* RIGHT COLUMN: Sidebar (Summary & Price Details) */}
           <aside className="w-full lg:w-[450px] shrink-0 flex flex-col gap-8">
             <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-100">
-              <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2 mb-6">
+              <h3 className="text-xl font-normal text-gray-900 flex items-center gap-2 mb-6">
                 📦 Order Summary <span className="text-base font-normal text-gray-500">({cart.reduce((sum, item) => sum + item.qty, 0)} Items)</span>
               </h3>
               
@@ -199,18 +199,18 @@ const Checkout = () => {
                       className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg bg-gray-50 border border-gray-100 shrink-0"
                     />
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-medium text-gray-900 truncate">{item.name}</h4>
+                      <h4 className="font-normal text-gray-900 truncate">{item.name}</h4>
                       <p className="text-sm text-gray-500 mt-1">Qty: {item.qty}</p>
                     </div>
                     <div className="text-right shrink-0">
-                      <p className="font-semibold text-gray-900">₹{(item.price * item.qty).toLocaleString()}</p>
+                      <p className="font-normal text-gray-900">₹{(item.price * item.qty).toLocaleString()}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
               <div className="border-t border-gray-200 pt-6">
-                <h3 className="font-semibold text-gray-900 mb-4 text-lg">Price Details</h3>
+                <h3 className="font-normal text-gray-900 mb-4 text-lg">Price Details</h3>
                 <div className="flex flex-col gap-3 text-base text-gray-600 mb-6">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
@@ -222,10 +222,10 @@ const Checkout = () => {
                   </div>
                   <div className="flex justify-between">
                     <span>Delivery</span>
-                    <span className="text-green-600 font-medium">FREE</span>
+                    <span className="text-green-600 font-normal">FREE</span>
                   </div>
                 </div>
-                <div className="border-t border-gray-200 pt-4 flex justify-between font-bold text-2xl text-gray-900 mb-8">
+                <div className="border-t border-gray-200 pt-4 flex justify-between font-normal text-2xl text-gray-900 mb-8">
                   <span>Total</span>
                   <span>₹{total.toLocaleString()}</span>
                 </div>
@@ -234,7 +234,7 @@ const Checkout = () => {
               <button 
                 onClick={handleConfirmOrder} 
                 disabled={!selectedAddressId}
-                className="w-full py-4 bg-hotpink-500 text-white font-semibold rounded-xl hover:bg-hotpink-600 transition-colors shadow-md text-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-4 bg-hotpink-500 text-white font-normal rounded-xl hover:bg-hotpink-600 transition-colors shadow-md text-xl disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Place Order
               </button>
@@ -242,9 +242,9 @@ const Checkout = () => {
 
             {/* Seller Info */}
             <div className="bg-orange-50/50 p-6 rounded-2xl shadow-sm border border-orange-100">
-              <h3 className="text-sm text-gray-500 mb-2 uppercase tracking-wide font-semibold">Seller</h3>
+              <h3 className="text-sm text-gray-500 mb-2 uppercase tracking-wide font-normal">Seller</h3>
               <div className="flex flex-col gap-1">
-                <span className="font-medium text-gray-900 text-lg flex items-center gap-2">
+                <span className="font-normal text-gray-900 text-lg flex items-center gap-2">
                   🏪 {cart[0]?.seller_name || 'Seller'}
                 </span>
                 <span className="text-gray-600 text-sm flex items-center gap-1.5">

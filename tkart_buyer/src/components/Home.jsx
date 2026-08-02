@@ -206,7 +206,7 @@ const Home = () => {
                   <h3 className="text-lg font-normal text-gray-800">
                     {deal.title}
                   </h3>
-                  <p className="text-hotpink-600 font-medium mb-1">{deal.subtitle}</p>
+                  <p className="text-hotpink-600 font-normal mb-1">{deal.subtitle}</p>
                   <p className="text-sm text-gray-600">{deal.tagline}</p>
                 </div>
                 <div className="bg-white/50 p-3 rounded-full">{deal.icon}</div>
@@ -237,7 +237,7 @@ const Home = () => {
                 <div className="bg-hotpink-50 p-3 rounded-full mb-3">
                   {cat.icon}
                 </div>
-                <h3 className="font-medium text-gray-800">{cat.name}</h3>
+                <h3 className="font-normal text-gray-800">{cat.name}</h3>
                 {cat.featured && (
                   <span className="mt-1 text-xs bg-hotpink-100 text-hotpink-700 px-2 py-0.5 rounded-full">
                     Popular
@@ -283,7 +283,7 @@ const Home = () => {
                 <div className="p-4 flex flex-col flex-1 justify-between">
                   <div>
                     <span className="text-xs text-hotpink-500">{product.category}</span>
-                    <h3 className="font-medium text-gray-800 line-clamp-2 my-1 min-h-[40px]">
+                    <h3 className="font-normal text-gray-800 line-clamp-2 my-1 min-h-[40px]">
                       {product.name}
                     </h3>
                     <div className="flex items-center mb-3">
@@ -305,7 +305,7 @@ const Home = () => {
                       </span>
                     )}
                   </div>
-                  <button className="w-full mt-3 py-2 bg-hotpink-100 text-hotpink-600 rounded-lg font-medium hover:bg-hotpink-200 transition-colors">
+                  <button className="w-full mt-3 py-2 bg-hotpink-100 text-hotpink-600 rounded-lg font-normal hover:bg-hotpink-200 transition-colors">
                     Add to Cart
                   </button>
                 </div>
@@ -320,28 +320,28 @@ const Home = () => {
             <div className="bg-hotpink-50 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
               <FiTruck className="text-xl text-hotpink-600" />
             </div>
-            <h3 className="font-medium text-gray-800">Free Delivery</h3>
+            <h3 className="font-normal text-gray-800">Free Delivery</h3>
             <p className="text-xs text-gray-500">On orders above ₹499</p>
           </div>
           <div className="bg-white p-4 rounded-xl border border-hotpink-100 text-center">
             <div className="bg-hotpink-50 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
               <FiClock className="text-xl text-hotpink-600" />
             </div>
-            <h3 className="font-medium text-gray-800">Easy Returns</h3>
+            <h3 className="font-normal text-gray-800">Easy Returns</h3>
             <p className="text-xs text-gray-500">15-day return policy</p>
           </div>
           <div className="bg-white p-4 rounded-xl border border-hotpink-100 text-center">
             <div className="bg-hotpink-50 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
               <FiStar className="text-xl text-hotpink-600" />
             </div>
-            <h3 className="font-medium text-gray-800">Authentic Products</h3>
+            <h3 className="font-normal text-gray-800">Authentic Products</h3>
             <p className="text-xs text-gray-500">Direct from artisans</p>
           </div>
           <div className="bg-white p-4 rounded-xl border border-hotpink-100 text-center">
             <div className="bg-hotpink-50 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
               <BsLightningFill className="text-xl text-hotpink-600" />
             </div>
-            <h3 className="font-medium text-gray-800">Express Delivery</h3>
+            <h3 className="font-normal text-gray-800">Express Delivery</h3>
             <p className="text-xs text-gray-500">In select cities</p>
           </div>
         </section>

@@ -83,7 +83,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
     const updateCartCount = () => {
       try {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        setCartCount(cart.length);
+        setCartCount(cart.reduce((sum, item) => sum + (item.qty || 1), 0));
       } catch (error) {
         setCartCount(0);
       }
@@ -101,16 +101,11 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
           localStorage.removeItem(item);
           sessionStorage.removeItem(item);
         });
-        toast.success("Logged out successfully", {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: true,
-          theme: "colored",
-        });
+        void 0;
         navigate('/login');
         window.dispatchEvent(new Event('storage'));
       } catch (error) {
-        toast.error("Failed to log out. Please try again.");
+        void 0;
       }
     }
   };
@@ -174,7 +169,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
                 </div>
                 <div>
                   <h2 className="text-lg font-normal text-gray-800 tracking-tight">Hello!</h2>
-                  <p className="text-sm font-semibold text-hotpink-500 tracking-widest">{firstName || "Guest"}</p>
+                  <p className="text-sm font-normal text-hotpink-500 tracking-widest">{firstName || "Guest"}</p>
                 </div>
               </div>
             </div>
@@ -219,7 +214,7 @@ const Navbar = withErrorBoundary(React.memo(({ toggleSidebar }) => {
     const updateCartCount = () => {
       try {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        setCartCount(cart.length);
+        setCartCount(cart.reduce((sum, item) => sum + (item.qty || 1), 0));
       } catch (error) {
         setCartCount(0);
       }
@@ -266,7 +261,7 @@ const Navbar = withErrorBoundary(React.memo(({ toggleSidebar }) => {
           </div>
 
           <div className="flex items-center space-x-4 sm:space-x-6">
-            <span className="text-sm font-semibold text-hotpink-600 hidden sm:inline">
+            <span className="text-sm font-normal text-hotpink-600 hidden sm:inline">
               Hi! {firstName || "Buyer"}
             </span>
 
@@ -307,7 +302,7 @@ const MobileBottomNav = withErrorBoundary(React.memo(() => {
     const updateCartCount = () => {
       try {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        setCartCount(cart.length);
+        setCartCount(cart.reduce((sum, item) => sum + (item.qty || 1), 0));
       } catch (error) {
         setCartCount(0);
       }
@@ -401,7 +396,7 @@ export const Layout = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase">Customer Service</h3>
+              <h3 className="text-sm font-normal text-gray-900 tracking-wider uppercase">Customer Service</h3>
               <ul className="mt-4 space-y-2">
                 <li><Link to="/contact" className="text-sm text-gray-600 hover:text-hotpink-600 transition-colors">Contact Us</Link></li>
                 <li><Link to="/faq" className="text-sm text-gray-600 hover:text-hotpink-600 transition-colors">FAQs</Link></li>
@@ -409,7 +404,7 @@ export const Layout = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase">About Us</h3>
+              <h3 className="text-sm font-normal text-gray-900 tracking-wider uppercase">About Us</h3>
               <ul className="mt-4 space-y-2">
                 <li><Link to="/about" className="text-sm text-gray-600 hover:text-hotpink-600 transition-colors">Our Story</Link></li>
                 <li><Link to="/careers" className="text-sm text-gray-600 hover:text-hotpink-600 transition-colors">Careers</Link></li>
@@ -417,7 +412,7 @@ export const Layout = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase">Legal</h3>
+              <h3 className="text-sm font-normal text-gray-900 tracking-wider uppercase">Legal</h3>
               <ul className="mt-4 space-y-2">
                 <li><Link to="/privacy" className="text-sm text-gray-600 hover:text-hotpink-600 transition-colors">Privacy Policy</Link></li>
                 <li><Link to="/terms" className="text-sm text-gray-600 hover:text-hotpink-600 transition-colors">Terms of Service</Link></li>
@@ -425,7 +420,7 @@ export const Layout = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase">Connect With Us</h3>
+              <h3 className="text-sm font-normal text-gray-900 tracking-wider uppercase">Connect With Us</h3>
               <div className="mt-4 flex space-x-4">
                 {/* Social media links */}
               </div>

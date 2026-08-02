@@ -90,7 +90,7 @@ const MyCart = () => {
 
   const handleCheckout = () => {
     if (cart.length === 0) {
-      toast.warn("Your cart is empty. Let's add some items!");
+      void 0;
       return;
     }
     navigate('/checkout');
@@ -132,9 +132,9 @@ const MyCart = () => {
         
         <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-4 pt-4 border-t border-gray-100">
           <div className="flex items-center bg-gray-50 border border-gray-200 rounded-xl h-10 overflow-hidden shadow-sm">
-            <button onClick={() => updateQty(item.id, -1)} className="px-4 h-full hover:bg-white text-gray-600 font-medium transition-colors border-r border-gray-200"> − </button>
+            <button onClick={() => updateQty(item.id, -1)} className="px-4 h-full hover:bg-white text-gray-600 font-normal transition-colors border-r border-gray-200"> − </button>
             <span className="w-12 text-center font-normal text-gray-900">{item.qty}</span>
-            <button onClick={() => updateQty(item.id, 1)} className="px-4 h-full hover:bg-white text-gray-600 font-medium transition-colors border-l border-gray-200"> + </button>
+            <button onClick={() => updateQty(item.id, 1)} className="px-4 h-full hover:bg-white text-gray-600 font-normal transition-colors border-l border-gray-200"> + </button>
           </div>
           <button onClick={() => removeItem(item.id)} className="text-sm font-normal text-gray-500 hover:text-red-500 transition-colors flex items-center gap-1.5 px-3 py-2 rounded-lg hover:bg-red-50">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
@@ -159,7 +159,7 @@ const MyCart = () => {
           {/* Left Column - Cart Items */}
           <main className="flex-1 w-full flex flex-col gap-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <h1 className="text-3xl font-semibold text-gray-900">Shopping Cart</h1>
+              <h1 className="text-3xl font-normal text-gray-900">Shopping Cart</h1>
               
               <div className="relative group w-full sm:max-w-xs md:max-w-sm">
                 <input
@@ -177,7 +177,7 @@ const MyCart = () => {
               {filteredCart.length === 0 ? (
                 <div className="py-16 text-center bg-white rounded-2xl border border-gray-100 shadow-sm">
                   <p className="text-gray-500 text-lg">
-                    {searchTerm ? `No items matched your search for "${searchTerm}".` : "Your Amazon Cart is empty."}
+                    {searchTerm ? `No items matched your search for "${searchTerm}".` : "Your Cart is empty."}
                   </p>
                 </div>
               ) : (
@@ -203,7 +203,7 @@ const MyCart = () => {
                 <div className="mb-6">
                   <div className="flex items-center gap-2 text-green-700 mb-4">
                     <svg className="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path></svg>
-                    <span className="text-sm font-medium">Your order is eligible for FREE Delivery.</span>
+                    <span className="text-sm font-normal">Your order is eligible for FREE Delivery.</span>
                   </div>
                   
                   <h2 className="text-xl text-gray-900 mb-2">

@@ -29,7 +29,7 @@ const MyProducts = () => {
       })
       .catch((err) => {
         console.error('Error fetching products', err);
-        toast.error('❌ Failed to load products');
+        void 0;
         setLoading(false);
       });
   };
@@ -41,12 +41,12 @@ const MyProducts = () => {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then(() => {
-          toast.success('✅ Product deleted');
+          void 0;
           fetchProducts();
         })
         .catch((err) => {
           console.error('Failed to delete product', err);
-          toast.error('❌ Delete failed');
+          void 0;
         });
     }
   };
@@ -78,10 +78,10 @@ const MyProducts = () => {
         {/* Header & Controls */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
           <div>
-            <h2 className="text-2xl md:text-3xl font-extrabold text-gray-800 tracking-tight drop-shadow-sm">
+            <h2 className="text-2xl md:text-3xl font-normal text-gray-800 tracking-tight drop-shadow-sm">
               My Products
             </h2>
-            <p className="text-gray-500 font-medium mt-2">Manage your inventory and product listings</p>
+            <p className="text-gray-500 font-normal mt-2">Manage your inventory and product listings</p>
           </div>
           
           <div className="flex items-center gap-4 w-full md:w-auto">
@@ -92,7 +92,7 @@ const MyProducts = () => {
                 placeholder="Search products..." 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-5 py-3 rounded-full border border-gray-100 bg-white/70 backdrop-blur-md shadow-[0_2px_10px_-4px_rgba(0,0,0,0.1)] focus:bg-white focus:outline-none focus:ring-2 focus:ring-hotpink-400/50 focus:border-hotpink-400 transition-all text-sm font-medium text-gray-700 placeholder-gray-400"
+                className="w-full pl-12 pr-5 py-3 rounded-full border border-gray-100 bg-white/70 backdrop-blur-md shadow-[0_2px_10px_-4px_rgba(0,0,0,0.1)] focus:bg-white focus:outline-none focus:ring-2 focus:ring-hotpink-400/50 focus:border-hotpink-400 transition-all text-sm font-normal text-gray-700 placeholder-gray-400"
               />
             </div>
             <button 
@@ -116,7 +116,7 @@ const MyProducts = () => {
             <div className="w-24 h-24 bg-hotpink-100 rounded-full flex items-center justify-center mb-6 text-hotpink-500 text-4xl">
               <BsBoxSeam />
             </div>
-            <h3 className="text-2xl font-bold text-gray-800 mb-2">No products found</h3>
+            <h3 className="text-2xl font-normal text-gray-800 mb-2">No products found</h3>
             <p className="text-gray-500 max-w-md">You haven't added any products that match your search. Start building your inventory to see it here.</p>
           </motion.div>
         ) : (
@@ -143,7 +143,7 @@ const MyProducts = () => {
                   
                   {/* Status Badge */}
                   <div className="absolute top-4 left-4 z-10">
-                    <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold shadow-sm backdrop-blur-md bg-white/90 ${product.in_stock ? 'text-emerald-600' : 'text-rose-600'}`}>
+                    <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-normal shadow-sm backdrop-blur-md bg-white/90 ${product.in_stock ? 'text-emerald-600' : 'text-rose-600'}`}>
                       <span className={`w-2 h-2 rounded-full ${product.in_stock ? 'bg-emerald-500' : 'bg-rose-500'}`}></span>
                       {product.in_stock ? 'In Stock' : 'Out of Stock'}
                     </span>
@@ -171,25 +171,25 @@ const MyProducts = () => {
                 {/* Content */}
                 <div className="p-6 flex-1 flex flex-col space-y-3 bg-white">
                   <div className="flex justify-between items-start">
-                    <span className="text-[10px] text-hotpink-500 font-bold uppercase tracking-widest bg-hotpink-50 px-2.5 py-1 rounded-md">{product.category}</span>
-                    <span className="flex items-center gap-1.5 text-yellow-500 text-sm font-bold bg-yellow-50 px-2 py-0.5 rounded-md">
+                    <span className="text-[10px] text-hotpink-500 font-normal uppercase tracking-widest bg-hotpink-50 px-2.5 py-1 rounded-md">{product.category}</span>
+                    <span className="flex items-center gap-1.5 text-yellow-500 text-sm font-normal bg-yellow-50 px-2 py-0.5 rounded-md">
                       <BsStarFill className="text-xs" /> 4.5
                     </span>
                   </div>
                   
-                  <h3 className="font-extrabold text-gray-800 text-xl line-clamp-1 group-hover:text-hotpink-600 transition-colors">
+                  <h3 className="font-normal text-gray-800 text-xl line-clamp-1 group-hover:text-hotpink-600 transition-colors">
                     {product.name}
                   </h3>
 
-                  <div className="flex items-center gap-2 text-sm font-medium text-gray-500">
+                  <div className="flex items-center gap-2 text-sm font-normal text-gray-500">
                     <span className="bg-gray-100 px-2.5 py-1 rounded-md">Qty: {product.quantity} {product.unit}</span>
                     <span className="bg-gray-100 px-2.5 py-1 rounded-md line-clamp-1">{product.subcategory}</span>
                   </div>
 
                   <div className="pt-4 mt-auto border-t border-gray-100 flex items-end justify-between">
                     <div>
-                      <p className="text-xs text-gray-400 font-medium mb-1">Selling Price</p>
-                      <p className="text-hotpink-600 font-extrabold text-2xl">₹{product.price}</p>
+                      <p className="text-xs text-gray-400 font-normal mb-1">Selling Price</p>
+                      <p className="text-hotpink-600 font-normal text-2xl">₹{product.price}</p>
                     </div>
                   </div>
                 </div>

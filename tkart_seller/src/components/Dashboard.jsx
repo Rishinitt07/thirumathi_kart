@@ -14,13 +14,13 @@ const Dashboard = () => {
           className="relative rounded-3xl overflow-hidden mb-12 p-10 bg-gradient-to-br from-hotpink-400 to-hotpink-600 text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl"
         >
           <div className="flex-1 space-y-6 z-10">
-            <h1 className="text-5xl font-extrabold leading-tight drop-shadow-sm">Welcome to Thirumathi Kart Seller Service</h1>
-            <p className="text-white/95 text-xl font-medium">Manage your products, track your earnings, and grow your store seamlessly.</p>
+            <h1 className="text-5xl font-normal leading-tight drop-shadow-sm">Welcome to Thirumathi Kart Seller Service</h1>
+            <p className="text-white/95 text-xl font-normal">Manage your products, track your earnings, and grow your store seamlessly.</p>
 
             <div className="flex flex-col sm:flex-row gap-5 pt-6">
               <Link
                 to="/login"
-                className="flex items-center justify-center gap-2 bg-white text-hotpink-600 px-8 py-4 rounded-full font-bold shadow-lg hover:bg-hotpink-50 transition-all duration-300 transform hover:-translate-y-1"
+                className="flex items-center justify-center gap-2 bg-white text-hotpink-600 px-8 py-4 rounded-full font-normal shadow-lg hover:bg-hotpink-50 transition-all duration-300 transform hover:-translate-y-1"
               >
                 <BsBoxArrowInRight className="text-xl" />
                 Login
@@ -28,7 +28,7 @@ const Dashboard = () => {
 
               <Link
                 to="/register"
-                className="flex items-center justify-center gap-2 bg-black/20 backdrop-blur-sm border border-white/40 px-8 py-4 rounded-full text-white font-bold hover:bg-black/30 transition-all duration-300 transform hover:-translate-y-1"
+                className="flex items-center justify-center gap-2 bg-black/20 backdrop-blur-sm border border-white/40 px-8 py-4 rounded-full text-white font-normal hover:bg-black/30 transition-all duration-300 transform hover:-translate-y-1"
               >
                 <BsPersonPlus className="text-xl" />
                 Register
@@ -82,8 +82,8 @@ const Dashboard = () => {
               <div className="w-12 h-12 bg-hotpink-100 rounded-full flex items-center justify-center mb-6">
                  <div className="w-6 h-6 bg-hotpink-500 rounded-full"></div>
               </div>
-              <h3 className="text-hotpink-600 text-xl font-extrabold mb-3">{item.title}</h3>
-              <p className="text-gray-600 font-medium leading-relaxed">{item.text}</p>
+              <h3 className="text-hotpink-600 text-xl font-normal mb-3">{item.title}</h3>
+              <p className="text-gray-600 font-normal leading-relaxed">{item.text}</p>
             </motion.div>
           ))}
         </div>
@@ -91,7 +91,7 @@ const Dashboard = () => {
         {/* Our Story */}
         <div className="max-w-7xl mx-auto py-20">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-extrabold text-hotpink-700 mb-4 tracking-tight">Our Story</h2>
+            <h2 className="text-4xl font-normal text-hotpink-700 mb-4 tracking-tight">Our Story</h2>
             <div className="w-24 h-1.5 bg-gradient-to-r from-hotpink-400 to-hotpink-600 rounded-full mx-auto"></div>
           </div>
           <div className="grid md:grid-cols-2 gap-16 items-center">
@@ -116,7 +116,7 @@ const Dashboard = () => {
               viewport={{ once: true }}
               className="space-y-6"
             >
-              <h3 className="text-3xl font-bold text-gray-800">From Humble Beginnings</h3>
+              <h3 className="text-3xl font-normal text-gray-800">From Humble Beginnings</h3>
               <p className="text-gray-600 text-lg leading-relaxed">
                 Founded in 2023, Thirumathi Kart began as a small initiative to support women entrepreneurs in rural Tamil Nadu.
                 What started as a local marketplace has now grown into a thriving e-commerce platform connecting thousands of
@@ -133,8 +133,8 @@ const Dashboard = () => {
                   { label: 'Categories', value: '50+' }
                 ].map((stat, idx) => (
                   <div key={idx} className="bg-white border-2 border-hotpink-100 px-6 py-4 rounded-2xl shadow-sm hover:border-hotpink-400 transition-colors">
-                    <h4 className="text-3xl font-extrabold text-hotpink-600">{stat.value}</h4>
-                    <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-1">{stat.label}</p>
+                    <h4 className="text-3xl font-normal text-hotpink-600">{stat.value}</h4>
+                    <p className="text-sm font-normal text-gray-500 uppercase tracking-wider mt-1">{stat.label}</p>
                   </div>
                 ))}
               </div>
@@ -146,7 +146,7 @@ const Dashboard = () => {
         <div className="py-20">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-extrabold text-hotpink-700 mb-4 tracking-tight">Our Values</h2>
+              <h2 className="text-4xl font-normal text-hotpink-700 mb-4 tracking-tight">Our Values</h2>
               <div className="w-24 h-1.5 bg-gradient-to-r from-hotpink-400 to-hotpink-600 rounded-full mx-auto"></div>
             </div>
             <div className="grid md:grid-cols-3 gap-10">
@@ -180,8 +180,8 @@ const Dashboard = () => {
                       {value.icon}
                     </svg>
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-800 mb-4">{value.title}</h3>
-                  <p className="text-gray-600 font-medium leading-relaxed">{value.desc}</p>
+                  <h3 className="text-2xl font-normal text-gray-800 mb-4">{value.title}</h3>
+                  <p className="text-gray-600 font-normal leading-relaxed">{value.desc}</p>
                 </motion.div>
               ))}
             </div>

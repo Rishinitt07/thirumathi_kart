@@ -8,7 +8,7 @@ const UserGuidePanel = () => (
       <h1 className="text-2xl font-normal text-hotpink-700 mb-2 font-serif tracking-tight">
         Shopping Guide
       </h1>
-      <p className="text-hotpink-600 font-medium">Your complete shopping companion</p>
+      <p className="text-hotpink-600 font-normal">Your complete shopping companion</p>
     </div>
     <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-hotpink-50 to-rose-50 rounded-lg border border-hotpink-100">
       <div className="bg-white p-2 rounded-full shadow-sm">
@@ -17,13 +17,13 @@ const UserGuidePanel = () => (
         </svg>
       </div>
       <div>
-        <span className="font-medium text-gray-800">Quick Help Guide</span>
+        <span className="font-normal text-gray-800">Quick Help Guide</span>
         <p className="text-xs text-hotpink-600">Find answers to common questions</p>
       </div>
     </div>
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-3">
+        <h3 className="text-lg font-normal text-gray-800 mb-3 flex items-center gap-3">
           <span className="bg-hotpink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-normal">
             1
           </span>
@@ -45,7 +45,7 @@ const UserGuidePanel = () => (
         </ul>
       </div>
       <div>
-        <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-3">
+        <h3 className="text-lg font-normal text-gray-800 mb-3 flex items-center gap-3">
           <span className="bg-hotpink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-normal">
             2
           </span>
@@ -67,7 +67,7 @@ const UserGuidePanel = () => (
         </ul>
       </div>
       <div>
-        <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-3">
+        <h3 className="text-lg font-normal text-gray-800 mb-3 flex items-center gap-3">
           <span className="bg-hotpink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-normal">
             3
           </span>
@@ -90,16 +90,16 @@ const UserGuidePanel = () => (
       </div>
     </div>
     <div className="bg-gradient-to-br from-hotpink-50 to-rose-50 p-5 rounded-xl border border-hotpink-100">
-      <h4 className="font-semibold text-gray-800 mb-2 text-center">Need more help?</h4>
+      <h4 className="font-normal text-gray-800 mb-2 text-center">Need more help?</h4>
       <p className="text-sm text-gray-600 mb-4 text-center">Our support team is available 24/7</p>
       <div className="flex flex-col gap-3">
-        <button className="w-full bg-white text-hotpink-600 border border-hotpink-200 py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-hotpink-50 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-md">
+        <button className="w-full bg-white text-hotpink-600 border border-hotpink-200 py-2.5 px-4 rounded-lg text-sm font-normal hover:bg-hotpink-50 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-md">
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
           </svg>
           Call Support
         </button>
-        <button className="w-full bg-gradient-to-r from-hotpink-600 to-rose-500 text-white py-2.5 px-4 rounded-lg text-sm font-medium hover:from-hotpink-700 hover:to-rose-600 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-md">
+        <button className="w-full bg-gradient-to-r from-hotpink-600 to-rose-500 text-white py-2.5 px-4 rounded-lg text-sm font-normal hover:from-hotpink-700 hover:to-rose-600 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-md">
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
           </svg>
@@ -139,7 +139,7 @@ const About = () => {
           >
             <Link
               to="/Home"
-              className="inline-block bg-white text-hotpink-600 px-8 py-3 rounded-full font-medium hover:bg-hotpink-50 transition duration-300"
+              className="inline-block bg-white text-hotpink-600 px-8 py-3 rounded-full font-normal hover:bg-hotpink-50 transition duration-300"
             >
               Start Shopping
             </Link>
@@ -173,7 +173,7 @@ const About = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-semibold text-gray-800 mb-4">From Humble Beginnings</h3>
+            <h3 className="text-2xl font-normal text-gray-800 mb-4">From Humble Beginnings</h3>
             <p className="text-gray-600 mb-4">
               Founded in 2023, Thirumathi Kart began as a small initiative to support women entrepreneurs in rural Tamil Nadu. What started as a local marketplace has now grown into a thriving e-commerce platform connecting thousands of women artisans with customers nationwide.
             </p>
@@ -244,7 +244,7 @@ const About = () => {
                 <div className="bg-hotpink-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   {value.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                <h3 className="text-xl font-normal text-gray-800 mb-2">
                   {value.title}
                 </h3>
                 <p className="text-gray-600">{value.description}</p>
@@ -305,7 +305,7 @@ const About = () => {
               <div className="flex items-center justify-center mb-4">
                 <div className="bg-hotpink-100 p-3 rounded-full">{item.icon}</div>
               </div>
-              <h3 className="text-xl font-semibold text-center text-gray-800 mb-2">
+              <h3 className="text-xl font-normal text-center text-gray-800 mb-2">
                 {item.title}
               </h3>
               <p className="text-gray-600 text-center">{item.description}</p>
@@ -363,7 +363,7 @@ const About = () => {
                     {testimonial.author.charAt(0)}
                   </div>
                   <div className="ml-4">
-                    <h4 className="font-semibold text-gray-800">{testimonial.author}</h4>
+                    <h4 className="font-normal text-gray-800">{testimonial.author}</h4>
                     <p className="text-sm text-gray-500">{testimonial.role}</p>
                   </div>
                 </div>
@@ -384,13 +384,13 @@ const About = () => {
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
               to="/Login"
-              className="bg-white text-hotpink-600 px-8 py-3 rounded-full font-medium hover:bg-hotpink-50 transition duration-300"
+              className="bg-white text-hotpink-600 px-8 py-3 rounded-full font-normal hover:bg-hotpink-50 transition duration-300"
             >
               Shop Now
             </Link>
             <Link
               to="/Register"
-              className="bg-transparent border-2 border-white px-8 py-3 rounded-full font-medium hover:bg-white hover:text-hotpink-600 transition duration-300"
+              className="bg-transparent border-2 border-white px-8 py-3 rounded-full font-normal hover:bg-white hover:text-hotpink-600 transition duration-300"
             >
               Create Account
             </Link>

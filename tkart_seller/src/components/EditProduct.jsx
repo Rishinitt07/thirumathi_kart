@@ -56,10 +56,10 @@ const EditProduct = () => {
         const imgKeys = ["image1", "image2", "image3", "image4"];
         setPreviews(imgKeys.map(key => product[key] ? `data:image/jpeg;base64,${product[key]}` : null));
       } else {
-        toast.error("❌ Product not found");
+        void 0;
         navigate("/myproducts");
       }
-    }).catch(() => toast.error("❌ Failed to load product"))
+    }).catch(() => void 0)
       .finally(() => setLoading(false));
   }, [id]);
 
@@ -104,13 +104,13 @@ const EditProduct = () => {
         }),
         minDelay
       ]);
-      toast.success("✅ Product updated!");
+      void 0;
       setIsPublishing(false);
       setTimeout(() => navigate("/myproducts"), 1000);
     } catch (err) {
       console.error(err);
       await minDelay;
-      toast.error("❌ Update failed");
+      void 0;
       setIsPublishing(false);
     }
   };
@@ -129,8 +129,8 @@ const EditProduct = () => {
         </div>
         
         <div className="absolute inset-0 flex flex-col justify-start pt-6 md:pt-10 items-center text-white px-4">
-          <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight drop-shadow-sm mb-1 md:mb-2">Edit Product</h1>
-          <p className="text-sm md:text-lg font-medium opacity-90 text-center max-w-2xl">Update details, pricing, and media for {form.name}</p>
+          <h1 className="text-2xl md:text-3xl font-normal text-white tracking-tight drop-shadow-sm mb-1 md:mb-2">Edit Product</h1>
+          <p className="text-sm md:text-lg font-normal opacity-90 text-center max-w-2xl">Update details, pricing, and media for {form.name}</p>
         </div>
       </div>
 
@@ -143,7 +143,7 @@ const EditProduct = () => {
         {/* Left Sidebar Tabs (Step Tracker) */}
         <div className="md:w-72 bg-white/90 backdrop-blur-xl rounded-3xl shadow-xl p-6 flex flex-col gap-3 sticky top-24 border border-white/50">
           <div className="mb-4">
-            <h2 className="text-xl font-extrabold text-gray-800 tracking-tight">Progress Tracker</h2>
+            <h2 className="text-xl font-normal text-gray-800 tracking-tight">Progress Tracker</h2>
             <div className="w-full bg-gray-100 rounded-full h-2 mt-4 overflow-hidden">
               <div 
                 className="bg-hotpink-500 h-2 rounded-full transition-all duration-500" 
@@ -190,7 +190,7 @@ const EditProduct = () => {
                   className="flex-1 space-y-8"
                 >
                   <div className="border-b border-gray-100 pb-4 mb-2">
-                    <h3 className="text-2xl font-bold text-gray-800">Basic Details</h3>
+                    <h3 className="text-2xl font-normal text-gray-800">Basic Details</h3>
                     <p className="text-gray-500 text-sm mt-1">Provide the fundamental information about your product.</p>
                   </div>
                   
@@ -204,10 +204,10 @@ const EditProduct = () => {
                       value={form.name}
                       onChange={handleChange}
                       placeholder=" "
-                      className="block w-full pl-12 pr-4 pt-7 pb-2 text-base font-bold text-gray-800 bg-gray-50/50 border-2 border-transparent rounded-2xl appearance-none focus:outline-none focus:ring-0 focus:bg-white focus:border-hotpink-400 hover:border-hotpink-200 transition-all peer"
+                      className="block w-full pl-12 pr-4 pt-7 pb-2 text-base font-normal text-gray-800 bg-gray-50/50 border-2 border-transparent rounded-2xl appearance-none focus:outline-none focus:ring-0 focus:bg-white focus:border-hotpink-400 hover:border-hotpink-200 transition-all peer"
                       required
                     />
-                    <label htmlFor="name" className="absolute text-sm text-gray-400 duration-300 transform -translate-y-3 scale-75 top-5 z-10 origin-[0] left-12 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 font-bold uppercase tracking-wider cursor-text">
+                    <label htmlFor="name" className="absolute text-sm text-gray-400 duration-300 transform -translate-y-3 scale-75 top-5 z-10 origin-[0] left-12 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 font-normal uppercase tracking-wider cursor-text">
                       Product Name
                     </label>
                   </div>
@@ -223,10 +223,10 @@ const EditProduct = () => {
                       onChange={handleChange}
                       placeholder=" "
                       rows="4"
-                      className="block w-full pl-12 pr-4 pt-7 pb-2 text-base font-bold text-gray-800 bg-gray-50/50 border-2 border-transparent rounded-2xl appearance-none focus:outline-none focus:ring-0 focus:bg-white focus:border-hotpink-400 hover:border-hotpink-200 transition-all peer resize-none"
+                      className="block w-full pl-12 pr-4 pt-7 pb-2 text-base font-normal text-gray-800 bg-gray-50/50 border-2 border-transparent rounded-2xl appearance-none focus:outline-none focus:ring-0 focus:bg-white focus:border-hotpink-400 hover:border-hotpink-200 transition-all peer resize-none"
                       required
                     />
-                    <label htmlFor="description" className="absolute text-sm text-gray-400 duration-300 transform -translate-y-3 scale-75 top-5 z-10 origin-[0] left-12 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 font-bold uppercase tracking-wider cursor-text">
+                    <label htmlFor="description" className="absolute text-sm text-gray-400 duration-300 transform -translate-y-3 scale-75 top-5 z-10 origin-[0] left-12 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 font-normal uppercase tracking-wider cursor-text">
                       Detailed Product Description
                     </label>
                   </div>
@@ -241,7 +241,7 @@ const EditProduct = () => {
                         name="category"
                         value={form.category}
                         onChange={handleChange}
-                        className="block w-full pl-12 pr-4 pt-7 pb-2 text-base font-bold text-gray-800 bg-gray-50/50 border-2 border-transparent rounded-2xl appearance-none focus:outline-none focus:ring-0 focus:bg-white focus:border-hotpink-400 hover:border-hotpink-200 transition-all peer"
+                        className="block w-full pl-12 pr-4 pt-7 pb-2 text-base font-normal text-gray-800 bg-gray-50/50 border-2 border-transparent rounded-2xl appearance-none focus:outline-none focus:ring-0 focus:bg-white focus:border-hotpink-400 hover:border-hotpink-200 transition-all peer"
                         required
                       >
                         <option value=""></option>
@@ -249,10 +249,10 @@ const EditProduct = () => {
                           <option key={idx} value={cat.category}>{cat.category}</option>
                         ))}
                       </select>
-                      <label htmlFor="category" className="absolute text-[10px] font-bold text-gray-400 uppercase tracking-wider top-2 left-12 z-10">
+                      <label htmlFor="category" className="absolute text-[10px] font-normal text-gray-400 uppercase tracking-wider top-2 left-12 z-10">
                         Category
                       </label>
-                      {!form.category && <span className="absolute left-12 top-6 text-gray-400 font-bold pointer-events-none">Select Category</span>}
+                      {!form.category && <span className="absolute left-12 top-6 text-gray-400 font-normal pointer-events-none">Select Category</span>}
                     </div>
 
                     <div className="relative group">
@@ -264,7 +264,7 @@ const EditProduct = () => {
                         name="subcategory"
                         value={form.subcategory}
                         onChange={handleChange}
-                        className="block w-full pl-12 pr-4 pt-7 pb-2 text-base font-bold text-gray-800 bg-gray-50/50 border-2 border-transparent rounded-2xl appearance-none focus:outline-none focus:ring-0 focus:bg-white focus:border-hotpink-400 hover:border-hotpink-200 transition-all peer"
+                        className="block w-full pl-12 pr-4 pt-7 pb-2 text-base font-normal text-gray-800 bg-gray-50/50 border-2 border-transparent rounded-2xl appearance-none focus:outline-none focus:ring-0 focus:bg-white focus:border-hotpink-400 hover:border-hotpink-200 transition-all peer"
                         required
                       >
                         <option value=""></option>
@@ -272,10 +272,10 @@ const EditProduct = () => {
                           <option key={idx} value={sub.name}>{sub.name}</option>
                         ))}
                       </select>
-                      <label htmlFor="subcategory" className="absolute text-[10px] font-bold text-gray-400 uppercase tracking-wider top-2 left-12 z-10">
+                      <label htmlFor="subcategory" className="absolute text-[10px] font-normal text-gray-400 uppercase tracking-wider top-2 left-12 z-10">
                         Subcategory
                       </label>
-                      {!form.subcategory && <span className="absolute left-12 top-6 text-gray-400 font-bold pointer-events-none">Select Subcategory</span>}
+                      {!form.subcategory && <span className="absolute left-12 top-6 text-gray-400 font-normal pointer-events-none">Select Subcategory</span>}
                     </div>
                   </div>
                 </motion.div>
@@ -291,7 +291,7 @@ const EditProduct = () => {
                   className="flex-1 space-y-8"
                 >
                   <div className="border-b border-gray-100 pb-4 mb-2">
-                    <h3 className="text-2xl font-bold text-gray-800">Pricing & Inventory</h3>
+                    <h3 className="text-2xl font-normal text-gray-800">Pricing & Inventory</h3>
                     <p className="text-gray-500 text-sm mt-1">Update your price and stock availability.</p>
                   </div>
                   
@@ -306,10 +306,10 @@ const EditProduct = () => {
                       onChange={handleChange}
                       type="number"
                       placeholder=" "
-                      className="block w-full pl-12 pr-4 pt-7 pb-2 text-base font-bold text-gray-800 bg-gray-50/50 border-2 border-transparent rounded-2xl appearance-none focus:outline-none focus:ring-0 focus:bg-white focus:border-hotpink-400 hover:border-hotpink-200 transition-all peer"
+                      className="block w-full pl-12 pr-4 pt-7 pb-2 text-base font-normal text-gray-800 bg-gray-50/50 border-2 border-transparent rounded-2xl appearance-none focus:outline-none focus:ring-0 focus:bg-white focus:border-hotpink-400 hover:border-hotpink-200 transition-all peer"
                       required
                     />
-                    <label htmlFor="price" className="absolute text-sm text-gray-400 duration-300 transform -translate-y-3 scale-75 top-5 z-10 origin-[0] left-12 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 font-bold uppercase tracking-wider cursor-text">
+                    <label htmlFor="price" className="absolute text-sm text-gray-400 duration-300 transform -translate-y-3 scale-75 top-5 z-10 origin-[0] left-12 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 font-normal uppercase tracking-wider cursor-text">
                       Price (₹)
                     </label>
                   </div>
@@ -326,10 +326,10 @@ const EditProduct = () => {
                         onChange={handleChange}
                         type="number"
                         placeholder=" "
-                        className="block w-full pl-12 pr-4 pt-7 pb-2 text-base font-bold text-gray-800 bg-gray-50/50 border-2 border-transparent rounded-2xl appearance-none focus:outline-none focus:ring-0 focus:bg-white focus:border-hotpink-400 hover:border-hotpink-200 transition-all peer"
+                        className="block w-full pl-12 pr-4 pt-7 pb-2 text-base font-normal text-gray-800 bg-gray-50/50 border-2 border-transparent rounded-2xl appearance-none focus:outline-none focus:ring-0 focus:bg-white focus:border-hotpink-400 hover:border-hotpink-200 transition-all peer"
                         required
                       />
-                      <label htmlFor="quantity" className="absolute text-sm text-gray-400 duration-300 transform -translate-y-3 scale-75 top-5 z-10 origin-[0] left-12 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 font-bold uppercase tracking-wider cursor-text">
+                      <label htmlFor="quantity" className="absolute text-sm text-gray-400 duration-300 transform -translate-y-3 scale-75 top-5 z-10 origin-[0] left-12 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 font-normal uppercase tracking-wider cursor-text">
                         Qty Available
                       </label>
                     </div>
@@ -343,10 +343,10 @@ const EditProduct = () => {
                         value={form.unit}
                         onChange={handleChange}
                         placeholder=" "
-                        className="block w-full pl-12 pr-4 pt-7 pb-2 text-base font-bold text-gray-800 bg-gray-50/50 border-2 border-transparent rounded-2xl appearance-none focus:outline-none focus:ring-0 focus:bg-white focus:border-hotpink-400 hover:border-hotpink-200 transition-all peer"
+                        className="block w-full pl-12 pr-4 pt-7 pb-2 text-base font-normal text-gray-800 bg-gray-50/50 border-2 border-transparent rounded-2xl appearance-none focus:outline-none focus:ring-0 focus:bg-white focus:border-hotpink-400 hover:border-hotpink-200 transition-all peer"
                         required
                       />
-                      <label htmlFor="unit" className="absolute text-sm text-gray-400 duration-300 transform -translate-y-3 scale-75 top-5 z-10 origin-[0] left-12 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 font-bold uppercase tracking-wider cursor-text">
+                      <label htmlFor="unit" className="absolute text-sm text-gray-400 duration-300 transform -translate-y-3 scale-75 top-5 z-10 origin-[0] left-12 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3 font-normal uppercase tracking-wider cursor-text">
                         Unit (e.g. kg, pcs)
                       </label>
                     </div>
@@ -354,8 +354,8 @@ const EditProduct = () => {
 
                   <div className="p-6 border-2 border-gray-100 bg-gray-50/50 rounded-2xl flex items-center justify-between hover:border-hotpink-200 transition-colors">
                     <div>
-                      <h4 className="font-bold text-gray-800 text-base">Product Status</h4>
-                      <p className="text-sm text-gray-500 font-medium mt-1">Toggle visibility on the storefront</p>
+                      <h4 className="font-normal text-gray-800 text-base">Product Status</h4>
+                      <p className="text-sm text-gray-500 font-normal mt-1">Toggle visibility on the storefront</p>
                     </div>
                     <label className="flex items-center cursor-pointer">
                       <div className="relative">
@@ -378,7 +378,7 @@ const EditProduct = () => {
                   className="flex-1 space-y-8"
                 >
                   <div className="border-b border-gray-100 pb-4 mb-2">
-                    <h3 className="text-2xl font-bold text-gray-800">Media Assets</h3>
+                    <h3 className="text-2xl font-normal text-gray-800">Media Assets</h3>
                     <p className="text-gray-500 text-sm mt-1">Upload high-quality images to showcase your product.</p>
                   </div>
                   
@@ -393,13 +393,13 @@ const EditProduct = () => {
                           <div className="bg-white p-4 rounded-full shadow-md mb-4 group-hover:-translate-y-1 transition-transform">
                             <FiImage className="text-4xl" />
                           </div>
-                          <span className="font-bold text-base text-gray-700">Upload Cover Image</span>
-                          <span className="font-semibold text-[10px] uppercase tracking-wider text-hotpink-400 mt-1 bg-hotpink-100 px-2 py-0.5 rounded-full">Required</span>
+                          <span className="font-normal text-base text-gray-700">Upload Cover Image</span>
+                          <span className="font-normal text-[10px] uppercase tracking-wider text-hotpink-400 mt-1 bg-hotpink-100 px-2 py-0.5 rounded-full">Required</span>
                         </div>
                       )}
                       {previews[0] && (
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm">
-                          <span className="text-white font-bold text-sm bg-black/50 px-6 py-3 rounded-full shadow-xl flex items-center gap-2"><FiUploadCloud className="text-lg"/> Change Cover</span>
+                          <span className="text-white font-normal text-sm bg-black/50 px-6 py-3 rounded-full shadow-xl flex items-center gap-2"><FiUploadCloud className="text-lg"/> Change Cover</span>
                         </div>
                       )}
                     </label>
@@ -414,12 +414,12 @@ const EditProduct = () => {
                           ) : (
                             <div className="flex flex-col items-center justify-center text-gray-300 group-hover:text-hotpink-400 transition-colors">
                               <FiImage className="text-2xl mb-2" />
-                              <span className="font-bold text-[9px] uppercase tracking-wider">Gallery {i}</span>
+                              <span className="font-normal text-[9px] uppercase tracking-wider">Gallery {i}</span>
                             </div>
                           )}
                           {previews[i] && (
                             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm">
-                              <span className="text-white font-bold text-[10px] bg-black/50 px-3 py-1.5 rounded-full">Edit</span>
+                              <span className="text-white font-normal text-[10px] bg-black/50 px-3 py-1.5 rounded-full">Edit</span>
                             </div>
                           )}
                         </label>
@@ -434,7 +434,7 @@ const EditProduct = () => {
             <div className="mt-12 pt-6 border-t border-gray-100 flex justify-end">
               <button 
                 type="submit" 
-                className="bg-gradient-to-r from-hotpink-500 to-hotpink-600 text-white shadow-xl shadow-hotpink-500/30 text-lg font-bold px-10 py-4 rounded-2xl flex items-center justify-center gap-3 hover:shadow-2xl hover:-translate-y-1 transition-all w-full md:w-auto"
+                className="bg-gradient-to-r from-hotpink-500 to-hotpink-600 text-white shadow-xl shadow-hotpink-500/30 text-lg font-normal px-10 py-4 rounded-2xl flex items-center justify-center gap-3 hover:shadow-2xl hover:-translate-y-1 transition-all w-full md:w-auto"
               >
                 <FiSave className="text-2xl" /> Save Changes
               </button>
@@ -469,8 +469,8 @@ const EditProduct = () => {
                 </div>
               </div>
               <div className="text-center">
-                <h3 className="text-2xl font-bold text-gray-800">Saving Changes...</h3>
-                <p className="text-sm text-gray-500 mt-1 font-medium">Updating your product for the storefront.</p>
+                <h3 className="text-2xl font-normal text-gray-800">Saving Changes...</h3>
+                <p className="text-sm text-gray-500 mt-1 font-normal">Updating your product for the storefront.</p>
               </div>
             </motion.div>
           </motion.div>
@@ -487,7 +487,7 @@ const TabButton = ({ active, onClick, icon, label, completed }) => (
   <button
     type="button"
     onClick={onClick}
-    className={`flex items-center justify-between px-4 py-4 rounded-2xl transition-all duration-300 font-bold text-sm ${
+    className={`flex items-center justify-between px-4 py-4 rounded-2xl transition-all duration-300 font-normal text-sm ${
       active 
         ? 'bg-hotpink-50 text-hotpink-600 shadow-sm border border-hotpink-100' 
         : 'text-gray-500 hover:bg-gray-50 hover:text-gray-800 border border-transparent'

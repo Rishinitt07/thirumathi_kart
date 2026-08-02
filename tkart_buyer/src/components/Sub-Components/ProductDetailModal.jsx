@@ -82,26 +82,26 @@ const ProductDetailModal = ({ product, onClose }) => {
             </div>
 
             <div className="prose prose-sm text-gray-600 mb-8 border-t border-b border-gray-100 py-6">
-              <h4 className="text-gray-900 font-semibold mb-2">Description</h4>
+              <h4 className="text-gray-900 font-normal mb-2">Description</h4>
               <p>{product.description || 'No description available for this product.'}</p>
             </div>
 
             <div className="grid grid-cols-2 gap-4 text-sm bg-gray-50 p-4 rounded-xl">
               <div>
                 <p className="text-gray-500 mb-1">Brand</p>
-                <p className="font-medium text-gray-900">{product.brand || 'N/A'}</p>
+                <p className="font-normal text-gray-900">{product.brand || 'N/A'}</p>
               </div>
               <div>
                 <p className="text-gray-500 mb-1">SKU</p>
-                <p className="font-medium text-gray-900">{product.sku || 'N/A'}</p>
+                <p className="font-normal text-gray-900">{product.sku || 'N/A'}</p>
               </div>
               <div>
                 <p className="text-gray-500 mb-1">Weight</p>
-                <p className="font-medium text-gray-900">{product.weight || 'N/A'}</p>
+                <p className="font-normal text-gray-900">{product.weight || 'N/A'}</p>
               </div>
               <div>
                 <p className="text-gray-500 mb-1">Stock Status</p>
-                <p className={`font-medium ${(product.stock || 0) > 0 ? 'text-green-600' : 'text-red-500'}`}>
+                <p className={`font-normal ${(product.stock || 0) > 0 ? 'text-green-600' : 'text-red-500'}`}>
                   {(product.stock || 0) > 0 ? 'In Stock' : 'Out of Stock'}
                 </p>
               </div>

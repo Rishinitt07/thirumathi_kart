@@ -28,7 +28,7 @@ const ProfileField = ({ icon, label, name, value, editable, onChange, type = "te
               name={name}
               value={value || ""}
               onChange={onChange}
-              className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:border-hotpink-400 focus:ring-4 focus:ring-hotpink-50 transition-all font-medium text-gray-800 appearance-none cursor-pointer"
+              className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:border-hotpink-400 focus:ring-4 focus:ring-hotpink-50 transition-all font-normal text-gray-800 appearance-none cursor-pointer"
             >
               <option value="" disabled>Select {label}</option>
               {options.map((opt) => (
@@ -41,7 +41,7 @@ const ProfileField = ({ icon, label, name, value, editable, onChange, type = "te
               value={value || ""}
               onChange={onChange}
               rows="3"
-              className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:border-hotpink-400 focus:ring-4 focus:ring-hotpink-50 transition-all font-medium text-gray-800 resize-none"
+              className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:border-hotpink-400 focus:ring-4 focus:ring-hotpink-50 transition-all font-normal text-gray-800 resize-none"
               placeholder={`Enter ${label}`}
             />
           ) : (
@@ -51,14 +51,14 @@ const ProfileField = ({ icon, label, name, value, editable, onChange, type = "te
               value={value || ""}
               onChange={onChange}
               maxLength={name === "mobile" || name === "pincode" ? (name === "mobile" ? 10 : 6) : undefined}
-              className={`w-full px-4 py-3 bg-white border-2 rounded-xl focus:outline-none focus:ring-4 transition-all font-medium text-gray-800 ${name === 'mobile' ? 'border-gray-100 text-gray-500 cursor-not-allowed bg-gray-50/50' : 'border-gray-200 focus:border-hotpink-400 focus:ring-hotpink-50'}`}
+              className={`w-full px-4 py-3 bg-white border-2 rounded-xl focus:outline-none focus:ring-4 transition-all font-normal text-gray-800 ${name === 'mobile' ? 'border-gray-100 text-gray-500 cursor-not-allowed bg-gray-50/50' : 'border-gray-200 focus:border-hotpink-400 focus:ring-hotpink-50'}`}
               placeholder={`Enter ${label}`}
               disabled={name === 'mobile'}
             />
           )
         ) : (
           <div className="px-4 py-3 bg-hotpink-50/40 border-2 border-transparent rounded-xl flex items-center h-full min-h-[52px]">
-            <span className="font-semibold text-gray-900 truncate">
+            <span className="font-normal text-gray-900 truncate">
               {value || <span className="text-gray-400 font-normal italic">Not specified</span>}
             </span>
           </div>
@@ -125,7 +125,7 @@ const Profile = () => {
             : profileIcon,
         });
       })
-      .catch(() => toast.error("Failed to load profile"))
+      .catch(() => void 0)
       .finally(() => setLoading(false));
   }, [token]);
 
@@ -133,7 +133,7 @@ const Profile = () => {
     const file = e.target.files[0];
     if (file) {
       if (!file.type.startsWith("image/")) {
-        toast.error("Please upload a valid image");
+        void 0;
         return;
       }
       setSelectedImage(file);
@@ -152,7 +152,7 @@ const Profile = () => {
 
   const handleSubmit = async () => {
     if (!profileData.first_name) {
-      toast.error("First name is required");
+      void 0;
       return;
     }
 
@@ -182,10 +182,10 @@ const Profile = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      toast.success("Profile Updated Successfully! 🎉");
+      void 0;
       setEditMode(false);
     } catch (err) {
-      toast.error("Update Failed");
+      void 0;
     } finally {
       setIsSaving(false);
     }
@@ -202,11 +202,11 @@ const Profile = () => {
         await axios.delete("http://localhost:8080/account", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        toast.success("Account deleted successfully!");
+        void 0;
         localStorage.removeItem("token");
         window.location.href = "/";
       } catch (err) {
-        toast.error("Failed to delete account");
+        void 0;
       }
     }
   };
@@ -277,7 +277,7 @@ const Profile = () => {
               <h1 className="text-2xl font-normal text-gray-900 tracking-tight mt-4">
                 {profileData.first_name || profileData.last_name ? `${profileData.first_name} ${profileData.last_name}` : "Seller Profile"}
               </h1>
-              <p className="text-gray-500 font-medium text-sm mt-1 flex items-center justify-center gap-1">
+              <p className="text-gray-500 font-normal text-sm mt-1 flex items-center justify-center gap-1">
                 <FiMapPin className="text-hotpink-400" />
                 {profileData.district || profileData.state ? `${profileData.district || ''}${profileData.district && profileData.state ? ', ' : ''}${profileData.state || ''}` : "Location not set"}
               </p>
@@ -348,7 +348,7 @@ const Profile = () => {
                 >
                   <div className="mb-8 border-b border-gray-100 pb-4">
                     <h2 className="text-3xl font-normal text-gray-900">Personal Information</h2>
-                    <p className="text-hotpink-600/80 mt-2 font-medium">Manage your basic profile details and identifiers.</p>
+                    <p className="text-hotpink-600/80 mt-2 font-normal">Manage your basic profile details and identifiers.</p>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8">
                     <ProfileField icon={<AiOutlineUser />} label="First Name" name="first_name" value={profileData.first_name} editable={editMode} onChange={handleChange} />
@@ -372,7 +372,7 @@ const Profile = () => {
                 >
                   <div className="mb-8 border-b border-gray-100 pb-4">
                     <h2 className="text-3xl font-normal text-gray-900">Address Book</h2>
-                    <p className="text-hotpink-600/80 mt-2 font-medium">Manage your location and delivery hub details.</p>
+                    <p className="text-hotpink-600/80 mt-2 font-normal">Manage your location and delivery hub details.</p>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8">
                     <ProfileField icon={<AiOutlineHome />} label="Store Name *" name="store_name" value={profileData.store_name} editable={editMode} onChange={handleChange} />
@@ -410,7 +410,7 @@ const Profile = () => {
                 >
                   <div className="mb-8 border-b border-gray-100 pb-4">
                     <h2 className="text-3xl font-normal text-gray-900">Account Settings</h2>
-                    <p className="text-hotpink-600/80 mt-2 font-medium">Configure your seller account preferences.</p>
+                    <p className="text-hotpink-600/80 mt-2 font-normal">Configure your seller account preferences.</p>
                   </div>
                   <div className="grid grid-cols-1 gap-x-8 gap-y-8">
                     
@@ -418,7 +418,7 @@ const Profile = () => {
                       <h3 className="text-xl font-normal text-gray-800 mb-4 flex items-center gap-2">
                         <FiSettings className="text-hotpink-500" /> Language Preferences
                       </h3>
-                      <p className="text-sm text-gray-500 font-medium mb-4">
+                      <p className="text-sm text-gray-500 font-normal mb-4">
                         Choose the language you prefer for the application interface.
                       </p>
                       <div className="relative">
@@ -456,7 +456,7 @@ const Profile = () => {
                       <div className="flex flex-col gap-4">
                         <button 
                           onClick={handleLogout}
-                          className="flex items-center justify-center gap-2 bg-white border-2 border-gray-200 hover:border-gray-300 text-gray-700 font-medium px-6 py-3 rounded-xl transition-all"
+                          className="flex items-center justify-center gap-2 bg-white border-2 border-gray-200 hover:border-gray-300 text-gray-700 font-normal px-6 py-3 rounded-xl transition-all"
                         >
                           <FiLogOut className="text-lg" />
                           Logout Session
@@ -464,7 +464,7 @@ const Profile = () => {
                         
                         <button 
                           onClick={handleDeleteAccount}
-                          className="flex items-center justify-center gap-2 bg-red-50 hover:bg-red-100 text-red-600 font-medium px-6 py-3 rounded-xl transition-all"
+                          className="flex items-center justify-center gap-2 bg-red-50 hover:bg-red-100 text-red-600 font-normal px-6 py-3 rounded-xl transition-all"
                         >
                           Delete Account
                         </button>

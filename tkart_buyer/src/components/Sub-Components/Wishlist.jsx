@@ -51,7 +51,7 @@ const WishlistCard = ({ item, onRemove, onAddToCart, onSelectProduct }) => {
         <div className="flex flex-col gap-2 mt-5">
           <button
             onClick={() => onAddToCart(item)}
-            className="w-full flex items-center justify-center gap-2 bg-hotpink-500 text-white font-semibold px-4 py-2.5 rounded-xl hover:bg-hotpink-600 shadow-md hover:shadow-hotpink-500/30 transition-all active:scale-95"
+            className="w-full flex items-center justify-center gap-2 bg-hotpink-500 text-white font-normal px-4 py-2.5 rounded-xl hover:bg-hotpink-600 shadow-md hover:shadow-hotpink-500/30 transition-all active:scale-95"
             aria-label={`Add ${item.name} to cart`}
           >
             <FaCartPlus className="text-lg" />
@@ -59,7 +59,7 @@ const WishlistCard = ({ item, onRemove, onAddToCart, onSelectProduct }) => {
           </button>
           <button
             onClick={() => onRemove(item.id)}
-            className="w-full flex items-center justify-center gap-2 bg-white border border-gray-200 text-gray-600 font-medium px-4 py-2 rounded-xl hover:bg-gray-50 hover:text-red-500 hover:border-red-200 transition-all active:scale-95"
+            className="w-full flex items-center justify-center gap-2 bg-white border border-gray-200 text-gray-600 font-normal px-4 py-2 rounded-xl hover:bg-gray-50 hover:text-red-500 hover:border-red-200 transition-all active:scale-95"
             aria-label={`Remove ${item.name} from wishlist`}
           >
             <FaTrash className="text-sm" />
@@ -94,7 +94,7 @@ const Wishlist = () => {
       setWishlist(updatedList);
       localStorage.setItem("wishlist", JSON.stringify(updatedList));
       syncWishlistToDB(updatedList);
-      toast.info("Item removed from wishlist");
+      void 0;
     },
     [wishlist]
   );
@@ -120,9 +120,9 @@ const Wishlist = () => {
       localStorage.setItem("cart", JSON.stringify(updatedCart));
       syncCartToDB(updatedCart);
       window.dispatchEvent(new Event('storage'));
-      toast.success(`${item.name} added to cart!`);
+      void 0;
     } catch (error) {
-      toast.error("Failed to add to cart, please try again.");
+      void 0;
       console.error("Add to cart error:", error);
     }
   }, []);

@@ -29,7 +29,7 @@ const HeroSection = () => (
           </p>
           <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
             <Link to="/Login">
-              <button className="bg-hotpink-600 hover:bg-hotpink-700 text-white px-6 py-3 rounded-full font-medium shadow-md hover:shadow-lg transition-all flex items-center justify-center">
+              <button className="bg-hotpink-600 hover:bg-hotpink-700 text-white px-6 py-3 rounded-full font-normal shadow-md hover:shadow-lg transition-all flex items-center justify-center">
                 <FaShoppingBag className="mr-2" />
                 Shop Now
               </button>
@@ -71,7 +71,7 @@ const FeaturesSection = () => {
               className="bg-hotpink-50 rounded-xl p-6 text-center"
             >
               <div className="mb-4 text-3xl text-hotpink-600">{f.icon}</div>
-              <h3 className="text-xl font-semibold text-hotpink-700 mb-2">{f.title}</h3>
+              <h3 className="text-xl font-normal text-hotpink-700 mb-2">{f.title}</h3>
               <p className="text-hotpink-600">{f.desc}</p>
             </motion.div>
           ))}
@@ -127,7 +127,7 @@ const AboutSection = () => (
             >
               <div className="text-center">
                 <div className="text-5xl mb-4 text-hotpink-600">👩‍🌾</div>
-                <h3 className="text-xl font-semibold text-hotpink-800">Supporting Women Entrepreneurs</h3>
+                <h3 className="text-xl font-normal text-hotpink-800">Supporting Women Entrepreneurs</h3>
                 <p className="text-hotpink-700 mt-2">Connecting artisans with customers nationwide</p>
               </div>
             </motion.div>

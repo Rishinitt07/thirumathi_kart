@@ -156,9 +156,9 @@ const Home = () => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white/90 backdrop-blur-md p-4 rounded-xl shadow-xl border border-hotpink-100">
-          <p className="font-bold text-gray-800 mb-2">{label}</p>
+          <p className="font-normal text-gray-800 mb-2">{label}</p>
           {payload.map((entry, index) => (
-            <p key={index} className="text-sm font-bold" style={{ color: entry.color }}>
+            <p key={index} className="text-sm font-normal" style={{ color: entry.color }}>
               {entry.name === 'sales' ? 'Earnings: ₹' : 'Orders: '}{entry.value}
             </p>
           ))}
@@ -177,31 +177,31 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
             <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} className="bg-gradient-to-br from-hotpink-400 to-hotpink-600 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 bg-white/20 rounded-full blur-xl -translate-y-1/2 translate-x-1/3"></div>
-              <h3 className="text-white/80 font-bold text-sm uppercase tracking-wider mb-2">Total Earnings</h3>
-              <p className="text-4xl font-extrabold drop-shadow-sm">₹1,28,450</p>
-              <div className="mt-4 text-sm font-medium bg-white/20 inline-block px-3 py-1 rounded-full">+14.5% from last month</div>
+              <h3 className="text-white/80 font-normal text-sm uppercase tracking-wider mb-2">Total Earnings</h3>
+              <p className="text-4xl font-normal drop-shadow-sm">₹1,28,450</p>
+              <div className="mt-4 text-sm font-normal bg-white/20 inline-block px-3 py-1 rounded-full">+14.5% from last month</div>
             </motion.div>
 
             <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay:0.1}} className="glass-card rounded-3xl p-6 shadow-sm border border-hotpink-100">
-              <h3 className="text-gray-500 font-bold text-sm uppercase tracking-wider mb-2">Total Orders</h3>
-              <p className="text-4xl font-extrabold text-gray-800">438</p>
-              <div className="mt-4 text-sm font-bold text-hotpink-500 bg-hotpink-50 inline-block px-3 py-1 rounded-full">+22 new today</div>
+              <h3 className="text-gray-500 font-normal text-sm uppercase tracking-wider mb-2">Total Orders</h3>
+              <p className="text-4xl font-normal text-gray-800">438</p>
+              <div className="mt-4 text-sm font-normal text-hotpink-500 bg-hotpink-50 inline-block px-3 py-1 rounded-full">+22 new today</div>
             </motion.div>
             
             <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay:0.2}} className="glass-card rounded-3xl p-6 shadow-sm border border-hotpink-100 flex items-center justify-between">
               <div>
-                <h3 className="text-gray-500 font-bold text-sm uppercase tracking-wider mb-2">Delivered</h3>
-                <p className="text-4xl font-extrabold text-gray-800">328</p>
+                <h3 className="text-gray-500 font-normal text-sm uppercase tracking-wider mb-2">Delivered</h3>
+                <p className="text-4xl font-normal text-gray-800">328</p>
               </div>
-              <CircularProgressbar value={75} text={`75%`} strokeWidth={12} styles={buildStyles({textColor: '#ff69b4', pathColor: '#ff69b4', trailColor: '#ffe4e6'})} className="w-20 h-20 font-bold" />
+              <CircularProgressbar value={75} text={`75%`} strokeWidth={12} styles={buildStyles({textColor: '#ff69b4', pathColor: '#ff69b4', trailColor: '#ffe4e6'})} className="w-20 h-20 font-normal" />
             </motion.div>
 
             <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay:0.3}} className="glass-card rounded-3xl p-6 shadow-sm border border-hotpink-100 flex items-center justify-between">
               <div>
-                <h3 className="text-gray-500 font-bold text-sm uppercase tracking-wider mb-2">Pending</h3>
-                <p className="text-4xl font-extrabold text-gray-800">110</p>
+                <h3 className="text-gray-500 font-normal text-sm uppercase tracking-wider mb-2">Pending</h3>
+                <p className="text-4xl font-normal text-gray-800">110</p>
               </div>
-              <CircularProgressbar value={25} text={`25%`} strokeWidth={12} styles={buildStyles({textColor: '#f59e0b', pathColor: '#f59e0b', trailColor: '#fef3c7'})} className="w-20 h-20 font-bold" />
+              <CircularProgressbar value={25} text={`25%`} strokeWidth={12} styles={buildStyles({textColor: '#f59e0b', pathColor: '#f59e0b', trailColor: '#fef3c7'})} className="w-20 h-20 font-normal" />
             </motion.div>
           </div>
 
@@ -209,8 +209,8 @@ const Home = () => {
           <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay:0.4}} className="glass-card rounded-3xl p-6 md:p-8 shadow-sm border border-hotpink-100">
             <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
               <div>
-                <h2 className="text-2xl font-extrabold text-gray-800 drop-shadow-sm">Sales & Orders Overview</h2>
-                <p className="text-gray-500 font-medium mt-1">Interactive tracking of your store's performance</p>
+                <h2 className="text-2xl font-normal text-gray-800 drop-shadow-sm">Sales & Orders Overview</h2>
+                <p className="text-gray-500 font-normal mt-1">Interactive tracking of your store's performance</p>
               </div>
               
               <div className="flex bg-hotpink-50 p-1 rounded-xl w-fit border border-hotpink-100 shadow-inner">
@@ -218,7 +218,7 @@ const Home = () => {
                   <button
                     key={range}
                     onClick={() => setTimeRange(range)}
-                    className={`px-6 py-2 rounded-lg text-sm font-bold capitalize transition-all duration-300 ${timeRange === range ? 'bg-white text-hotpink-600 shadow-sm' : 'text-gray-500 hover:text-hotpink-500'}`}
+                    className={`px-6 py-2 rounded-lg text-sm font-normal capitalize transition-all duration-300 ${timeRange === range ? 'bg-white text-hotpink-600 shadow-sm' : 'text-gray-500 hover:text-hotpink-500'}`}
                   >
                     {range}
                   </button>
@@ -254,14 +254,14 @@ const Home = () => {
         </section>
          {/* Featured Deals */}
         <section className="mb-12">
-          <h2 className="text-2xl font-extrabold text-gray-800 mb-6 drop-shadow-sm">Featured Deals</h2>
+          <h2 className="text-2xl font-normal text-gray-800 mb-6 drop-shadow-sm">Featured Deals</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {featuredDeals.map((deal, index) => (
               <div key={index} className={`${deal.bgColor} rounded-2xl p-6 flex items-center justify-between hover-lift shadow-sm`}>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-800">{deal.title}</h3>
-                  <p className="text-hotpink-600 font-bold mb-1">{deal.subtitle}</p>
-                  <p className="text-sm font-medium text-gray-600">{deal.tagline}</p>
+                  <h3 className="text-xl font-normal text-gray-800">{deal.title}</h3>
+                  <p className="text-hotpink-600 font-normal mb-1">{deal.subtitle}</p>
+                  <p className="text-sm font-normal text-gray-600">{deal.tagline}</p>
                 </div>
                 <div className="bg-white/60 backdrop-blur-sm p-4 rounded-full shadow-inner">{deal.icon}</div>
               </div>
@@ -272,7 +272,7 @@ const Home = () => {
         {/* Categories */}
         <section className="mb-12">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-extrabold text-gray-800 drop-shadow-sm">Sell in these Categories</h2>
+            <h2 className="text-2xl font-normal text-gray-800 drop-shadow-sm">Sell in these Categories</h2>
             
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
@@ -283,9 +283,9 @@ const Home = () => {
                 className="glass-card p-5 hover-lift flex flex-col items-center text-center"
               >
                 <div className="bg-hotpink-100 p-4 rounded-2xl mb-4 shadow-inner">{cat.icon}</div>
-                <h3 className="font-bold text-gray-800">{cat.name}</h3>
+                <h3 className="font-normal text-gray-800">{cat.name}</h3>
                 {cat.featured && (
-                  <span className="mt-2 text-xs font-bold bg-hotpink-100 text-hotpink-700 px-3 py-1 rounded-full border border-hotpink-200">
+                  <span className="mt-2 text-xs font-normal bg-hotpink-100 text-hotpink-700 px-3 py-1 rounded-full border border-hotpink-200">
                     Popular
                   </span>
                 )}
@@ -300,8 +300,8 @@ const Home = () => {
         {/* My Products */}
 <section className="mb-12">
   <div className="flex items-center justify-between mb-6">
-    <h2 className="text-2xl font-extrabold text-gray-800 drop-shadow-sm">My Products</h2>
-    <Link to="/myproducts" className="text-hotpink-600 font-bold hover:text-hotpink-700 flex items-center text-sm transition-colors">
+    <h2 className="text-2xl font-normal text-gray-800 drop-shadow-sm">My Products</h2>
+    <Link to="/myproducts" className="text-hotpink-600 font-normal hover:text-hotpink-700 flex items-center text-sm transition-colors">
       View All <FiChevronRight className="ml-1" />
     </Link>
   </div>
@@ -318,21 +318,21 @@ const Home = () => {
                 className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-gray-400 font-medium bg-gray-100">No Image</div>
+              <div className="w-full h-full flex items-center justify-center text-gray-400 font-normal bg-gray-100">No Image</div>
             )}
-            <div className="absolute top-3 left-3 bg-hotpink-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
+            <div className="absolute top-3 left-3 bg-hotpink-500 text-white text-xs font-normal px-3 py-1.5 rounded-full shadow-md">
               {product.quantity} in stock
             </div>
           </div>
           <div className="p-5 flex-1 flex flex-col">
-            <span className="text-xs font-bold text-hotpink-500 uppercase tracking-wider">{product.category}</span>
-            <h3 className="font-bold text-gray-800 line-clamp-1 my-2 text-lg">{product.name}</h3>
+            <span className="text-xs font-normal text-hotpink-500 uppercase tracking-wider">{product.category}</span>
+            <h3 className="font-normal text-gray-800 line-clamp-1 my-2 text-lg">{product.name}</h3>
             <div className="flex items-end mt-auto">
-              <span className="text-xl font-extrabold text-hotpink-600">₹{product.price}</span>
+              <span className="text-xl font-normal text-hotpink-600">₹{product.price}</span>
             </div>
             <Link
               to="/myproducts"
-              className="w-full mt-4 block text-center py-2.5 bg-hotpink-100 text-hotpink-700 rounded-xl font-bold hover:bg-hotpink-500 hover:text-white transition-all duration-300"
+              className="w-full mt-4 block text-center py-2.5 bg-hotpink-100 text-hotpink-700 rounded-xl font-normal hover:bg-hotpink-500 hover:text-white transition-all duration-300"
             >
               View Details
             </Link>

@@ -35,7 +35,7 @@ const StorePage = () => {
         setProducts(enhancedProducts);
       } catch (err) {
         console.error('Error fetching store data:', err);
-        toast.error('Failed to load store data');
+        void 0;
       } finally {
         setLoading(false);
       }
@@ -67,12 +67,12 @@ const StorePage = () => {
                 🏪
               </div>
               <div>
-                <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">{seller.name}</h1>
+                <h1 className="text-3xl sm:text-4xl font-normal text-gray-900 mb-2">{seller.name}</h1>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-600">
-                  <span className="flex items-center gap-1.5 bg-pink-50 text-hotpink-600 px-3 py-1 rounded-full font-medium">
+                  <span className="flex items-center gap-1.5 bg-pink-50 text-hotpink-600 px-3 py-1 rounded-full font-normal">
                     🌸 Women-Owned Business
                   </span>
-                  <span className="flex items-center gap-1 text-yellow-500 font-medium">
+                  <span className="flex items-center gap-1 text-yellow-500 font-normal">
                     ⭐⭐⭐⭐⭐ <span className="text-gray-700 ml-1">4.8 (124 Reviews)</span>
                   </span>
                 </div>
@@ -92,12 +92,12 @@ const StorePage = () => {
         {/* Left Sidebar - About */}
         <div className="w-full lg:w-80 shrink-0">
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-24">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">About Store</h3>
+            <h3 className="text-lg font-normal text-gray-900 mb-4">About Store</h3>
             <p className="text-gray-600 leading-relaxed text-sm">
               {seller.description ? seller.description : "No description provided."}
             </p>
             <div className="mt-6 pt-6 border-t border-gray-100">
-              <div className="flex items-center gap-2 text-green-700 font-medium text-sm">
+              <div className="flex items-center gap-2 text-green-700 font-normal text-sm">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
                 Verified Seller
               </div>
@@ -107,7 +107,7 @@ const StorePage = () => {
 
         {/* Right Content - Products */}
         <div className="flex-1">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Products</h2>
+          <h2 className="text-2xl font-normal text-gray-900 mb-6">Products</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
             {products.length === 0 ? (
               <p className="text-gray-500">No products available in this store.</p>
@@ -122,9 +122,9 @@ const StorePage = () => {
                     <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
                   <div className="p-5">
-                    <h3 className="text-lg font-medium text-gray-900 mb-1 truncate">{product.name}</h3>
+                    <h3 className="text-lg font-normal text-gray-900 mb-1 truncate">{product.name}</h3>
                     <div className="flex items-center justify-between mt-3">
-                      <span className="text-xl font-semibold text-gray-900">₹{product.price}</span>
+                      <span className="text-xl font-normal text-gray-900">₹{product.price}</span>
                       <span className="flex items-center text-sm text-gray-500 gap-1">
                         <span className="text-yellow-400">⭐</span> {product.rating}
                       </span>
