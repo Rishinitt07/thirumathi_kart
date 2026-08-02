@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { FiSearch, FiChevronRight } from 'react-icons/fi';
@@ -7,7 +7,8 @@ import { GiClothes, GiFruitBowl, GiOfficeChair } from 'react-icons/gi';
 import { BiLeaf } from 'react-icons/bi';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
+import { motion } from 'framer-motion';
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -44,15 +45,15 @@ const Home = () => {
   
 
   const categories = [
-    { name: 'Food', icon: <GiFruitBowl className="text-2xl text-pink-600" />, featured: true },
-    { name: 'Clothing', icon: <GiClothes className="text-2xl text-pink-600" />, featured: true },
-    { name: 'Handicraft', icon: <BsGem className="text-2xl text-pink-600" />, featured: true },
-    { name: 'Groceries', icon: <BsBasket className="text-2xl text-pink-600" />, featured: true },
-    { name: 'Fashion & Jewellery', icon: <BsShop className="text-2xl text-pink-600" /> },
-    { name: 'Beauty & Healthcare', icon: <BsDroplet className="text-2xl text-pink-600" />, featured: true },
-    { name: 'Office', icon: <GiOfficeChair className="text-2xl text-pink-600" /> },
-    { name: 'Organic Fruits & Vegetables', icon: <BiLeaf className="text-2xl text-pink-600" />, featured: true },
-    { name: 'Others', icon: <BsFlower1 className="text-2xl text-pink-600" /> }
+    { name: 'Food', icon: <GiFruitBowl className="text-2xl text-hotpink-500" />, featured: true },
+    { name: 'Clothing', icon: <GiClothes className="text-2xl text-hotpink-500" />, featured: true },
+    { name: 'Handicraft', icon: <BsGem className="text-2xl text-hotpink-500" />, featured: true },
+    { name: 'Groceries', icon: <BsBasket className="text-2xl text-hotpink-500" />, featured: true },
+    { name: 'Fashion & Jewellery', icon: <BsShop className="text-2xl text-hotpink-500" /> },
+    { name: 'Beauty & Healthcare', icon: <BsDroplet className="text-2xl text-hotpink-500" />, featured: true },
+    { name: 'Office', icon: <GiOfficeChair className="text-2xl text-hotpink-500" /> },
+    { name: 'Organic Fruits & Vegetables', icon: <BiLeaf className="text-2xl text-hotpink-500" />, featured: true },
+    { name: 'Others', icon: <BsFlower1 className="text-2xl text-hotpink-500" /> }
   ];
 
   const featuredDeals = [
@@ -60,8 +61,8 @@ const Home = () => {
       title: 'Organic Summer Fruits',
       subtitle: 'From ₹199',
       tagline: 'Mangoes, Berries & more',
-      bgColor: 'bg-pink-100',
-      icon: <BiLeaf className="text-3xl text-pink-600" />
+      bgColor: 'bg-hotpink-100',
+      icon: <BiLeaf className="text-3xl text-hotpink-600" />
     },
     {
       title: 'Handcrafted Jewellery',
@@ -122,111 +123,169 @@ const Home = () => {
     }
   ];
 
-  const ordersData = [
-    { month: 'Jan', earnings: 24000 },
-    { month: 'Feb', earnings: 21000 },
-    { month: 'Mar', earnings: 26000 },
-    { month: 'Apr', earnings: 19000 },
-    { month: 'May', earnings: 29000 },
-    { month: 'Jun', earnings: 31000 }
-  ];
+  const [timeRange, setTimeRange] = useState('monthly');
+
+  const analyticsData = {
+    weekly: [
+      { name: 'Mon', sales: 4000, orders: 24 },
+      { name: 'Tue', sales: 3000, orders: 13 },
+      { name: 'Wed', sales: 5000, orders: 48 },
+      { name: 'Thu', sales: 2780, orders: 39 },
+      { name: 'Fri', sales: 6890, orders: 68 },
+      { name: 'Sat', sales: 8390, orders: 88 },
+      { name: 'Sun', sales: 9490, orders: 93 },
+    ],
+    monthly: [
+      { name: 'Jan', sales: 24000, orders: 150 },
+      { name: 'Feb', sales: 21000, orders: 130 },
+      { name: 'Mar', sales: 36000, orders: 270 },
+      { name: 'Apr', sales: 29000, orders: 220 },
+      { name: 'May', sales: 49000, orders: 390 },
+      { name: 'Jun', sales: 51000, orders: 400 },
+    ],
+    yearly: [
+      { name: '2021', sales: 150000, orders: 800 },
+      { name: '2022', sales: 230000, orders: 1200 },
+      { name: '2023', sales: 340000, orders: 1800 },
+      { name: '2024', sales: 290000, orders: 1500 },
+      { name: '2025', sales: 420000, orders: 2200 },
+    ]
+  };
+
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white/90 backdrop-blur-md p-4 rounded-xl shadow-xl border border-hotpink-100">
+          <p className="font-bold text-gray-800 mb-2">{label}</p>
+          {payload.map((entry, index) => (
+            <p key={index} className="text-sm font-bold" style={{ color: entry.color }}>
+              {entry.name === 'sales' ? 'Earnings: ₹' : 'Orders: '}{entry.value}
+            </p>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white">
-      <main className="container mx-auto px-4 py-6">
-        {/* Hero + Stats */}
-        <div className="relative rounded-2xl overflow-hidden mb-8 p-6 h-auto bg-gradient-to-r from-pink-500 to-rose-500 text-white grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="md:col-span-2 space-y-4">
-            <h1 className="text-2xl font-bold">Seller Dashboard</h1>
-            <p className="text-white/90">Monitor your products, sales and earnings from one place.</p>
+    <div className="min-h-screen bg-white font-josefin">
+      <main className="container mx-auto px-4 py-8">
+        {/* Analytics Dashboard */}
+        <section className="mb-12">
+          {/* Top KPI Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} className="bg-gradient-to-br from-hotpink-400 to-hotpink-600 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-white/20 rounded-full blur-xl -translate-y-1/2 translate-x-1/3"></div>
+              <h3 className="text-white/80 font-bold text-sm uppercase tracking-wider mb-2">Total Earnings</h3>
+              <p className="text-4xl font-extrabold drop-shadow-sm">₹1,28,450</p>
+              <div className="mt-4 text-sm font-medium bg-white/20 inline-block px-3 py-1 rounded-full">+14.5% from last month</div>
+            </motion.div>
+
+            <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay:0.1}} className="glass-card rounded-3xl p-6 shadow-sm border border-hotpink-100">
+              <h3 className="text-gray-500 font-bold text-sm uppercase tracking-wider mb-2">Total Orders</h3>
+              <p className="text-4xl font-extrabold text-gray-800">438</p>
+              <div className="mt-4 text-sm font-bold text-hotpink-500 bg-hotpink-50 inline-block px-3 py-1 rounded-full">+22 new today</div>
+            </motion.div>
+            
+            <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay:0.2}} className="glass-card rounded-3xl p-6 shadow-sm border border-hotpink-100 flex items-center justify-between">
+              <div>
+                <h3 className="text-gray-500 font-bold text-sm uppercase tracking-wider mb-2">Delivered</h3>
+                <p className="text-4xl font-extrabold text-gray-800">328</p>
+              </div>
+              <CircularProgressbar value={75} text={`75%`} strokeWidth={12} styles={buildStyles({textColor: '#ff69b4', pathColor: '#ff69b4', trailColor: '#ffe4e6'})} className="w-20 h-20 font-bold" />
+            </motion.div>
+
+            <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay:0.3}} className="glass-card rounded-3xl p-6 shadow-sm border border-hotpink-100 flex items-center justify-between">
+              <div>
+                <h3 className="text-gray-500 font-bold text-sm uppercase tracking-wider mb-2">Pending</h3>
+                <p className="text-4xl font-extrabold text-gray-800">110</p>
+              </div>
+              <CircularProgressbar value={25} text={`25%`} strokeWidth={12} styles={buildStyles({textColor: '#f59e0b', pathColor: '#f59e0b', trailColor: '#fef3c7'})} className="w-20 h-20 font-bold" />
+            </motion.div>
           </div>
 
-          <div className="flex flex-col items-center">
-            <CircularProgressbar
-              value={75}
-              text={`75%`}
-              strokeWidth={20}
-              styles={buildStyles({
-                textColor: '#fff',
-                pathColor: '#fff',
-                trailColor: '#f9a8d4'
-              })}
-              className="w-24 h-24"
-            />
-            <p className="mt-2 text-sm">Delivered Orders</p>
-          </div>
+          {/* Interactive Charts */}
+          <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay:0.4}} className="glass-card rounded-3xl p-6 md:p-8 shadow-sm border border-hotpink-100">
+            <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+              <div>
+                <h2 className="text-2xl font-extrabold text-gray-800 drop-shadow-sm">Sales & Orders Overview</h2>
+                <p className="text-gray-500 font-medium mt-1">Interactive tracking of your store's performance</p>
+              </div>
+              
+              <div className="flex bg-hotpink-50 p-1 rounded-xl w-fit border border-hotpink-100 shadow-inner">
+                {['weekly', 'monthly', 'yearly'].map((range) => (
+                  <button
+                    key={range}
+                    onClick={() => setTimeRange(range)}
+                    className={`px-6 py-2 rounded-lg text-sm font-bold capitalize transition-all duration-300 ${timeRange === range ? 'bg-white text-hotpink-600 shadow-sm' : 'text-gray-500 hover:text-hotpink-500'}`}
+                  >
+                    {range}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-          <div className="flex flex-col items-center">
-            <CircularProgressbar
-              value={25}
-              text={`25%`}
-              strokeWidth={20}
-              styles={buildStyles({
-                textColor: '#fff',
-                pathColor: '#fff',
-                trailColor: '#fca5a5'
-              })}
-              className="w-24 h-24"
-            />
-            <p className="mt-2 text-sm">Cancelled Orders</p>
-          </div>
-
-          <div className="md:col-span-4 grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-            <div className="bg-white/20 p-4 rounded-xl">
-              <h3 className="text-lg font-semibold mb-2">Monthly Earnings</h3>
-              <ResponsiveContainer width="100%" height={100}>
-                <BarChart data={ordersData}>
-                  <XAxis dataKey="month" stroke="#fff" fontSize={12} />
-                  <YAxis stroke="#fff" fontSize={12} />
-                  <Tooltip />
-                  <Bar dataKey="earnings" fill="#fff" radius={[4, 4, 0, 0]} />
-                </BarChart>
+            <div className="h-[350px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={analyticsData[timeRange]} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#ff69b4" stopOpacity={0.8}/>
+                      <stop offset="95%" stopColor="#ff69b4" stopOpacity={0}/>
+                    </linearGradient>
+                    <linearGradient id="colorOrders" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.8}/>
+                      <stop offset="95%" stopColor="#f59e0b" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#ffe4e6" />
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#9ca3af', fontSize: 12, fontWeight: 600}} dy={10} />
+                  <YAxis yAxisId="left" axisLine={false} tickLine={false} tick={{fill: '#9ca3af', fontSize: 12, fontWeight: 600}} dx={-10} />
+                  <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{fill: '#9ca3af', fontSize: 12, fontWeight: 600}} dx={10} />
+                  <Tooltip content={<CustomTooltip />} cursor={{stroke: '#ffb6c1', strokeWidth: 2, strokeDasharray: '5 5'}} />
+                  <Legend verticalAlign="top" height={36} iconType="circle" wrapperStyle={{fontWeight: 'bold', fontSize: '14px', color: '#4b5563'}} />
+                  <Area yAxisId="left" type="monotone" dataKey="sales" name="Sales (₹)" stroke="#ff69b4" strokeWidth={4} fillOpacity={1} fill="url(#colorSales)" activeDot={{r: 8, strokeWidth: 0, fill: '#ff69b4'}} />
+                  <Area yAxisId="right" type="monotone" dataKey="orders" name="Orders" stroke="#f59e0b" strokeWidth={4} fillOpacity={1} fill="url(#colorOrders)" activeDot={{r: 8, strokeWidth: 0, fill: '#f59e0b'}} />
+                </AreaChart>
               </ResponsiveContainer>
             </div>
-            <div className="bg-white/20 p-4 rounded-xl text-center">
-              <h3 className="text-lg font-semibold">Total Orders</h3>
-              <p className="text-3xl font-bold mt-2">438</p>
-            </div>
-            <div className="bg-white/20 p-4 rounded-xl text-center">
-              <h3 className="text-lg font-semibold">Earnings</h3>
-              <p className="text-3xl font-bold mt-2">₹1.28L</p>
-            </div>
-          </div>
-        </div>
+          </motion.div>
+        </section>
          {/* Featured Deals */}
-        <section className="mb-10">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Featured Deals</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <section className="mb-12">
+          <h2 className="text-2xl font-extrabold text-gray-800 mb-6 drop-shadow-sm">Featured Deals</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {featuredDeals.map((deal, index) => (
-              <div key={index} className={`${deal.bgColor} rounded-xl p-6 flex items-center justify-between`}>
+              <div key={index} className={`${deal.bgColor} rounded-2xl p-6 flex items-center justify-between hover-lift shadow-sm`}>
                 <div>
-                  <h3 className="text-lg font-bold text-gray-800">{deal.title}</h3>
-                  <p className="text-pink-600 font-medium mb-1">{deal.subtitle}</p>
-                  <p className="text-sm text-gray-600">{deal.tagline}</p>
+                  <h3 className="text-xl font-bold text-gray-800">{deal.title}</h3>
+                  <p className="text-hotpink-600 font-bold mb-1">{deal.subtitle}</p>
+                  <p className="text-sm font-medium text-gray-600">{deal.tagline}</p>
                 </div>
-                <div className="bg-white/50 p-3 rounded-full">{deal.icon}</div>
+                <div className="bg-white/60 backdrop-blur-sm p-4 rounded-full shadow-inner">{deal.icon}</div>
               </div>
             ))}
           </div>
         </section>
 
         {/* Categories */}
-        <section className="mb-10">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-gray-800">Sell this Categories</h2>
+        <section className="mb-12">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-extrabold text-gray-800 drop-shadow-sm">Sell in these Categories</h2>
             
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
             {categories.map((cat, i) => (
               <Link
                 to={`/category/${cat.name.toLowerCase().replace(/ /g, '-')}`}
                 key={i}
-                className="bg-white rounded-xl p-4 border border-pink-100 hover:shadow-md transition-shadow flex flex-col items-center text-center"
+                className="glass-card p-5 hover-lift flex flex-col items-center text-center"
               >
-                <div className="bg-pink-50 p-3 rounded-full mb-3">{cat.icon}</div>
-                <h3 className="font-medium text-gray-800">{cat.name}</h3>
+                <div className="bg-hotpink-100 p-4 rounded-2xl mb-4 shadow-inner">{cat.icon}</div>
+                <h3 className="font-bold text-gray-800">{cat.name}</h3>
                 {cat.featured && (
-                  <span className="mt-1 text-xs bg-pink-100 text-pink-700 px-2 py-0.5 rounded-full">
+                  <span className="mt-2 text-xs font-bold bg-hotpink-100 text-hotpink-700 px-3 py-1 rounded-full border border-hotpink-200">
                     Popular
                   </span>
                 )}
@@ -239,43 +298,43 @@ const Home = () => {
 
      
         {/* My Products */}
-<section className="mb-10">
-  <div className="flex items-center justify-between mb-4">
-    <h2 className="text-xl font-bold text-gray-800">My Products</h2>
-    <Link to="/myproducts" className="text-pink-600 flex items-center text-sm">
+<section className="mb-12">
+  <div className="flex items-center justify-between mb-6">
+    <h2 className="text-2xl font-extrabold text-gray-800 drop-shadow-sm">My Products</h2>
+    <Link to="/myproducts" className="text-hotpink-600 font-bold hover:text-hotpink-700 flex items-center text-sm transition-colors">
       View All <FiChevronRight className="ml-1" />
     </Link>
   </div>
 
-  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     {(Array.isArray(myProducts) && myProducts.length > 0) ? (
       myProducts.slice(0, 4).map((product) => (
-        <div key={product.id} className="bg-white rounded-xl overflow-hidden border border-pink-100 hover:shadow-md transition-shadow">
-          <div className="relative h-48 bg-pink-50 overflow-hidden">
+        <div key={product.id} className="glass-card overflow-hidden hover-lift flex flex-col">
+          <div className="relative h-48 bg-hotpink-50 overflow-hidden">
             {product.image1 ? (
               <img
                 src={`data:image/jpeg;base64,${product.image1}`}
                 alt={product.name}
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-gray-400">No Image</div>
+              <div className="w-full h-full flex items-center justify-center text-gray-400 font-medium bg-gray-100">No Image</div>
             )}
-            <div className="absolute top-2 left-2 bg-pink-500 text-white text-xs px-2 py-1 rounded">
+            <div className="absolute top-3 left-3 bg-hotpink-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
               {product.quantity} in stock
             </div>
           </div>
-          <div className="p-4">
-            <span className="text-xs text-pink-500">{product.category}</span>
-            <h3 className="font-medium text-gray-800 line-clamp-1 my-1">{product.name}</h3>
-            <div className="flex items-end">
-              <span className="text-lg font-bold text-pink-600">₹{product.price}</span>
+          <div className="p-5 flex-1 flex flex-col">
+            <span className="text-xs font-bold text-hotpink-500 uppercase tracking-wider">{product.category}</span>
+            <h3 className="font-bold text-gray-800 line-clamp-1 my-2 text-lg">{product.name}</h3>
+            <div className="flex items-end mt-auto">
+              <span className="text-xl font-extrabold text-hotpink-600">₹{product.price}</span>
             </div>
             <Link
               to="/myproducts"
-              className="w-full mt-3 block text-center py-2 bg-pink-100 text-pink-600 rounded-lg font-medium hover:bg-pink-200 transition-colors"
+              className="w-full mt-4 block text-center py-2.5 bg-hotpink-100 text-hotpink-700 rounded-xl font-bold hover:bg-hotpink-500 hover:text-white transition-all duration-300"
             >
-              View
+              View Details
             </Link>
           </div>
         </div>

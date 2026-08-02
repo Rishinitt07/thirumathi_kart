@@ -1,9 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap');
 @import "tailwindcss";
-body {
-  font-family: 'Josefin Sans', sans-serif;
-}
-@font-face {
-  font-family: 'Josefin Sans';
-  src: url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap');
+
+@theme {
+  --color-hotpink-50: #FFF0F5;  /* Lavender Blush */
+  --color-hotpink-100: #FFE4E1; /* Misty Rose */
+  --color-hotpink-400: #FF69B4; /* Hot Pink */
+  --color-hotpink-500: #FF1493; /* Deep Pink */
+  --color-hotpink-600: #E71081; /* Darker Pink */
+  --color-hotpink-700: #C71585; /* Medium Violet Red */
 }
 
+body {
+  font-family: 'Josefin Sans', sans-serif;
+  background-color: #FAFAFA; /* Off white background */
+  color: #1F2937; /* Gray-800 for primary text */
+}
+
+/* Custom Utilities for Animations and Shadows */
+@layer utilities {
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-lg rounded-2xl;
+  }
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+  }
+  .btn-hotpink {
+    @apply bg-gradient-to-r from-hotpink-400 to-hotpink-500 text-white font-semibold py-2 px-6 rounded-full hover:from-hotpink-500 hover:to-hotpink-600 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5;
+  }
+  .btn-hotpink-outline {
+    @apply bg-white text-hotpink-500 border-2 border-hotpink-500 font-semibold py-2 px-6 rounded-full hover:bg-hotpink-50 transition-all duration-300;
+  }
+}

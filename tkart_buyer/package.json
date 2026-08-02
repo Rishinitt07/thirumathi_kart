@@ -13,6 +13,7 @@
     "@fontsource/josefin-sans": "^5.2.6",
     "@tailwindcss/vite": "^4.1.7",
     "axios": "^1.10.0",
+    "firebase": "^12.17.0",
     "framer-motion": "^12.23.3",
     "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",

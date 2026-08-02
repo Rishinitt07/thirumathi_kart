@@ -9,7 +9,7 @@ import Orders from './components/Orders';            // Seller Orders
 import Profile from './components/Profile';          // Seller Profile
 import MyProducts from './components/MyProducts';    // Seller's own listings
 import About from './components/About.jsx'
-import EditProduct from './components/EditProduct'; // Edit Product (optional)
+import EditProduct from './components/EditProduct';
 
 // 🔐 ProtectedRoute wrapper
 const ProtectedRoute = ({ children }) => {

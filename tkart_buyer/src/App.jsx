@@ -10,6 +10,9 @@ import Cart from './components/Sub-Components/Cart';
 import Orders from './components/Sub-Components/Orders';
 import About from './components/About.jsx';
 import Dashboard from './components/Dashboard.jsx';
+import ProductPage from './components/Sub-Components/ProductPage.jsx';
+import Checkout from './components/Sub-Components/Checkout';
+import StorePage from './components/Sub-Components/StorePage';
 
 
 const ProtectedRoute = ({ children }) => {
@@ -38,10 +41,13 @@ function App() {
 
           <Route path="/home" element={<Home />} />
           <Route path="/categories" element={<Categories />} />
+          <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/store/:id" element={<StorePage />} />
           <Route path="/about" element={<About />} />
         </Route>
 

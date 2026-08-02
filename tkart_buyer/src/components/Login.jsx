@@ -1,19 +1,18 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { BiUser } from "react-icons/bi";
-import { AiOutlineLock } from "react-icons/ai";
-import axios from "axios";
-import { Bounce, ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import tklogo from "./tklogo.png";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AiOutlineUser, AiOutlineLock } from "react-icons/ai";
+import axios from 'axios';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import tklogo from './tkart.png';
 
 const Login = () => {
-  const [user, setUser] = useState("");
-  const [pass, setPass] = useState("");
+  const [mobile, setMobile] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const showErrorToast = () => {
-    toast.error("Invalid Credentials", {
+    toast.error('Invalid Credentials', {
       position: "top-right",
       autoClose: 4000,
       theme: "dark",
@@ -25,97 +24,113 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:8081/login", { username: user, password: pass })
-      .then((res) => {
+    axios.post('http://localhost:8081/login', {
+      mobile: mobile,
+      password: password,
+    })
+      .then(res => {
         if (res.data.token) {
-          localStorage.setItem("token", res.data.token);
-          navigate("/home");
-          toast.success("Logged in successfully", {
-            position: "top-right",
-            autoClose: 2000,
-            theme: "colored",
-          });
+          localStorage.setItem('token', res.data.token);
+          navigate('/home');
         } else {
           showErrorToast();
         }
       })
-      .catch(() => {
+      .catch(err => {
+        console.log(err);
         showErrorToast();
       });
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 to-pink-100">
-      <div className="bg-white bg-opacity-80 border border-pink-200 backdrop-blur-md rounded-2xl shadow-xl px-8 py-10 w-[90%] max-w-md">
-        <h1 className="text-4xl text-pink-700 font-bold text-center mb-2">
-          Login
-        </h1>
-        <div className="flex justify-center mb-6">
-          <img
-            src={tklogo}
-            alt="Thirumathi Kart Logo"
-            className="w-20 h-20 object-contain"
-          />
+    <div className="min-h-screen flex items-center justify-center bg-hotpink-50 py-10 px-4 font-josefin">
+      <div className="bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
+        
+        {/* Left Panel */}
+        <div className="md:w-1/2 bg-gradient-to-br from-hotpink-400 to-hotpink-600 text-white flex flex-col justify-center items-center p-10 relative">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/3"></div>
+          <h2 className="text-4xl font-bold mb-4 z-10 drop-shadow-sm">New Here?</h2>
+          <p className="text-center text-white/90 text-lg mb-8 z-10">
+            To create a new account, please register first
+          </p>
+          <Link to="/register" className="z-10">
+            <button className="bg-white text-hotpink-600 px-8 py-3 rounded-full font-bold shadow-lg hover:bg-hotpink-50 transition-all duration-300 transform hover:-translate-y-1">
+              SIGN UP
+            </button>
+          </Link>
         </div>
-        <form onSubmit={handleLogin}>
-          <div className="relative mb-6">
-            <input
-              type="text"
-              required
-              className="w-full px-4 py-3 rounded-md bg-transparent border border-pink-300 text-pink-800 focus:outline-none focus:border-pink-600"
-              onChange={(e) => setUser(e.target.value)}
-              value={user}
-              autoComplete="username"
-            />
-            <label className="absolute left-4 top-[-10px] text-sm px-1 bg-white text-pink-700">
-              Username
-            </label>
-            <BiUser className="absolute right-4 top-3 text-pink-500" size={20} />
-          </div>
-          <div className="relative mb-6">
-            <input
-              type="password"
-              required
-              className="w-full px-4 py-3 rounded-md bg-transparent border border-pink-300 text-pink-800 focus:outline-none focus:border-pink-600"
-              onChange={(e) => setPass(e.target.value)}
-              value={pass}
-              autoComplete="current-password"
-            />
-            <label className="absolute left-4 top-[-10px] text-sm px-1 bg-white text-pink-700">
-              Password
-            </label>
-            <AiOutlineLock
-              className="absolute right-4 top-3 text-pink-500"
-              size={20}
-            />
-          </div>
-          <div className="flex justify-between items-center mb-4">
-            <div className="flex items-center gap-2">
-              <input type="checkbox" id="remember" className="accent-pink-500" />
-              <label htmlFor="remember" className="text-pink-700 text-sm">
-                Remember Me
-              </label>
-            </div>
-            <Link to="#" className="text-sm text-pink-600 hover:underline">
-              Forgot Password?
-            </Link>
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-pink-600 hover:bg-pink-700 text-white font-medium py-2 rounded-md transition-all"
-          >
+
+        {/* Right Panel */}
+        <div className="md:w-1/2 p-10 bg-white flex flex-col justify-center">
+          {/* Logo */}
+           <div className="flex justify-center mb-6">
+           <img src={tklogo} alt="Thirumathi Kart Logo" className="h-24 w-24 drop-shadow-md" />
+           </div>
+          <h2 className="text-3xl font-extrabold text-hotpink-600 text-center mb-8">
             Login
-          </button>
-          <div className="text-center mt-6">
-            <span className="text-pink-700 text-sm">
-              New here?{" "}
-              <Link to="/register" className="font-medium text-pink-600 hover:underline">
-                Create an account
-              </Link>
-            </span>
+          </h2>
+
+          <form onSubmit={handleLogin} className="space-y-5">
+            {/* Mobile */}
+            <div className="flex items-center border-2 border-gray-100 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-hotpink-400 focus-within:bg-white transition-colors">
+              <AiOutlineUser className="text-gray-400 mr-3 text-xl" />
+              <input
+                type="text"
+                name="mobile"
+                placeholder="Mobile Number"
+                value={mobile}
+                onChange={(e) => setMobile(e.target.value)}
+                className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium"
+                required
+              />
+            </div>
+
+            {/* Password */}
+            <div className="flex items-center border-2 border-gray-100 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-hotpink-400 focus-within:bg-white transition-colors">
+              <AiOutlineLock className="text-gray-400 mr-3 text-xl" />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium"
+                required
+              />
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              className="w-full bg-hotpink-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg hover:bg-hotpink-600 transition-all duration-300 hover:shadow-hotpink-500/30 transform hover:-translate-y-0.5"
+            >
+              SIGN IN
+            </button>
+          </form>
+
+          {/* Social Logins */}
+          <div className="mt-8">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-200"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">Or continue with</span>
+              </div>
+            </div>
+
+            <div className="mt-6 grid grid-cols-2 gap-4">
+              <button className="flex items-center justify-center px-4 py-2 border border-gray-200 rounded-xl shadow-sm bg-white hover:bg-gray-50 transition-colors">
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="h-5 w-5 mr-2" />
+                <span className="text-sm font-medium text-gray-700">Google</span>
+              </button>
+              <button className="flex items-center justify-center px-4 py-2 border border-gray-200 rounded-xl shadow-sm bg-white hover:bg-gray-50 transition-colors">
+                <img src="https://www.svgrepo.com/show/448224/facebook.svg" alt="Facebook" className="h-5 w-5 mr-2" />
+                <span className="text-sm font-medium text-gray-700">Facebook</span>
+              </button>
+            </div>
           </div>
-        </form>
+        </div>
       </div>
       <ToastContainer />
     </div>

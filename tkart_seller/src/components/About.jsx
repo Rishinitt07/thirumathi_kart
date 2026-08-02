@@ -2,24 +2,24 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 const UserGuidePanel = () => (
-  <div className="w-full bg-white rounded-xl shadow-lg p-6 space-y-6 border border-pink-100 font-sans">
+  <div className="w-full bg-white rounded-xl shadow-lg p-6 space-y-6 border border-hotpink-100 font-sans">
     {/* Header with decorative elements */}
-    <div className="text-center border-b border-pink-100 pb-6 relative">
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full"></div>
-      <h1 className="text-2xl font-bold text-pink-700 mb-2 font-serif tracking-tight">Shopping Guide</h1>
-      <p className="text-pink-600 font-medium">Your complete shopping companion</p>
+    <div className="text-center border-b border-hotpink-100 pb-6 relative">
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-hotpink-400 to-hotpink-600 rounded-full"></div>
+      <h1 className="text-2xl font-bold text-hotpink-700 mb-2 font-serif tracking-tight">Shopping Guide</h1>
+      <p className="text-hotpink-600 font-medium">Your complete shopping companion</p>
     </div>
     
     {/* User greeting card */}
-    <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-pink-50 to-rose-50 rounded-lg border border-pink-100">
+    <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-hotpink-50 to-hotpink-50 rounded-lg border border-hotpink-100">
       <div className="bg-white p-2 rounded-full shadow-sm">
-        <svg className="w-5 h-5 text-pink-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="w-5 h-5 text-hotpink-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
         </svg>
       </div>
       <div>
         <span className="font-medium text-gray-800">Quick Help Guide</span>
-        <p className="text-xs text-pink-600">Find answers to common questions</p>
+        <p className="text-xs text-hotpink-600">Find answers to common questions</p>
       </div>
     </div>
 
@@ -27,20 +27,20 @@ const UserGuidePanel = () => (
     <div className="space-y-6">
       <div>
         <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-3">
-          <span className="bg-pink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">1</span>
+          <span className="bg-hotpink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">1</span>
           Shopping Process
         </h3>
         <ul className="space-y-3 text-gray-600 text-sm pl-12">
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Browse products by category or search
           </li>
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Add items to your cart or wishlist
           </li>
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Proceed to secure checkout
           </li>
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Multiple payment options available
           </li>
         </ul>
@@ -48,20 +48,20 @@ const UserGuidePanel = () => (
 
       <div>
         <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-3">
-          <span className="bg-pink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">2</span>
+          <span className="bg-hotpink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">2</span>
           Order Tracking
         </h3>
         <ul className="space-y-3 text-gray-600 text-sm pl-12">
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Real-time order status updates
           </li>
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Email/SMS delivery notifications
           </li>
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Direct seller communication
           </li>
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Track shipment with provided link
           </li>
         </ul>
@@ -69,20 +69,20 @@ const UserGuidePanel = () => (
 
       <div>
         <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-3">
-          <span className="bg-pink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">3</span>
+          <span className="bg-hotpink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">3</span>
           Returns & Support
         </h3>
         <ul className="space-y-3 text-gray-600 text-sm pl-12">
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Easy return initiation from order details
           </li>
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             7-day hassle-free return policy
           </li>
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Quality guarantee on all products
           </li>
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             24/7 customer support available
           </li>
         </ul>
@@ -90,17 +90,17 @@ const UserGuidePanel = () => (
     </div>
 
     {/* Support CTA with enhanced buttons */}
-    <div className="bg-gradient-to-br from-pink-50 to-rose-50 p-5 rounded-xl border border-pink-100">
+    <div className="bg-gradient-to-br from-hotpink-50 to-hotpink-50 p-5 rounded-xl border border-hotpink-100">
       <h4 className="font-semibold text-gray-800 mb-2 text-center">Need more help?</h4>
       <p className="text-sm text-gray-600 mb-4 text-center">Our support team is available 24/7</p>
       <div className="flex flex-col gap-3">
-        <button className="w-full bg-white text-pink-600 border border-pink-200 py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-pink-50 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-md">
+        <button className="w-full bg-white text-hotpink-600 border border-hotpink-200 py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-hotpink-50 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-md">
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
           </svg>
           Call Support
         </button>
-        <button className="w-full bg-gradient-to-r from-pink-600 to-rose-500 text-white py-2.5 px-4 rounded-lg text-sm font-medium hover:from-pink-700 hover:to-rose-600 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-md">
+        <button className="w-full bg-gradient-to-r from-hotpink-600 to-hotpink-500 text-white py-2.5 px-4 rounded-lg text-sm font-medium hover:from-hotpink-700 hover:to-hotpink-600 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-md">
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
           </svg>
@@ -113,93 +113,117 @@ const UserGuidePanel = () => (
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white">
+    <div className="min-h-screen bg-hotpink-50 font-josefin">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-pink-600 to-rose-500 py-20 px-4 sm:px-6 lg:px-8 text-white overflow-hidden">
+      <div className="relative bg-gradient-to-br from-hotpink-600 via-hotpink-500 to-hotpink-700 py-32 px-4 sm:px-6 lg:px-8 text-white overflow-hidden shadow-2xl">
+        <motion.div 
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.5 }}
+          className="absolute inset-0 z-0 bg-[url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-10 mix-blend-overlay"
+        ></motion.div>
+        
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 z-0"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-black/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3 z-0"></div>
+
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl md:text-5xl font-bold mb-4"
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-lg"
           >
             About Thirumathi Kart
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl max-w-3xl mx-auto"
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            className="text-xl md:text-2xl max-w-3xl mx-auto font-medium text-white/90 drop-shadow-md"
           >
             Empowering women through seamless shopping experiences
           </motion.p>
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-8"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.4, type: "spring", stiffness: 100 }}
+            className="mt-12"
           >
             <Link 
               to="/Home" 
-              className="inline-block bg-white text-pink-600 px-8 py-3 rounded-full font-medium hover:bg-pink-50 transition duration-300"
+              className="inline-block bg-white text-hotpink-600 px-10 py-4 rounded-full text-lg font-extrabold hover:bg-hotpink-50 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
             >
               Start Shopping
             </Link>
           </motion.div>
         </div>
-        <div className="absolute top-0 left-0 w-full h-full opacity-10">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white to-transparent"></div>
-        </div>
       </div>
 
       {/* Our Story Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-pink-700 mb-4">Our Story</h2>
-          <div className="w-24 h-1 bg-pink-500 mx-auto"></div>
-        </div>
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="text-center mb-20">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            className="text-5xl font-extrabold text-gray-800 mb-6 drop-shadow-sm tracking-tight"
           >
+            Our Story
+          </motion.h2>
+          <motion.div 
+            initial={{ width: 0 }}
+            whileInView={{ width: "6rem" }}
+            viewport={{ once: true }}
+            className="h-1.5 bg-gradient-to-r from-hotpink-400 to-hotpink-600 mx-auto rounded-full"
+          ></motion.div>
+        </div>
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
+            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="relative"
+          >
+            <div className="absolute inset-0 bg-hotpink-400 rounded-3xl transform rotate-3 scale-105 opacity-20"></div>
             <img 
               src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
               alt="Our Team" 
-              className="rounded-lg shadow-xl w-full h-auto"
+              className="relative rounded-3xl shadow-2xl w-full h-auto object-cover border-4 border-white"
             />
           </motion.div>
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             viewport={{ once: true }}
+            className="space-y-6"
           >
-            <h3 className="text-2xl font-semibold text-gray-800 mb-4">From Humble Beginnings</h3>
-            <p className="text-gray-600 mb-4">
+            <h3 className="text-3xl font-bold text-gray-800">From Humble Beginnings</h3>
+            <p className="text-gray-600 text-lg leading-relaxed">
               Founded in 2023, Thirumathi Kart began as a small initiative to support women entrepreneurs in rural Tamil Nadu. 
               What started as a local marketplace has now grown into a thriving e-commerce platform connecting thousands of 
               women artisans with customers nationwide.
             </p>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-600 text-lg leading-relaxed">
               Our mission is simple: to create economic opportunities for women while providing customers with authentic, 
               high-quality products that tell a story.
             </p>
-            <div className="flex flex-wrap gap-4">
-              <div className="bg-pink-50 px-4 py-3 rounded-lg">
-                <h4 className="font-bold text-pink-700">5000+</h4>
-                <p className="text-sm text-gray-600">Women Sellers</p>
-              </div>
-              <div className="bg-pink-50 px-4 py-3 rounded-lg">
-                <h4 className="font-bold text-pink-700">100K+</h4>
-                <p className="text-sm text-gray-600">Happy Customers</p>
-              </div>
-              <div className="bg-pink-50 px-4 py-3 rounded-lg">
-                <h4 className="font-bold text-pink-700">50+</h4>
-                <p className="text-sm text-gray-600">Categories</p>
-              </div>
+            <div className="flex flex-wrap gap-4 pt-6">
+              {[
+                { label: "Women Sellers", value: "5000+" },
+                { label: "Happy Customers", value: "100K+" },
+                { label: "Categories", value: "50+" }
+              ].map((stat, i) => (
+                <motion.div 
+                  key={i}
+                  whileHover={{ y: -5 }}
+                  className="bg-white border-2 border-hotpink-100 px-6 py-4 rounded-2xl shadow-sm hover:shadow-md transition-all flex-1 text-center"
+                >
+                  <h4 className="font-extrabold text-3xl text-hotpink-600">{stat.value}</h4>
+                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mt-1">{stat.label}</p>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </div>
@@ -209,8 +233,8 @@ const About = () => {
       <div className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-pink-700 mb-4">Our Values</h2>
-            <div className="w-24 h-1 bg-pink-500 mx-auto"></div>
+            <h2 className="text-4xl font-extrabold text-hotpink-700 mb-4 drop-shadow-sm">Our Values</h2>
+            <div className="w-24 h-1 bg-hotpink-500 mx-auto rounded-full"></div>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
@@ -264,8 +288,8 @@ const About = () => {
       {/* How It Works Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-pink-700 mb-4">How It Works</h2>
-          <div className="w-24 h-1 bg-pink-500 mx-auto"></div>
+          <h2 className="text-4xl font-extrabold text-hotpink-700 mb-4 drop-shadow-sm">How It Works</h2>
+          <div className="w-24 h-1 bg-hotpink-500 mx-auto rounded-full"></div>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           {[
@@ -324,11 +348,11 @@ const About = () => {
       </div>
 
       {/* Testimonials */}
-      <div className="bg-pink-50 py-16">
+      <div className="bg-hotpink-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-pink-700 mb-4">What Our Customers Say</h2>
-            <div className="w-24 h-1 bg-pink-500 mx-auto"></div>
+            <h2 className="text-4xl font-extrabold text-hotpink-700 mb-4 drop-shadow-sm">What Our Customers Say</h2>
+            <div className="w-24 h-1 bg-hotpink-500 mx-auto rounded-full"></div>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
@@ -381,22 +405,22 @@ const About = () => {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-gradient-to-r from-pink-600 to-rose-500 py-16 px-4 sm:px-6 lg:px-8 text-white">
+      <div className="bg-gradient-to-br from-hotpink-400 to-hotpink-600 py-16 px-4 sm:px-6 lg:px-8 text-white shadow-inner">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Experience Thirumathi Kart?</h2>
-          <p className="text-xl mb-8 max-w-3xl mx-auto">
+          <h2 className="text-4xl font-extrabold mb-4 drop-shadow-sm">Ready to Experience Thirumathi Kart?</h2>
+          <p className="text-xl mb-8 max-w-3xl mx-auto font-medium">
             Join thousands of customers supporting women artisans across India
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-6">
             <Link 
               to="/Login" 
-              className="bg-white text-pink-600 px-8 py-3 rounded-full font-medium hover:bg-pink-50 transition duration-300"
+              className="bg-white text-hotpink-600 px-8 py-3 rounded-full font-bold hover:bg-hotpink-50 hover:shadow-lg transition-all duration-300"
             >
               Sell Products
             </Link>
             <Link 
               to="/Register" 
-              className="bg-transparent border-2 border-white px-8 py-3 rounded-full font-medium hover:bg-white hover:text-pink-600 transition duration-300"
+              className="bg-transparent border-2 border-white px-8 py-3 rounded-full font-bold hover:bg-white hover:text-hotpink-600 transition-all duration-300 hover:shadow-lg"
             >
               Create Account
             </Link>

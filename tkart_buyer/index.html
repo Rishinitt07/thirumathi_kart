@@ -17,6 +17,29 @@
 </head>
 
 <body>
+  <div id="google_translate_element" style="display:none;"></div>
+  <script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en', 
+        includedLanguages: 'en,ta',
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <style>
+    /* Hide the Google Translate toolbar and prevent body shifting */
+    .goog-te-banner-frame { display: none !important; }
+    .goog-te-banner-frame.skiptranslate { display: none !important; }
+    .VIpgJd-ZVi9od-ORHb-OEVmcd { display: none !important; }
+    .VIpgJd-ZVi9od-aZ2wEe-wOHMyf { display: none !important; }
+    body { top: 0px !important; position: static !important; }
+    html { top: 0px !important; height: 100% !important; }
+    #goog-gt-tt { display: none !important; }
+    .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
+    iframe.goog-te-banner-frame { display: none !important; }
+  </style>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
 </body>

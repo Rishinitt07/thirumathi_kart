@@ -1,6 +1,10 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+import { syncCartToDB } from '../../utils/sync';
+import ProductDetailModal from './ProductDetailModal';
 
 const ToastifyCSS = () => (
   <style>{`
@@ -32,30 +36,29 @@ const TrashIcon = () => (
 );
 
 const MyCart = () => {
-  const [cart, setCart] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [showModal, setShowModal] = useState(false);
-  const [orderDetails, setOrderDetails] = useState({
-    phone: '', address: '', city: '', pincode: '', state: '', paymentMethod: '',
-  });
-
-  useEffect(() => {
+  const [cart, setCart] = useState(() => {
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    const sanitizedCart = storedCart.map(item => ({
+    
+    // Check for old cart format missing seller details and clear if needed
+    if (storedCart.length > 0 && !storedCart[0].seller_name) {
+      localStorage.removeItem('cart');
+      return [];
+    }
+
+    return storedCart.map(item => ({
       ...item,
       qty: item.qty > 0 ? item.qty : 1,
     }));
-    setCart(sanitizedCart);
-  }, []);
+  });
+  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
+    syncCartToDB(cart);
   }, [cart]);
 
-  const handleInputChange = useCallback(e => {
-    const { name, value } = e.target;
-    setOrderDetails(prev => ({ ...prev, [name]: value }));
-  }, []);
 
   const updateQty = useCallback((id, delta) => {
     setCart(currentCart =>
@@ -90,124 +93,153 @@ const MyCart = () => {
       toast.warn("Your cart is empty. Let's add some items!");
       return;
     }
-    setShowModal(true);
+    navigate('/checkout');
   };
+  const CartItem = ({ item, onSelectProduct }) => (
+    <div className="flex flex-col sm:flex-row items-stretch bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in group overflow-hidden mb-4">
+      
+      {/* Image Section */}
+      <div 
+        className="w-full sm:w-48 md:w-56 shrink-0 bg-gray-50 relative cursor-pointer overflow-hidden border-b sm:border-b-0 sm:border-r border-gray-100"
+        onClick={() => onSelectProduct(item)}
+      >
+        <img
+          src={item.images?.[0] || 'https://placehold.co/400x400/f472b6/ffffff?text=No+Image'}
+          alt={item.name}
+          className="w-full h-48 sm:h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
+      </div>
 
-  const handleConfirmOrder = async () => {
-    const { phone, address, pincode } = orderDetails;
-    if (!phone || !address || !pincode) {
-      toast.error('Whoops! Please fill in your phone, address, and pincode.');
-      return;
-    }
-
-    try {
-      await axios.post('http://localhost:8081/orders/place', {
-        items: cart,
-        ...orderDetails,
-      });
-
-      toast.success('Success! Your order has been placed.');
-      setCart([]);
-      localStorage.removeItem('cart');
-      setShowModal(false);
-    } catch (err) {
-      toast.error('Oh no! Something went wrong. Please try placing your order again.');
-    }
-  };
-  
-  const InputField = (props) => (
-    <input
-      {...props}
-      className="border border-pink-300 rounded px-3 py-2 w-full mb-3 focus:outline-none focus:ring-2 focus:ring-pink-400"
-    />
-  );
-
-  const CartItem = ({ item }) => (
-    <div className="flex items-center justify-between border-b py-4 animate-fade-in">
-      <img
-        src={item.image || 'https://placehold.co/64x64/f472b6/ffffff?text=Item'}
-        alt={item.name}
-        className="w-16 h-16 object-cover rounded mr-4"
-      />
-      <div className="flex-1">
-        <h3 className="font-semibold text-gray-800">{item.name}</h3>
-        <p className="text-gray-700">₹{item.price}</p>
-        <div className="flex items-center gap-2 mt-2">
-          <span className="text-sm text-gray-600">Qty:</span>
-          <button onClick={() => updateQty(item.id, -1)} className="px-2 py-1 border rounded hover:bg-pink-100 transition-colors"> − </button>
-          <span className="text-md font-medium w-8 text-center">{item.qty}</span>
-          <button onClick={() => updateQty(item.id, 1)} className="px-2 py-1 border rounded hover:bg-pink-100 transition-colors"> + </button>
+      {/* Content Section */}
+      <div className="p-5 flex flex-col justify-between flex-1">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+          <div>
+            <h3 
+              className="text-lg sm:text-xl font-normal text-gray-900 group-hover:text-hotpink-600 transition-colors cursor-pointer leading-tight mb-2"
+              onClick={() => onSelectProduct(item)}
+            >
+              {item.name}
+            </h3>
+            <p className="text-xs text-green-600 font-normal tracking-wide uppercase mb-1">In stock</p>
+            <p className="text-xs text-gray-500">Eligible for FREE Delivery</p>
+          </div>
+          
+          <div className="text-left sm:text-right">
+            <p className="text-2xl font-normal text-gray-900">₹{item.price.toLocaleString()}</p>
+          </div>
+        </div>
+        
+        <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-4 pt-4 border-t border-gray-100">
+          <div className="flex items-center bg-gray-50 border border-gray-200 rounded-xl h-10 overflow-hidden shadow-sm">
+            <button onClick={() => updateQty(item.id, -1)} className="px-4 h-full hover:bg-white text-gray-600 font-medium transition-colors border-r border-gray-200"> − </button>
+            <span className="w-12 text-center font-normal text-gray-900">{item.qty}</span>
+            <button onClick={() => updateQty(item.id, 1)} className="px-4 h-full hover:bg-white text-gray-600 font-medium transition-colors border-l border-gray-200"> + </button>
+          </div>
+          <button onClick={() => removeItem(item.id)} className="text-sm font-normal text-gray-500 hover:text-red-500 transition-colors flex items-center gap-1.5 px-3 py-2 rounded-lg hover:bg-red-50">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+            Delete
+          </button>
+          <div className="h-4 w-px bg-gray-300 hidden sm:block"></div>
+          <button className="text-sm font-normal text-gray-500 hover:text-hotpink-600 transition-colors px-3 py-2 rounded-lg hover:bg-hotpink-50">
+            Save for later
+          </button>
         </div>
       </div>
-      <button onClick={() => removeItem(item.id)} className="text-pink-600 hover:text-pink-800 ml-4 flex items-center gap-1 transition-colors">
-        <TrashIcon /> Remove
-      </button>
     </div>
   );
 
   return (
-    <div className="min-h-screen flex flex-col bg-pink-50 font-sans">
-      <ToastifyCSS />
-      <main className="max-w-2xl mx-auto w-full p-6 bg-white rounded-lg shadow-lg mt-10">
-        <h2 className="text-3xl font-bold mb-6 text-gray-800 text-center">Your Shopping Cart</h2>
+    <div className="min-h-screen font-josefin bg-gray-50">
+      <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <ToastifyCSS />
+        
+        <div className="flex flex-col lg:flex-row gap-8 items-start">
+          
+          {/* Left Column - Cart Items */}
+          <main className="flex-1 w-full flex flex-col gap-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <h1 className="text-3xl font-semibold text-gray-900">Shopping Cart</h1>
+              
+              <div className="relative group w-full sm:max-w-xs md:max-w-sm">
+                <input
+                  type="text"
+                  placeholder="Search cart items..."
+                  value={searchTerm}
+                  onChange={e => setSearchTerm(e.target.value)}
+                  className="w-full px-5 py-2.5 rounded-full border border-gray-200 bg-white shadow-sm focus:outline-none focus:border-hotpink-300 focus:ring-2 focus:ring-hotpink-100 transition-all text-sm text-gray-700 pl-11 placeholder-gray-400"
+                />
+                <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-hotpink-400 transition-colors h-4 w-4" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </div>
+            </div>
 
-        <InputField
-          type="text"
-          placeholder="Search for an item in your cart..."
-          value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
+            <div className="flex flex-col mt-2">
+              {filteredCart.length === 0 ? (
+                <div className="py-16 text-center bg-white rounded-2xl border border-gray-100 shadow-sm">
+                  <p className="text-gray-500 text-lg">
+                    {searchTerm ? `No items matched your search for "${searchTerm}".` : "Your Amazon Cart is empty."}
+                  </p>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2">
+                  {filteredCart.map(item => <CartItem key={item.id} item={item} onSelectProduct={setSelectedProduct} />)}
+                </div>
+              )}
+            </div>
+            
+            {filteredCart.length > 0 && (
+              <div className="text-right pt-2 border-t border-gray-200 mt-2">
+                <p className="text-xl text-gray-900">
+                  Subtotal ({filteredCart.reduce((sum, item) => sum + item.qty, 0)} items): <span className="font-normal">₹{total.toLocaleString()}</span>
+                </p>
+              </div>
+            )}
+          </main>
+
+          {/* Right Column - Price Details & Checkout */}
+          {cart.length > 0 && (
+            <aside className="w-full lg:w-96 shrink-0 sticky top-24">
+              <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div className="mb-6">
+                  <div className="flex items-center gap-2 text-green-700 mb-4">
+                    <svg className="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path></svg>
+                    <span className="text-sm font-medium">Your order is eligible for FREE Delivery.</span>
+                  </div>
+                  
+                  <h2 className="text-xl text-gray-900 mb-2">
+                    Subtotal ({cart.reduce((sum, item) => sum + item.qty, 0)} items): <span className="font-normal">₹{total.toLocaleString()}</span>
+                  </h2>
+                </div>
+
+                <button
+                  onClick={handleCheckout}
+                  className="w-full py-3 px-4 bg-hotpink-500 hover:bg-hotpink-600 text-white rounded-full font-normal text-[15px] shadow-md transition-all hover:-translate-y-0.5"
+                >
+                  Proceed to Buy
+                </button>
+
+                <div className="mt-6 pt-6 border-t border-gray-200">
+                  <div className="flex items-start gap-3">
+                    <svg className="w-6 h-6 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    <p className="text-xs text-gray-500 leading-tight">
+                      Safe and secure payments. Easy returns. 100% Authentic products.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          )}
+          
+        </div>
+
+
+        <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
+
+        <ProductDetailModal 
+          product={selectedProduct} 
+          onClose={() => setSelectedProduct(null)} 
         />
-
-        {filteredCart.length === 0 ? (
-          <p className="text-center text-gray-500 mt-8">
-            {searchTerm ? `Nothing found for "${searchTerm}". Try another search!` : "Your cart is currently empty."}
-          </p>
-        ) : (
-          filteredCart.map(item => <CartItem key={item.id} item={item} />)
-        )}
-
-        <div className="mt-6 border-t pt-4 text-right">
-          <p className="text-xl font-bold text-gray-800">
-            Total: ₹{total.toFixed(2)}
-          </p>
-          <button
-            onClick={handleCheckout}
-            disabled={cart.length === 0}
-            className={`mt-4 w-full py-3 rounded-lg font-semibold text-lg transition-all duration-300 ${
-              cart.length === 0
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-pink-600 text-white hover:bg-pink-700 hover:shadow-lg transform hover:-translate-y-1'
-            }`}
-          >
-            Proceed to Checkout
-          </button>
-        </div>
-      </main>
-
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-sm">
-            <h2 className="text-2xl font-semibold mb-6 text-center">Delivery Information</h2>
-            <InputField name="phone" placeholder="Phone Number" value={orderDetails.phone} onChange={handleInputChange} maxLength="10" />
-            <textarea name="address" placeholder="Full Address" value={orderDetails.address} onChange={handleInputChange} className="border border-pink-300 p-2 w-full mb-3 rounded focus:outline-none focus:ring-2 focus:ring-pink-400" rows="3" />
-            <div className="flex gap-4">
-              <InputField name="city" placeholder="City" value={orderDetails.city} onChange={handleInputChange} />
-              <InputField name="pincode" placeholder="Pincode" value={orderDetails.pincode} onChange={handleInputChange} maxLength="6" />
-            </div>
-            <InputField name="state" placeholder="State" value={orderDetails.state} onChange={handleInputChange} />
-            <select name="paymentMethod" value={orderDetails.paymentMethod} onChange={handleInputChange} className="border border-pink-300 p-2 w-full mb-6 rounded focus:outline-none focus:ring-2 focus:ring-pink-400">
-              <option value="">Select Payment Method</option>
-              <option value="cod">Cash on Delivery</option>
-            </select>
-            <div className="flex justify-end gap-3">
-              <button onClick={() => setShowModal(false)} className="px-6 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors">Cancel</button>
-              <button onClick={handleConfirmOrder} className="px-6 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors">Confirm Order</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
+      </div>
     </div>
   );
 };

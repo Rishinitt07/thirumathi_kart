@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import { syncCartToDB, syncWishlistToDB } from '../../utils/sync';
 import {
   FaSearch,
   FaHeart,
@@ -34,8 +35,8 @@ const Categories = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [cart, setCart] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
+  const [cart, setCart] = useState(() => JSON.parse(localStorage.getItem('cart')) || []);
+  const [wishlist, setWishlist] = useState(() => JSON.parse(localStorage.getItem('wishlist')) || []);
   const [searchQuery, setSearchQuery] = useState('');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState(null);
@@ -61,57 +62,71 @@ const Categories = () => {
 
 const categoryStructure = {
   'All': { subcategories: ['All'], icon: '🛍️', colors: [], sizes: [], brands: [] },
-  'Food': {
-    subcategories: ['All', 'Snacks', 'Beverages', 'Packaged Foods'],
-    icon: '🍎',
-    colors: [],
-    sizes: ['Small', 'Medium', 'Large'],
-    brands: ['HealthyBites', 'TasteGood', 'PureEats'],
-  },
-  'Clothing': {
-    subcategories: ['All', 'Men', 'Women', 'Kids'],
-    icon: '👕',
-    colors: ['Red', 'Blue', 'Green', 'Black', 'White'],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    brands: ['StyleTrend', 'UrbanWear', 'ClassicFit'],
-  },
-  'Handcrafts': {
-    subcategories: ['All', 'Pottery', 'Textiles', 'Woodwork'],
-    icon: '🖌️',
-    colors: ['Brown', 'Blue', 'Red', 'Natural'],
-    sizes: ['Small', 'Medium', 'Large'],
-    brands: ['CraftWorks', 'ArtisanHub', 'HandmadeHaven'],
-  },
-  'Fashion and Jewellery': {
-    subcategories: ['All', 'Necklaces', 'Rings', 'Bracelets', 'Clothing'],
-    icon: '💍',
-    colors: ['Gold', 'Silver', 'Rose Gold', 'Black'],
-    sizes: ['One Size', 'Adjustable'],
-    brands: ['GlamourGlow', 'ChicShine', 'ElegantCraft'],
-  },
   'Beauty and Healthcare': {
-    subcategories: ['All', 'Skincare', 'Haircare', 'Wellness'],
+    subcategories: ['All', 'Essential Oils', 'Hair Care', 'Makeup', 'Organic Skincare', 'Personal Hygiene', 'Soaps & Body Wash', 'Wellness Supplements'],
     icon: '💆‍♀️',
     colors: [],
     sizes: ['Standard', 'Travel'],
     brands: ['PureCare', 'GlowUp', 'WellnessPro'],
   },
+  'Clothing': {
+    subcategories: ['All', 'Blouses', 'Dresses', 'Ethnic Wear', 'Footwear', 'Kids Wear', 'Men’s Wear', 'Sarees', 'Shirts & Tops', 'Women’s Wear'],
+    icon: '👕',
+    colors: ['Red', 'Blue', 'Green', 'Black', 'White'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    brands: ['StyleTrend', 'UrbanWear', 'ClassicFit'],
+  },
+  'Fashion': {
+    subcategories: ['All', 'Bags & Purses', 'Caps & Hats', 'Eyewear', 'Footwear', 'Scarves & Stoles', 'Watches'],
+    icon: '👓',
+    colors: ['Black', 'Brown', 'Silver', 'Gold'],
+    sizes: ['One Size'],
+    brands: ['ChicStyle', 'ModernTrend'],
+  },
+  'Fashion and Jewellery': {
+    subcategories: ['All', 'Anklets', 'Bangles & Bracelets', 'Earrings', 'Necklaces', 'Rings', 'Traditional Sets'],
+    icon: '💍',
+    colors: ['Gold', 'Silver', 'Rose Gold', 'Black'],
+    sizes: ['One Size', 'Adjustable'],
+    brands: ['GlamourGlow', 'ChicShine', 'ElegantCraft'],
+  },
+  'Food': {
+    subcategories: ['All', 'Bakery', 'Beverages', 'Dry Fruits & Nuts', 'Homemade Snacks', 'Pickles & Chutneys', 'Ready-to-Eat', 'Spices & Masala', 'Staples & Grains'],
+    icon: '🍎',
+    colors: [],
+    sizes: ['Small', 'Medium', 'Large'],
+    brands: ['HealthyBites', 'TasteGood', 'PureEats'],
+  },
+  'Groceries': {
+    subcategories: ['All', 'Atta & Flours', 'Dals & Pulses', 'Edible Oils', 'Organic Products', 'Rice & Grains', 'Salt & Sugar', 'Spices & Condiments', 'Tea & Coffee'],
+    icon: '🛒',
+    colors: [],
+    sizes: ['1kg', '500g', '250g'],
+    brands: ['DailyFresh', 'FarmChoice'],
+  },
+  'Handicraft': {
+    subcategories: ['All', 'Bamboo Crafts', 'Handmade Bags', 'Handmade Home Decor', 'Pottery', 'Terracotta Items', 'Wood Carvings'],
+    icon: '🖌️',
+    colors: ['Brown', 'Blue', 'Red', 'Natural'],
+    sizes: ['Small', 'Medium', 'Large'],
+    brands: ['CraftWorks', 'ArtisanHub', 'HandmadeHaven'],
+  },
   'Office Code': {
-    subcategories: ['All', 'Stationery', 'Electronics', 'Furniture'],
+    subcategories: ['All', 'Chairs', 'Desks', 'Filing Products', 'Laptop Stands', 'Lighting', 'Stationery', 'Storage Solutions'],
     icon: '💼',
     colors: ['Black', 'White', 'Gray'],
     sizes: ['Standard', 'Compact'],
     brands: ['OfficePro', 'WorkSmart', 'ErgoDesign'],
   },
   'Organic Fruits and Vegetables': {
-    subcategories: ['All', 'Fruits', 'Vegetables', 'Mixed Baskets'],
+    subcategories: ['All', 'Fruits', 'Leafy Greens', 'Organic Juices', 'Root Vegetables', 'Seasonal Produce', 'Vegetables'],
     icon: '🥕',
     colors: [],
     sizes: ['Small', 'Medium', 'Large'],
     brands: ['FarmFresh', 'GreenHarvest', 'OrganicFields'],
   },
   'Others': {
-    subcategories: ['All', 'Miscellaneous'],
+    subcategories: ['All', 'Books', 'DIY Kits', 'Gift Items', 'Home Cleaning', 'Pet Supplies', 'Toys & Games'],
     icon: '📦',
     colors: [],
     sizes: [],
@@ -159,7 +174,9 @@ const categoryStructure = {
         sizes: product.sizes || availableFilters.sizes.slice(0, Math.floor(Math.random() * 3) + 1),
         brand: product.brand || availableFilters.brands[Math.floor(Math.random() * availableFilters.brands.length)] || 'Generic',
         discount: product.discount || (Math.random() > 0.7 ? Math.floor(Math.random() * 50) + 10 : 0),
-        images: product.images && Array.isArray(product.images) ? product.images : ['/placeholder-product.jpg'],
+        images: [product.image1, product.image2, product.image3, product.image4].some(Boolean)
+          ? [product.image1, product.image2, product.image3, product.image4].filter(Boolean).map(img => `data:image/jpeg;base64,${img}`)
+          : ['https://via.placeholder.com/300?text=No+Image'],
       }));
       setProducts(enhancedProducts);
       ReactGA.event({ category: 'Category', action: 'View', label: selectedCategory });
@@ -175,15 +192,24 @@ const categoryStructure = {
 
   useEffect(() => {
     fetchProducts();
+  }, [fetchProducts]);
 
+  useEffect(() => {
     const viewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
     setRecentlyViewed(viewed);
+  }, []);
 
+  useEffect(() => {
     const params = new URLSearchParams(location.search);
-    if (params.get('category')) setSelectedCategory(params.get('category'));
-    if (params.get('subcategory')) setSelectedSubcategory(params.get('subcategory'));
-    if (params.get('search')) setSearchQuery(params.get('search'));
-  }, [location.search, fetchProducts]);
+    const cat = params.get('category') || 'All';
+    const sub = params.get('subcategory') || 'All';
+    const search = params.get('search') || '';
+    
+    setSelectedCategory(cat);
+    setSelectedSubcategory(sub);
+    setSearchQuery(search);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search]);
 
   useEffect(() => {
     if (products.length > 0 && recentlyViewed.length > 0) {
@@ -191,16 +217,13 @@ const categoryStructure = {
     }
   }, [recentlyViewed, products]);
 
-  useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    const storedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-    setCart(storedCart);
-    setWishlist(storedWishlist);
-  }, []);
+
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
+    syncCartToDB(cart);
     localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    syncWishlistToDB(wishlist);
   }, [cart, wishlist]);
 
   useEffect(() => {
@@ -343,13 +366,8 @@ const categoryStructure = {
   };
 
   const openQuickView = (product) => {
-    setQuickViewProduct(product);
-    setSelectedImage(0);
-    setQuantity(1);
-    if (!recentlyViewed.some(item => item.id === product.id)) {
-      setRecentlyViewed(prev => [product, ...prev].slice(0, 5));
-    }
-    ReactGA.event({ category: 'Product', action: 'Quick View', label: product.name });
+    navigate(`/product/${product.id}`);
+    ReactGA.event({ category: 'Product', action: 'View', label: product.name });
   };
 
   const toggleCompare = (product) => {
@@ -391,7 +409,7 @@ const categoryStructure = {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-8">
+      <div className="min-h-screen bg-white p-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {[...Array(8)].map((_, i) => (
@@ -412,17 +430,17 @@ const categoryStructure = {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center p-6 bg-white rounded-lg shadow-md max-w-md mx-auto">
           <div className="text-red-500 text-5xl mb-4">⚠️</div>
-          <h2 className="text-xl font-bold mb-2">Error Loading Products</h2>
+          <h2 className="text-xl font-normal mb-2">Error Loading Products</h2>
           <p className="text-gray-600 mb-4">{error}</p>
           <button
             onClick={() => {
               retryCount = 0;
               fetchProducts();
             }}
-            className="px-4 py-2 bg-pink-600 text-white rounded hover:bg-pink-700"
+            className="px-4 py-2 bg-hotpink-600 text-white rounded hover:bg-hotpink-700"
           >
             Try Again
           </button>
@@ -433,7 +451,7 @@ const categoryStructure = {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-white">
         <ToastContainer
           position="top-right"
           autoClose={3000}
@@ -450,7 +468,7 @@ const categoryStructure = {
           <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 mb-1">
+                <h1 className="text-2xl font-normal text-gray-900 mb-1">
                   {selectedCategory === 'All' ? 'All Products' : selectedCategory}
                   {selectedSubcategory !== 'All' && ` / ${selectedSubcategory}`}
                 </h1>
@@ -460,21 +478,9 @@ const categoryStructure = {
               </div>
 
               <div className="flex items-center space-x-4 mt-4 md:mt-0">
-                <div className="relative flex-1 md:w-64">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <FaSearch className="text-gray-400" />
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Search products..."
-                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </div>
 
                 <button
-                  className="md:hidden p-2 text-gray-500 hover:text-pink-600"
+                  className="md:hidden p-2 text-gray-500 hover:text-hotpink-600"
                   onClick={() => setShowMobileFilters(!showMobileFilters)}
                 >
                   <FaFilter size={20} />
@@ -496,7 +502,7 @@ const categoryStructure = {
                     {Object.keys(categoryStructure).map((category) => (
                       <li key={category}>
                         <button
-                          className={`w-full text-left px-3 py-2 rounded-md flex items-center ${selectedCategory === category ? 'bg-pink-100 text-pink-700' : 'hover:bg-gray-100'}`}
+                          className={`w-full text-left px-3 py-2 rounded-md flex items-center ${selectedCategory === category ? 'bg-hotpink-100 text-hotpink-700' : 'hover:bg-gray-100'}`}
                           onClick={() => {
                             setSelectedCategory(category);
                             setSelectedSubcategory('All');
@@ -513,7 +519,7 @@ const categoryStructure = {
                             {categoryStructure[category].subcategories.map((subcat) => (
                               <li key={subcat}>
                                 <button
-                                  className={`w-full text-left px-3 py-1 text-sm rounded-md ${selectedSubcategory === subcat ? 'text-pink-600 font-medium' : 'hover:text-gray-800'}`}
+                                  className={`w-full text-left px-3 py-1 text-sm rounded-md ${selectedSubcategory === subcat ? 'text-hotpink-600 font-medium' : 'hover:text-gray-800'}`}
                                   onClick={() => setSelectedSubcategory(subcat)}
                                 >
                                   {subcat}
@@ -541,7 +547,7 @@ const categoryStructure = {
                       step="100"
                       value={priceRange[1]}
                       onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
-                      className="w-full accent-pink-500"
+                      className="w-full accent-hotpink-500"
                     />
                   </div>
                 </div>
@@ -556,7 +562,7 @@ const categoryStructure = {
                           name="availability"
                           checked={availabilityFilter === option}
                           onChange={() => setAvailabilityFilter(option)}
-                          className="text-pink-600 focus:ring-pink-500"
+                          className="text-hotpink-600 focus:ring-hotpink-500"
                         />
                         <span className="capitalize">
                           {option === 'all' ? 'All Products' : option === 'in-stock' ? 'In Stock' : 'Out of Stock'}
@@ -576,7 +582,7 @@ const categoryStructure = {
                           name="rating"
                           checked={ratingFilter === stars}
                           onChange={() => setRatingFilter(ratingFilter === stars ? 0 : stars)}
-                          className="text-pink-600 focus:ring-pink-500"
+                          className="text-hotpink-600 focus:ring-hotpink-500"
                         />
                         <div className="flex items-center">
                           {[...Array(5)].map((_, i) =>
@@ -608,7 +614,7 @@ const categoryStructure = {
                             );
                           }}
                           className={`flex items-center justify-center w-8 h-8 rounded-full border ${
-                            colorFilters.includes(color) ? 'ring-2 ring-pink-500' : 'hover:ring-1 hover:ring-gray-300'
+                            colorFilters.includes(color) ? 'ring-2 ring-hotpink-500' : 'hover:ring-1 hover:ring-gray-300'
                           }`}
                           style={{ backgroundColor: color.toLowerCase() }}
                           title={color}
@@ -635,7 +641,7 @@ const categoryStructure = {
                             );
                           }}
                           className={`px-3 py-1 text-sm rounded-md border ${
-                            sizeFilters.includes(size) ? 'bg-pink-100 text-pink-700 border-pink-300' : 'hover:bg-gray-50'
+                            sizeFilters.includes(size) ? 'bg-hotpink-100 text-hotpink-700 border-hotpink-300' : 'hover:bg-gray-50'
                           }`}
                         >
                           {size}
@@ -661,7 +667,7 @@ const categoryStructure = {
                                   : [...prev, brand]
                               );
                             }}
-                            className="text-pink-600 focus:ring-pink-500"
+                            className="text-hotpink-600 focus:ring-hotpink-500"
                           />
                           <span>{brand}</span>
                         </label>
@@ -676,7 +682,7 @@ const categoryStructure = {
                       type="checkbox"
                       checked={discountFilter}
                       onChange={() => setDiscountFilter(!discountFilter)}
-                      className="text-pink-600 focus:ring-pink-500"
+                      className="text-hotpink-600 focus:ring-hotpink-500"
                     />
                     <span className="font-medium">Discounted Items Only</span>
                   </label>
@@ -685,7 +691,7 @@ const categoryStructure = {
                 <div>
                   <h3 className="text-lg font-semibold mb-3">Sort By</h3>
                   <select
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-pink-500 focus:border-pink-500"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-hotpink-500 focus:border-hotpink-500"
                     value={sortOption}
                     onChange={(e) => setSortOption(e.target.value)}
                   >
@@ -716,7 +722,7 @@ const categoryStructure = {
                         setDiscountFilter(false);
                         setSortOption('featured');
                       }}
-                      className="w-full py-2 text-pink-600 border border-pink-600 rounded-md hover:bg-pink-50"
+                      className="w-full py-2 text-hotpink-600 border border-hotpink-600 rounded-md hover:bg-hotpink-50"
                     >
                       Clear All Filters
                     </button>
@@ -739,7 +745,7 @@ const categoryStructure = {
                     className="fixed inset-y-0 left-0 w-80 bg-white z-50 shadow-xl p-6 overflow-y-auto md:hidden"
                   >
                     <div className="flex justify-between items-center mb-4">
-                      <h2 className="text-xl font-bold">Filters</h2>
+                      <h2 className="text-xl font-normal">Filters</h2>
                       <button
                         className="text-gray-500 hover:text-gray-700"
                         onClick={() => setShowMobileFilters(false)}
@@ -754,7 +760,7 @@ const categoryStructure = {
                           {Object.keys(categoryStructure).map((category) => (
                             <li key={category}>
                               <button
-                                className={`w-full text-left px-3 py-2 rounded-md flex items-center ${selectedCategory === category ? 'bg-pink-100 text-pink-700' : 'hover:bg-gray-100'}`}
+                                className={`w-full text-left px-3 py-2 rounded-md flex items-center ${selectedCategory === category ? 'bg-hotpink-100 text-hotpink-700' : 'hover:bg-gray-100'}`}
                                 onClick={() => {
                                   setSelectedCategory(category);
                                   setSelectedSubcategory('All');
@@ -771,7 +777,7 @@ const categoryStructure = {
                                   {categoryStructure[category].subcategories.map((subcat) => (
                                     <li key={subcat}>
                                       <button
-                                        className={`w-full text-left px-3 py-1 text-sm rounded-md ${selectedSubcategory === subcat ? 'text-pink-600 font-medium' : 'hover:text-gray-800'}`}
+                                        className={`w-full text-left px-3 py-1 text-sm rounded-md ${selectedSubcategory === subcat ? 'text-hotpink-600 font-medium' : 'hover:text-gray-800'}`}
                                         onClick={() => setSelectedSubcategory(subcat)}
                                       >
                                         {subcat}
@@ -799,7 +805,7 @@ const categoryStructure = {
                             step="100"
                             value={priceRange[1]}
                             onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
-                            className="w-full accent-pink-500"
+                            className="w-full accent-hotpink-500"
                           />
                         </div>
                       </div>
@@ -814,7 +820,7 @@ const categoryStructure = {
                                 name="availability"
                                 checked={availabilityFilter === option}
                                 onChange={() => setAvailabilityFilter(option)}
-                                className="text-pink-600 focus:ring-pink-500"
+                                className="text-hotpink-600 focus:ring-hotpink-500"
                               />
                               <span className="capitalize">
                                 {option === 'all' ? 'All Products' : option === 'in-stock' ? 'In Stock' : 'Out of Stock'}
@@ -834,7 +840,7 @@ const categoryStructure = {
                                 name="rating"
                                 checked={ratingFilter === stars}
                                 onChange={() => setRatingFilter(ratingFilter === stars ? 0 : stars)}
-                                className="text-pink-600 focus:ring-pink-500"
+                                className="text-hotpink-600 focus:ring-hotpink-500"
                               />
                               <div className="flex items-center">
                                 {[...Array(5)].map((_, i) =>
@@ -866,7 +872,7 @@ const categoryStructure = {
                                   );
                                 }}
                                 className={`flex items-center justify-center w-8 h-8 rounded-full border ${
-                                  colorFilters.includes(color) ? 'ring-2 ring-pink-500' : 'hover:ring-1 hover:ring-gray-300'
+                                  colorFilters.includes(color) ? 'ring-2 ring-hotpink-500' : 'hover:ring-1 hover:ring-gray-300'
                                 }`}
                                 style={{ backgroundColor: color.toLowerCase() }}
                                 title={color}
@@ -893,7 +899,7 @@ const categoryStructure = {
                                   );
                                 }}
                                 className={`px-3 py-1 text-sm rounded-md border ${
-                                  sizeFilters.includes(size) ? 'bg-pink-100 text-pink-700 border-pink-300' : 'hover:bg-gray-50'
+                                  sizeFilters.includes(size) ? 'bg-hotpink-100 text-hotpink-700 border-hotpink-300' : 'hover:bg-gray-50'
                                 }`}
                               >
                                 {size}
@@ -919,7 +925,7 @@ const categoryStructure = {
                                         : [...prev, brand]
                                     );
                                   }}
-                                  className="text-pink-600 focus:ring-pink-500"
+                                  className="text-hotpink-600 focus:ring-hotpink-500"
                                 />
                                 <span>{brand}</span>
                               </label>
@@ -934,7 +940,7 @@ const categoryStructure = {
                             type="checkbox"
                             checked={discountFilter}
                             onChange={() => setDiscountFilter(!discountFilter)}
-                            className="text-pink-600 focus:ring-pink-500"
+                            className="text-hotpink-600 focus:ring-hotpink-500"
                           />
                           <span className="font-medium">Discounted Items Only</span>
                         </label>
@@ -943,7 +949,7 @@ const categoryStructure = {
                       <div>
                         <h3 className="text-lg font-semibold mb-3">Sort By</h3>
                         <select
-                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-pink-500 focus:border-pink-500"
+                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-hotpink-500 focus:border-hotpink-500"
                           value={sortOption}
                           onChange={(e) => setSortOption(e.target.value)}
                         >
@@ -974,7 +980,7 @@ const categoryStructure = {
                               setDiscountFilter(false);
                               setSortOption('featured');
                             }}
-                            className="w-full py-2 text-pink-600 border border-pink-600 rounded-md hover:bg-pink-50"
+                            className="w-full py-2 text-hotpink-600 border border-hotpink-600 rounded-md hover:bg-hotpink-50"
                           >
                             Clear All Filters
                           </button>
@@ -997,14 +1003,14 @@ const categoryStructure = {
                           onClick={() => openQuickView(product)}
                         >
                           <img
-                            src={product.images?.[0] || '/placeholder-product.jpg'}
+                            src={product.images?.[0] || 'https://via.placeholder.com/300?text=No+Image'}
                             alt={product.name}
                             className="w-full h-full object-cover"
                             loading="lazy"
-                            onError={(e) => { e.target.src = '/placeholder-product.jpg'; }}
+                            onError={(e) => { e.target.src = 'https://via.placeholder.com/300?text=No+Image'; }}
                           />
                           <button
-                            className={`absolute top-2 right-2 p-2 rounded-full ${wishlist.some(item => item.id === product.id) ? 'text-pink-600' : 'text-gray-400 hover:text-pink-600'}`}
+                            className={`absolute top-2 right-2 p-2 rounded-full ${wishlist.some(item => item.id === product.id) ? 'text-hotpink-600' : 'text-gray-400 hover:text-hotpink-600'}`}
                             onClick={(e) => {
                               e.stopPropagation();
                               toggleWishlist(product);
@@ -1016,7 +1022,7 @@ const categoryStructure = {
                         <div className="p-3">
                           <h3 className="font-medium text-sm mb-1 truncate">{product.name}</h3>
                           <div className="flex items-center justify-between">
-                            <span className="font-bold text-pink-600">
+                            <span className="font-normal text-hotpink-600">
                               ₹{(product.price * (1 - product.discount / 100)).toFixed(2)}
                             </span>
                             {product.discount > 0 && (
@@ -1054,19 +1060,19 @@ const categoryStructure = {
                           onClick={() => openQuickView(product)}
                         >
                           <img
-                            src={product.images?.[0] || '/placeholder-product.jpg'}
+                            src={product.images?.[0] || 'https://via.placeholder.com/300?text=No+Image'}
                             alt={product.name}
                             className="w-full h-full object-cover"
                             loading="lazy"
-                            onError={(e) => { e.target.src = '/placeholder-product.jpg'; }}
+                            onError={(e) => { e.target.src = 'https://via.placeholder.com/300?text=No+Image'; }}
                           />
                           {product.discount > 0 && (
-                            <span className="absolute top-2 left-2 bg-pink-600 text-white text-xs px-2 py-1 rounded">
+                            <span className="absolute top-2 left-2 bg-hotpink-600 text-white text-xs px-2 py-1 rounded">
                               {product.discount}% OFF
                             </span>
                           )}
                           <button
-                            className={`absolute top-2 right-2 p-2 rounded-full ${wishlist.some(item => item.id === product.id) ? 'text-pink-600' : 'text-gray-400 hover:text-pink-600'}`}
+                            className={`absolute top-2 right-2 p-2 rounded-full ${wishlist.some(item => item.id === product.id) ? 'text-hotpink-600' : 'text-gray-400 hover:text-hotpink-600'}`}
                             onClick={(e) => {
                               e.stopPropagation();
                               toggleWishlist(product);
@@ -1076,20 +1082,20 @@ const categoryStructure = {
                           </button>
                           {product.stock <= 0 && (
                             <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                              <span className="text-white font-bold bg-red-500 px-2 py-1 rounded text-sm">OUT OF STOCK</span>
+                              <span className="text-white font-normal bg-red-500 px-2 py-1 rounded text-sm">OUT OF STOCK</span>
                             </div>
                           )}
                         </div>
                         <div className="p-4">
                           <div className="flex justify-between items-start mb-1">
                             <h3
-                              className="font-medium text-sm hover:text-pink-600 cursor-pointer line-clamp-2"
+                              className="font-medium text-sm hover:text-hotpink-600 cursor-pointer line-clamp-2"
                               onClick={() => openQuickView(product)}
                             >
                               {product.name}
                             </h3>
                             <button
-                              className={`p-1 ${compareProducts.some(item => item.id === product.id) ? 'text-pink-600' : 'text-gray-400 hover:text-pink-600'}`}
+                              className={`p-1 ${compareProducts.some(item => item.id === product.id) ? 'text-hotpink-600' : 'text-gray-400 hover:text-hotpink-600'}`}
                               onClick={(e) => {
                                 e.stopPropagation();
                                 toggleCompare(product);
@@ -1104,7 +1110,7 @@ const categoryStructure = {
                           </div>
                           <div className="flex items-center justify-between">
                             <div>
-                              <span className="font-bold text-pink-600">
+                              <span className="font-normal text-hotpink-600">
                                 ₹{(product.price * (1 - product.discount / 100)).toFixed(2)}
                               </span>
                               {product.discount > 0 && (
@@ -1119,7 +1125,7 @@ const categoryStructure = {
                                 addToCart(product);
                               }}
                               disabled={product.stock <= 0}
-                              className={`p-2 rounded-full ${product.stock <= 0 ? 'bg-gray-200 text-gray-400' : 'bg-pink-100 text-pink-600 hover:bg-pink-200'}`}
+                              className={`p-2 rounded-full ${product.stock <= 0 ? 'bg-gray-200 text-gray-400' : 'bg-hotpink-100 text-hotpink-600 hover:bg-hotpink-200'}`}
                             >
                               <FaShoppingCart size={16} />
                             </button>
@@ -1145,7 +1151,7 @@ const categoryStructure = {
                         setBrandFilters([]);
                         setDiscountFilter(false);
                       }}
-                      className="px-4 py-2 bg-pink-600 text-white rounded-md hover:bg-pink-700"
+                      className="px-4 py-2 bg-hotpink-600 text-white rounded-md hover:bg-hotpink-700"
                     >
                       Reset Filters
                     </button>
@@ -1177,7 +1183,7 @@ const categoryStructure = {
                           <button
                             key={pageNum}
                             onClick={() => setCurrentPage(pageNum)}
-                            className={`w-10 h-10 rounded-full ${currentPage === pageNum ? 'bg-pink-600 text-white' : 'hover:bg-gray-100'}`}
+                            className={`w-10 h-10 rounded-full ${currentPage === pageNum ? 'bg-hotpink-600 text-white' : 'hover:bg-gray-100'}`}
                           >
                             {pageNum}
                           </button>
@@ -1187,7 +1193,7 @@ const categoryStructure = {
                       {totalPages > 5 && currentPage < totalPages - 2 && (
                         <button
                           onClick={() => setCurrentPage(totalPages)}
-                          className={`w-10 h-10 rounded-full ${currentPage === totalPages ? 'bg-pink-600 text-white' : 'hover:bg-gray-100'}`}
+                          className={`w-10 h-10 rounded-full ${currentPage === totalPages ? 'bg-hotpink-600 text-white' : 'hover:bg-gray-100'}`}
                         >
                           {totalPages}
                         </button>
@@ -1233,15 +1239,15 @@ const categoryStructure = {
                     <div className="space-y-4">
                       <div className="relative h-64 bg-gray-100 rounded-lg overflow-hidden">
                         <img
-                          src={quickViewProduct.images?.[selectedImage] || '/placeholder-product.jpg'}
+                          src={quickViewProduct.images?.[selectedImage] || 'https://via.placeholder.com/300?text=No+Image'}
                           alt={quickViewProduct.name}
                           className="w-full h-full object-contain"
                           loading="lazy"
-                          onError={(e) => { e.target.src = '/placeholder-product.jpg'; }}
+                          onError={(e) => { e.target.src = 'https://via.placeholder.com/300?text=No+Image'; }}
                         />
                         <button
                           className="absolute bottom-2 right-2 p-2 bg-white rounded-full shadow-md hover:bg-gray-100"
-                          onClick={() => setExpandedImage(quickViewProduct.images?.[selectedImage] || '/placeholder-product.jpg')}
+                          onClick={() => setExpandedImage(quickViewProduct.images?.[selectedImage] || 'https://via.placeholder.com/300?text=No+Image')}
                         >
                           <FaExpand />
                         </button>
@@ -1251,7 +1257,7 @@ const categoryStructure = {
                           {quickViewProduct.images.map((img, idx) => (
                             <button
                               key={idx}
-                              className={`h-16 bg-gray-100 rounded overflow-hidden ${selectedImage === idx ? 'ring-2 ring-pink-500' : ''}`}
+                              className={`h-16 bg-gray-100 rounded overflow-hidden ${selectedImage === idx ? 'ring-2 ring-hotpink-500' : ''}`}
                               onClick={() => setSelectedImage(idx)}
                             >
                               <img
@@ -1259,7 +1265,7 @@ const categoryStructure = {
                                 alt={`${quickViewProduct.name} thumbnail ${idx + 1}`}
                                 className="w-full h-full object-cover"
                                 loading="lazy"
-                                onError={(e) => { e.target.src = '/placeholder-product.jpg'; }}
+                                onError={(e) => { e.target.src = 'https://via.placeholder.com/300?text=No+Image'; }}
                               />
                             </button>
                           ))}
@@ -1267,7 +1273,7 @@ const categoryStructure = {
                       )}
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold mb-2">{quickViewProduct.name}</h2>
+                      <h2 className="text-2xl font-normal mb-2">{quickViewProduct.name}</h2>
                       <div className="flex items-center mb-4">
                         {renderRating(quickViewProduct.rating)}
                         <span className="ml-2 text-sm text-gray-500">
@@ -1275,7 +1281,7 @@ const categoryStructure = {
                         </span>
                       </div>
                       <div className="mb-4">
-                        <span className="text-2xl font-bold text-pink-600">
+                        <span className="text-2xl font-normal text-hotpink-600">
                           ₹{(quickViewProduct.price * (1 - quickViewProduct.discount / 100)).toFixed(2)}
                         </span>
                         {quickViewProduct.discount > 0 && (
@@ -1284,7 +1290,7 @@ const categoryStructure = {
                           </span>
                         )}
                         {quickViewProduct.discount > 0 && (
-                          <span className="ml-2 bg-pink-100 text-pink-800 text-xs font-semibold px-2 py-1 rounded">
+                          <span className="ml-2 bg-hotpink-100 text-hotpink-800 text-xs font-semibold px-2 py-1 rounded">
                             {quickViewProduct.discount}% OFF
                           </span>
                         )}
@@ -1299,7 +1305,7 @@ const categoryStructure = {
                             {quickViewProduct.colors.map((color, idx) => (
                               <button
                                 key={color}
-                                className={`w-8 h-8 rounded-full border ${selectedImage === idx ? 'ring-2 ring-pink-500' : ''}`}
+                                className={`w-8 h-8 rounded-full border ${selectedImage === idx ? 'ring-2 ring-hotpink-500' : ''}`}
                                 style={{ backgroundColor: color.toLowerCase() }}
                                 title={color}
                                 onClick={() => setSelectedImage(idx)}
@@ -1353,7 +1359,7 @@ const categoryStructure = {
                           }}
                           disabled={quickViewProduct.stock <= 0}
                           className={`flex-1 py-3 px-6 rounded-md font-medium ${
-                            quickViewProduct.stock <= 0 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-pink-600 text-white hover:bg-pink-700'
+                            quickViewProduct.stock <= 0 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-hotpink-600 text-white hover:bg-hotpink-700'
                           }`}
                         >
                           {quickViewProduct.stock <= 0 ? 'Out of Stock' : 'Add to Cart'}
@@ -1361,7 +1367,7 @@ const categoryStructure = {
                         <button
                           onClick={() => toggleWishlist(quickViewProduct)}
                           className={`p-3 rounded-md border ${
-                            wishlist.some(item => item.id === quickViewProduct.id) ? 'text-pink-600 border-pink-600' : 'text-gray-600 hover:text-pink-600 hover:border-pink-600'
+                            wishlist.some(item => item.id === quickViewProduct.id) ? 'text-hotpink-600 border-hotpink-600' : 'text-gray-600 hover:text-hotpink-600 hover:border-hotpink-600'
                           }`}
                         >
                           <FaHeart />
@@ -1408,7 +1414,7 @@ const categoryStructure = {
                 onClick={() => setExpandedImage(null)}
               >
                 <button
-                  className="absolute top-4 right-4 p-2 text-white hover:text-pink-400"
+                  className="absolute top-4 right-4 p-2 text-white hover:text-hotpink-400"
                   onClick={() => setExpandedImage(null)}
                 >
                   <FaTimes size={24} />
@@ -1419,7 +1425,7 @@ const categoryStructure = {
                   className="max-w-full max-h-full object-contain"
                   onClick={(e) => e.stopPropagation()}
                   loading="lazy"
-                  onError={(e) => { e.target.src = '/placeholder-product.jpg'; }}
+                  onError={(e) => { e.target.src = 'https://via.placeholder.com/300?text=No+Image'; }}
                 />
               </div>
             </>
@@ -1443,11 +1449,11 @@ const categoryStructure = {
                       {compareProducts.map((product) => (
                         <div key={product.id} className="flex items-center bg-gray-100 rounded px-2 py-1">
                           <img
-                            src={product.images?.[0] || '/placeholder-product.jpg'}
+                            src={product.images?.[0] || 'https://via.placeholder.com/300?text=No+Image'}
                             alt={product.name}
                             className="w-8 h-8 object-cover rounded"
                             loading="lazy"
-                            onError={(e) => { e.target.src = '/placeholder-product.jpg'; }}
+                            onError={(e) => { e.target.src = 'https://via.placeholder.com/300?text=No+Image'; }}
                           />
                           <span className="ml-2 text-sm">{product.name}</span>
                           <button
@@ -1464,7 +1470,7 @@ const categoryStructure = {
                     <Link
                       to="/compare"
                       state={{ products: compareProducts }}
-                      className="px-4 py-2 bg-pink-600 text-white rounded hover:bg-pink-700"
+                      className="px-4 py-2 bg-hotpink-600 text-white rounded hover:bg-hotpink-700"
                     >
                       Compare Now
                     </Link>

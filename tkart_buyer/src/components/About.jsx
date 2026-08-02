@@ -2,104 +2,104 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 const UserGuidePanel = () => (
-  <div className="w-full bg-white rounded-xl shadow-lg p-6 space-y-6 border border-pink-100 font-sans">
-    <div className="text-center border-b border-pink-100 pb-6 relative">
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full"></div>
-      <h1 className="text-2xl font-bold text-pink-700 mb-2 font-serif tracking-tight">
+  <div className="w-full bg-white rounded-xl shadow-lg p-6 space-y-6 border border-hotpink-100 font-sans">
+    <div className="text-center border-b border-hotpink-100 pb-6 relative">
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-hotpink-400 to-rose-400 rounded-full"></div>
+      <h1 className="text-2xl font-normal text-hotpink-700 mb-2 font-serif tracking-tight">
         Shopping Guide
       </h1>
-      <p className="text-pink-600 font-medium">Your complete shopping companion</p>
+      <p className="text-hotpink-600 font-medium">Your complete shopping companion</p>
     </div>
-    <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-pink-50 to-rose-50 rounded-lg border border-pink-100">
+    <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-hotpink-50 to-rose-50 rounded-lg border border-hotpink-100">
       <div className="bg-white p-2 rounded-full shadow-sm">
-        <svg className="w-5 h-5 text-pink-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="w-5 h-5 text-hotpink-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
         </svg>
       </div>
       <div>
         <span className="font-medium text-gray-800">Quick Help Guide</span>
-        <p className="text-xs text-pink-600">Find answers to common questions</p>
+        <p className="text-xs text-hotpink-600">Find answers to common questions</p>
       </div>
     </div>
     <div className="space-y-6">
       <div>
         <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-3">
-          <span className="bg-pink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">
+          <span className="bg-hotpink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-normal">
             1
           </span>
           Shopping Process
         </h3>
         <ul className="space-y-3 text-gray-600 text-sm pl-12">
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Browse products by category or search
           </li>
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Add items to your cart or wishlist
           </li>
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Proceed to secure checkout
           </li>
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Multiple payment options available
           </li>
         </ul>
       </div>
       <div>
         <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-3">
-          <span className="bg-pink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">
+          <span className="bg-hotpink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-normal">
             2
           </span>
           Order Tracking
         </h3>
         <ul className="space-y-3 text-gray-600 text-sm pl-12">
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Real-time order status updates
           </li>
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Email/SMS delivery notifications
           </li>
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Direct seller communication
           </li>
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Track shipment with provided link
           </li>
         </ul>
       </div>
       <div>
         <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-3">
-          <span className="bg-pink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">
+          <span className="bg-hotpink-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-normal">
             3
           </span>
           Returns & Support
         </h3>
         <ul className="space-y-3 text-gray-600 text-sm pl-12">
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Easy return initiation from order details
           </li>
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             7-day hassle-free return policy
           </li>
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             Quality guarantee on all products
           </li>
-          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-pink-500 before:rounded-full">
+          <li className="relative before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-hotpink-500 before:rounded-full">
             24/7 customer support available
           </li>
         </ul>
       </div>
     </div>
-    <div className="bg-gradient-to-br from-pink-50 to-rose-50 p-5 rounded-xl border border-pink-100">
+    <div className="bg-gradient-to-br from-hotpink-50 to-rose-50 p-5 rounded-xl border border-hotpink-100">
       <h4 className="font-semibold text-gray-800 mb-2 text-center">Need more help?</h4>
       <p className="text-sm text-gray-600 mb-4 text-center">Our support team is available 24/7</p>
       <div className="flex flex-col gap-3">
-        <button className="w-full bg-white text-pink-600 border border-pink-200 py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-pink-50 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-md">
+        <button className="w-full bg-white text-hotpink-600 border border-hotpink-200 py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-hotpink-50 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-md">
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
           </svg>
           Call Support
         </button>
-        <button className="w-full bg-gradient-to-r from-pink-600 to-rose-500 text-white py-2.5 px-4 rounded-lg text-sm font-medium hover:from-pink-700 hover:to-rose-600 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-md">
+        <button className="w-full bg-gradient-to-r from-hotpink-600 to-rose-500 text-white py-2.5 px-4 rounded-lg text-sm font-medium hover:from-hotpink-700 hover:to-rose-600 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-md">
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
           </svg>
@@ -112,14 +112,14 @@ const UserGuidePanel = () => (
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white">
-      <div className="relative bg-gradient-to-r from-pink-600 to-rose-500 py-20 px-4 sm:px-6 lg:px-8 text-white overflow-hidden">
+    <div className="min-h-screen bg-white">
+      <div className="relative bg-gradient-to-r from-hotpink-600 to-rose-500 py-20 px-4 sm:px-6 lg:px-8 text-white overflow-hidden">
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl md:text-5xl font-bold mb-4"
+            className="text-4xl md:text-5xl font-normal mb-4"
           >
             About Thirumathi Kart
           </motion.h1>
@@ -139,7 +139,7 @@ const About = () => {
           >
             <Link
               to="/Home"
-              className="inline-block bg-white text-pink-600 px-8 py-3 rounded-full font-medium hover:bg-pink-50 transition duration-300"
+              className="inline-block bg-white text-hotpink-600 px-8 py-3 rounded-full font-medium hover:bg-hotpink-50 transition duration-300"
             >
               Start Shopping
             </Link>
@@ -151,8 +151,8 @@ const About = () => {
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-pink-700 mb-4">Our Story</h2>
-          <div className="w-24 h-1 bg-pink-500 mx-auto"></div>
+          <h2 className="text-3xl font-normal text-hotpink-700 mb-4">Our Story</h2>
+          <div className="w-24 h-1 bg-hotpink-500 mx-auto"></div>
         </div>
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <motion.div
@@ -181,16 +181,16 @@ const About = () => {
               Our mission is simple: to create economic opportunities for women while providing customers with authentic, high-quality products that tell a story.
             </p>
             <div className="flex flex-wrap gap-4">
-              <div className="bg-pink-50 px-4 py-3 rounded-lg">
-                <h4 className="font-bold text-pink-700">5000+</h4>
+              <div className="bg-hotpink-50 px-4 py-3 rounded-lg">
+                <h4 className="font-normal text-hotpink-700">5000+</h4>
                 <p className="text-sm text-gray-600">Women Sellers</p>
               </div>
-              <div className="bg-pink-50 px-4 py-3 rounded-lg">
-                <h4 className="font-bold text-pink-700">100K+</h4>
+              <div className="bg-hotpink-50 px-4 py-3 rounded-lg">
+                <h4 className="font-normal text-hotpink-700">100K+</h4>
                 <p className="text-sm text-gray-600">Happy Customers</p>
               </div>
-              <div className="bg-pink-50 px-4 py-3 rounded-lg">
-                <h4 className="font-bold text-pink-700">50+</h4>
+              <div className="bg-hotpink-50 px-4 py-3 rounded-lg">
+                <h4 className="font-normal text-hotpink-700">50+</h4>
                 <p className="text-sm text-gray-600">Categories</p>
               </div>
             </div>
@@ -200,14 +200,14 @@ const About = () => {
       <div className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-pink-700 mb-4">Our Values</h2>
-            <div className="w-24 h-1 bg-pink-500 mx-auto"></div>
+            <h2 className="text-3xl font-normal text-hotpink-700 mb-4">Our Values</h2>
+            <div className="w-24 h-1 bg-hotpink-500 mx-auto"></div>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
                 icon: (
-                  <svg className="w-10 h-10 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-10 h-10 text-hotpink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
                 ),
@@ -216,7 +216,7 @@ const About = () => {
               },
               {
                 icon: (
-                  <svg className="w-10 h-10 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-10 h-10 text-hotpink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 ),
@@ -225,7 +225,7 @@ const About = () => {
               },
               {
                 icon: (
-                  <svg className="w-10 h-10 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-10 h-10 text-hotpink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
                   </svg>
                 ),
@@ -239,9 +239,9 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-pink-50 p-8 rounded-lg text-center hover:shadow-lg transition-shadow duration-300"
+                className="bg-hotpink-50 p-8 rounded-lg text-center hover:shadow-lg transition-shadow duration-300"
               >
-                <div className="bg-pink-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="bg-hotpink-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   {value.icon}
                 </div>
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">
@@ -255,8 +255,8 @@ const About = () => {
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-pink-700 mb-4">How It Works</h2>
-          <div className="w-24 h-1 bg-pink-500 mx-auto"></div>
+          <h2 className="text-3xl font-normal text-hotpink-700 mb-4">How It Works</h2>
+          <div className="w-24 h-1 bg-hotpink-500 mx-auto"></div>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           {[
@@ -265,7 +265,7 @@ const About = () => {
               title: "Discover Authentic Products",
               description: "Browse through thousands of handcrafted items from women artisans across India.",
               icon: (
-                <svg className="w-8 h-8 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-8 h-8 text-hotpink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               )
@@ -275,7 +275,7 @@ const About = () => {
               title: "Secure Checkout",
               description: "Enjoy multiple payment options with our 100% secure payment gateway.",
               icon: (
-                <svg className="w-8 h-8 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-8 h-8 text-hotpink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                 </svg>
               )
@@ -285,7 +285,7 @@ const About = () => {
               title: "Fast Delivery & Support",
               description: "Get your order delivered quickly with our reliable logistics partners.",
               icon: (
-                <svg className="w-8 h-8 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-8 h-8 text-hotpink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                 </svg>
               )
@@ -297,13 +297,13 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="relative bg-white p-8 rounded-lg shadow-md border border-pink-100 hover:shadow-lg transition-shadow duration-300"
+              className="relative bg-white p-8 rounded-lg shadow-md border border-hotpink-100 hover:shadow-lg transition-shadow duration-300"
             >
-              <div className="absolute -top-4 -left-4 bg-pink-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">
+              <div className="absolute -top-4 -left-4 bg-hotpink-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-normal">
                 {item.step}
               </div>
               <div className="flex items-center justify-center mb-4">
-                <div className="bg-pink-100 p-3 rounded-full">{item.icon}</div>
+                <div className="bg-hotpink-100 p-3 rounded-full">{item.icon}</div>
               </div>
               <h3 className="text-xl font-semibold text-center text-gray-800 mb-2">
                 {item.title}
@@ -313,13 +313,13 @@ const About = () => {
           ))}
         </div>
       </div>
-      <div className="bg-pink-50 py-16">
+      <div className="bg-hotpink-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-pink-700 mb-4">
+            <h2 className="text-3xl font-normal text-hotpink-700 mb-4">
               What Our Customers Say
             </h2>
-            <div className="w-24 h-1 bg-pink-500 mx-auto"></div>
+            <div className="w-24 h-1 bg-hotpink-500 mx-auto"></div>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
@@ -350,7 +350,7 @@ const About = () => {
                 viewport={{ once: true }}
                 className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
               >
-                <div className="mb-4 text-pink-500">
+                <div className="mb-4 text-hotpink-500">
                   {[...Array(5)].map((_, i) => (
                     <svg key={i} className="w-5 h-5 inline-block" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
@@ -359,7 +359,7 @@ const About = () => {
                 </div>
                 <p className="text-gray-600 italic mb-6">"{testimonial.quote}"</p>
                 <div className="flex items-center">
-                  <div className="bg-pink-200 w-10 h-10 rounded-full flex items-center justify-center text-pink-700 font-bold">
+                  <div className="bg-hotpink-200 w-10 h-10 rounded-full flex items-center justify-center text-hotpink-700 font-normal">
                     {testimonial.author.charAt(0)}
                   </div>
                   <div className="ml-4">
@@ -373,9 +373,9 @@ const About = () => {
         </div>
         <UserGuidePanel />
       </div>
-      <div className="bg-gradient-to-r from-pink-600 to-rose-500 py-16 px-4 sm:px-6 lg:px-8 text-white">
+      <div className="bg-gradient-to-r from-hotpink-600 to-rose-500 py-16 px-4 sm:px-6 lg:px-8 text-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">
+          <h2 className="text-3xl font-normal mb-4">
             Ready to Experience Thirumathi Kart?
           </h2>
           <p className="text-xl mb-8 max-w-3xl mx-auto">
@@ -384,13 +384,13 @@ const About = () => {
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
               to="/Login"
-              className="bg-white text-pink-600 px-8 py-3 rounded-full font-medium hover:bg-pink-50 transition duration-300"
+              className="bg-white text-hotpink-600 px-8 py-3 rounded-full font-medium hover:bg-hotpink-50 transition duration-300"
             >
               Shop Now
             </Link>
             <Link
               to="/Register"
-              className="bg-transparent border-2 border-white px-8 py-3 rounded-full font-medium hover:bg-white hover:text-pink-600 transition duration-300"
+              className="bg-transparent border-2 border-white px-8 py-3 rounded-full font-medium hover:bg-white hover:text-hotpink-600 transition duration-300"
             >
               Create Account
             </Link>

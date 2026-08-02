@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@fontsource/josefin-sans": "^5.2.6",
+    "firebase": "^12.17.0",
     "react-hot-toast": "^2.5.2"
   }
 }

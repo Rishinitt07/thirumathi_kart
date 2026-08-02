@@ -4,10 +4,10 @@ import { AiOutlineUser, AiOutlineLock } from "react-icons/ai";
 import axios from 'axios';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import tklogo from './tklogo.png';
+import tklogo from '../tkart.png';
 
 const Login = () => {
-  const [identifier, setIdentifier] = useState('');
+  const [mobile, setMobile] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     axios.post('http://localhost:8080/login', {
-      identifier: identifier,
+      mobile: mobile,
       password: password,
     })
       .then(res => {
@@ -43,80 +43,81 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-pink-50 to-white py-10 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-hotpink-50 py-10 px-4 font-josefin">
       <div className="bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
         
         {/* Left Panel */}
-        <div className="md:w-1/2 bg-gradient-to-br from-pink-600 to-rose-500 text-white flex flex-col justify-center items-center p-10">
-          <h2 className="text-3xl font-bold mb-4">New Here?</h2>
-          <p className="text-center text-sm mb-6">
+        <div className="md:w-1/2 bg-gradient-to-br from-hotpink-400 to-hotpink-600 text-white flex flex-col justify-center items-center p-10 relative">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/3"></div>
+          <h2 className="text-4xl font-bold mb-4 z-10 drop-shadow-sm">New Here?</h2>
+          <p className="text-center text-white/90 text-lg mb-8 z-10">
             To create a new account, please register first
           </p>
-          <Link to="/register">
-            <button className="bg-white text-pink-600 px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition">
+          <Link to="/register" className="z-10">
+            <button className="bg-white text-hotpink-600 px-8 py-3 rounded-full font-bold shadow-lg hover:bg-hotpink-50 transition-all duration-300 transform hover:-translate-y-1">
               SIGN UP
             </button>
           </Link>
         </div>
 
         {/* Right Panel */}
-        <div className="md:w-1/2 p-10 bg-white">
+        <div className="md:w-1/2 p-10 bg-white flex flex-col justify-center">
           {/* Logo */}
-           <div className="flex justify-center mb-4">
-           <img src={tklogo} alt="Thirumathi Kart Logo" className="h-20 w-20" />
+           <div className="flex justify-center mb-6">
+           <img src={tklogo} alt="Thirumathi Kart Logo" className="h-24 w-24 drop-shadow-md" />
            </div>
-          <h2 className="text-2xl font-bold text-pink-600 text-center mb-4">
+          <h2 className="text-3xl font-extrabold text-hotpink-600 text-center mb-8">
             Login
           </h2>
 
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-5">
             {/* Identifier */}
-            <div className="flex items-center border border-gray-300 rounded px-3 py-2">
-              <AiOutlineUser className="text-gray-400 mr-2" />
+            <div className="flex items-center border-2 border-gray-100 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-hotpink-400 focus-within:bg-white transition-colors">
+              <AiOutlineUser className="text-gray-400 mr-3 text-xl" />
               <input
                 type="text"
-                name="identifier"
-                placeholder="Email or Phone"
-                value={identifier}
-                onChange={(e) => setIdentifier(e.target.value)}
-                className="w-full focus:outline-none"
+                name="mobile"
+                placeholder="Mobile Number"
+                value={mobile}
+                onChange={(e) => setMobile(e.target.value)}
+                className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium"
                 required
               />
             </div>
 
             {/* Password */}
-            <div className="flex items-center border border-gray-300 rounded px-3 py-2">
-              <AiOutlineLock className="text-gray-400 mr-2" />
+            <div className="flex items-center border-2 border-gray-100 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-hotpink-400 focus-within:bg-white transition-colors">
+              <AiOutlineLock className="text-gray-400 mr-3 text-xl" />
               <input
                 type="password"
                 name="password"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full focus:outline-none"
+                className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium"
                 required
               />
             </div>
 
-            <div className="flex justify-between items-center text-sm text-pink-600">
-              <label className="flex items-center gap-2">
-                <input type="checkbox" className="accent-pink-500" />
+            <div className="flex justify-between items-center text-sm text-hotpink-600 font-medium">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" className="accent-hotpink-500 w-4 h-4 rounded border-gray-300" />
                 Remember Me
               </label>
-              <Link to="#" className="hover:underline">Forgot Password?</Link>
+              <Link to="#" className="hover:text-hotpink-700 hover:underline transition-colors">Forgot Password?</Link>
             </div>
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-br from-pink-600 to-rose-500 text-white font-semibold py-2 rounded-full mt-2 transition"
+              className="btn-hotpink w-full py-3 mt-4 text-lg"
             >
-              Login
+              Login to Dashboard
             </button>
 
-            <div className="text-center mt-6">
-              <span className="text-pink-700 text-sm">
+            <div className="text-center mt-8">
+              <span className="text-gray-500 font-medium">
                 Don't have an account?{" "}
-                <Link to="/register" className="font-medium text-pink-600 hover:underline">
+                <Link to="/register" className="font-bold text-hotpink-600 hover:text-hotpink-700 hover:underline transition-colors">
                   Register Now
                 </Link>
               </span>
