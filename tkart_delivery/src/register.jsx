@@ -4,12 +4,14 @@ import { BiUser } from "react-icons/bi";
 import { AiOutlineLock, AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
 import { MdOutlinePerson } from "react-icons/md";
 import axios from 'axios';
-import { Bounce, toast } from 'react-toastify';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import tklogo from "./assets/TKartD.png";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     phone: '',
     password: '',
@@ -56,7 +58,6 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    // Validation
     if (formData.password !== formData.confirmPassword) {
       showError('Passwords do not match');
       return;
@@ -71,8 +72,8 @@ const Register = () => {
 
     try {
       const response = await axios.post('http://localhost:8082/register', {
-        username: formData.username,
-        name: formData.name,
+        username: formData.phone,
+        name: `${formData.firstName} ${formData.lastName}`.trim(),
         email: formData.email,
         phone: formData.phone,
         password: formData.password
@@ -93,125 +94,131 @@ const Register = () => {
   };
 
   return (
-    <div className='text-white min-h-screen flex justify-center items-center bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 py-8'>
-      <div className='bg-slate-800 border border-slate-400 rounded-md p-8 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative max-w-md w-full mx-4'>
-        <h1 className='text-4xl text-white font-bold text-center mb-6'>
-          Delivery Partner Registration
-        </h1>
+    <div className="min-h-screen flex items-center justify-center bg-blue-50 py-10 px-4 font-sans">
+      <ToastContainer position="top-right" autoClose={3000} />
+      <div className="bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
 
-        <form onSubmit={handleRegister}>
-          <div className='relative my-4'>
-            <input
-              type="text"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              className='block w-full py-2.5 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-              placeholder=""
-              required
-            />
-            <label className='absolute text-sm text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'>
-              Username
-            </label>
-            <BiUser className='absolute top-4 right-4 text-white' />
+        {/* Left Panel */}
+        <div className="md:w-1/2 bg-gradient-to-br from-blue-500 to-blue-700 text-white flex flex-col justify-center items-center p-10 relative">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/3"></div>
+          <h2 className="text-4xl font-bold mb-4 z-10 drop-shadow-sm">Welcome Back!</h2>
+          <p className="text-center text-white/90 text-lg mb-8 z-10">
+            To keep connected with us please login with your personal info
+          </p>
+          <Link to="/login" className="z-10">
+            <button className="bg-white text-blue-600 px-8 py-3 rounded-full font-bold shadow-lg hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-1">
+              SIGN IN
+            </button>
+          </Link>
+        </div>
+
+        {/* Right Panel */}
+        <div className="md:w-1/2 p-10 bg-white flex flex-col justify-center">
+          {/* Logo */}
+          <div className="flex justify-center mb-6">
+            <img src={tklogo} alt="Thirumathi Kart Logo" className="h-24 w-24 drop-shadow-md" />
           </div>
 
-          <div className='relative my-4'>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className='block w-full py-2.5 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-              placeholder=""
-              required
-            />
-            <label className='absolute text-sm text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'>
-              Full Name
-            </label>
-            <MdOutlinePerson className='absolute top-4 right-4 text-white' />
-          </div>
+          <h2 className="text-3xl font-extrabold text-blue-600 text-center mb-8">
+            Create Account
+          </h2>
 
-          <div className='relative my-4'>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className='block w-full py-2.5 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-              placeholder=""
-              required
-            />
-            <label className='absolute text-sm text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'>
-              Email
-            </label>
-            <AiOutlineMail className='absolute top-4 right-4 text-white' />
-          </div>
+          <form onSubmit={handleRegister} className="space-y-4">
+            {/* First Name & Last Name */}
+            <div className="flex space-x-4">
+              <div className="flex-1 flex items-center border-2 border-gray-100 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-blue-500 focus-within:bg-white transition-colors">
+                <BiUser className="text-gray-400 mr-3 text-xl" />
+                <input
+                  type="text"
+                  name="firstName"
+                  placeholder="First Name"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium"
+                  required
+                />
+              </div>
+              <div className="flex-1 flex items-center border-2 border-gray-100 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-blue-500 focus-within:bg-white transition-colors">
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Last Name"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium"
+                  required
+                />
+              </div>
+            </div>
 
-          <div className='relative my-4'>
-            <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              className='block w-full py-2.5 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-              placeholder=""
-            />
-            <label className='absolute text-sm text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'>
-              Phone Number
-            </label>
-            <AiOutlinePhone className='absolute top-4 right-4 text-white' />
-          </div>
+            {/* Email & Phone */}
+            <div className="flex space-x-4">
+              <div className="flex-1 flex items-center border-2 border-gray-100 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-blue-500 focus-within:bg-white transition-colors">
+                <AiOutlineMail className="text-gray-400 mr-3 text-xl" />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium"
+                  required
+                />
+              </div>
+              <div className="flex-1 flex items-center border-2 border-gray-100 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-blue-500 focus-within:bg-white transition-colors">
+                <AiOutlinePhone className="text-gray-400 mr-3 text-xl" />
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium"
+                  required
+                />
+              </div>
+            </div>
 
-          <div className='relative my-4'>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className='block w-full py-2.5 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-              placeholder=""
-              required
-            />
-            <label className='absolute text-sm text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'>
-              Password
-            </label>
-            <AiOutlineLock className='absolute top-4 right-4 text-white' />
-          </div>
+            {/* Password */}
+            <div className="flex items-center border-2 border-gray-100 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-blue-500 focus-within:bg-white transition-colors">
+              <AiOutlineLock className="text-gray-400 mr-3 text-xl" />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium"
+                required
+              />
+            </div>
 
-          <div className='relative my-4'>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className='block w-full py-2.5 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-              placeholder=""
-              required
-            />
-            <label className='absolute text-sm text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'>
-              Confirm Password
-            </label>
-            <AiOutlineLock className='absolute top-4 right-4 text-white' />
-          </div>
+            {/* Confirm Password */}
+            <div className="flex items-center border-2 border-gray-100 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-blue-500 focus-within:bg-white transition-colors">
+              <AiOutlineLock className="text-gray-400 mr-3 text-xl" />
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium"
+                required
+              />
+            </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className='w-full mb-4 text-[18px] mt-6 rounded-full bg-white text-emerald-800 hover:bg-emerald-600 hover:text-white py-2 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed'
-          >
-            {loading ? 'Creating Account...' : 'Register'}
-          </button>
-
-          <div className='text-center'>
-            <span className='text-white text-sm'>
-              Already have an account?{' '}
-              <Link to="/login" className='text-blue-500 hover:underline'>
-                Login here
-              </Link>
-            </span>
-          </div>
-        </form>
+            <button
+              type="submit"
+              disabled={loading}
+              className={`w-full py-3 mt-6 text-lg font-bold rounded-full shadow-lg transition-all duration-300 transform ${loading
+                ? 'bg-blue-400 cursor-not-allowed'
+                : 'bg-blue-600 text-white hover:bg-blue-700 hover:-translate-y-1'
+                }`}
+            >
+              {loading ? 'Creating Account...' : 'SIGN UP'}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

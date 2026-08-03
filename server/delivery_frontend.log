@@ -1,0 +1,1256 @@
+
+--- Starting npm run dev at Mon Aug  3 00:05:10 2026 ---
+
+> thirumathi-delivery-frontend@0.0.0 dev
+> vite --port 5174
+
+
+  VITE v6.3.5  ready in 171 ms
+
+  ➜  Local:   http://localhost:5174/
+  ➜  Network: http://10.93.232.140:5174/
+12:05:37 AM [vite] vite.config.js changed, restarting server...
+12:05:37 AM [vite] server restarted.
+
+--- Starting npm run dev at Mon Aug  3 00:05:48 2026 ---
+
+> thirumathi-delivery-frontend@0.0.0 dev
+> vite --port 5174
+
+
+  VITE v6.3.5  ready in 105 ms
+
+  ➜  Local:   http://localhost:5174/
+  ➜  Network: http://10.93.232.140:5174/
+
+--- Starting npm run dev at Mon Aug  3 00:07:31 2026 ---
+
+> thirumathi-delivery-frontend@0.0.0 dev
+> vite --port 5175
+
+
+  VITE v6.3.5  ready in 112 ms
+
+  ➜  Local:   http://localhost:5175/
+  ➜  Network: http://10.93.232.140:5175/
+12:20:11 AM [vite] (client) hmr update /src/login.jsx
+
+--- Starting npm run dev at Mon Aug  3 00:20:39 2026 ---
+
+> thirumathi-delivery-frontend@0.0.0 dev
+> vite --port 5175
+
+
+  VITE v6.3.5  ready in 129 ms
+
+  ➜  Local:   http://localhost:5175/
+  ➜  Network: http://10.93.232.140:5175/
+12:24:01 AM [vite] (client) hmr update /src/register.jsx
+
+--- Starting npm run dev at Mon Aug  3 00:26:38 2026 ---
+
+> thirumathi-delivery-frontend@0.0.0 dev
+> vite --port 5175
+
+
+  VITE v6.3.5  ready in 153 ms
+
+  ➜  Local:   http://localhost:5175/
+  ➜  Network: http://10.93.232.140:5175/
+12:37:57 AM [vite] (client) hmr update /src/App.jsx
+12:37:58 AM [vite] (client) ✨ new dependencies optimized: react-icons/fi, framer-motion
+12:37:58 AM [vite] (client) ✨ optimized dependencies changed. reloading
+12:38:17 AM [vite] (client) hmr update /src/dashboard.jsx
+12:38:32 AM [vite] (client) hmr update /src/available.jsx
+12:38:54 AM [vite] (client) hmr update /src/map.jsx
+
+--- Starting npm run dev at Mon Aug  3 00:40:12 2026 ---
+
+> thirumathi-delivery-frontend@0.0.0 dev
+> vite --port 5175
+
+
+  VITE v6.3.5  ready in 179 ms
+
+  ➜  Local:   http://localhost:5175/
+  ➜  Network: http://10.93.232.140:5175/
+12:42:14 AM [vite] (client) hmr update /src/components/Layout.jsx
+12:44:24 AM [vite] (client) page reload index.html
+12:44:33 AM [vite] (client) hmr update /src/styles.css
+12:46:29 AM [vite] (client) hmr update /src/App.jsx
+12:46:31 AM [vite] (client) hmr update /src/components/Layout.jsx
+1:03:19 AM [vite] (client) hmr update /src/dashboard.jsx
+1:04:32 AM [vite] (client) hmr update /src/components/Profile.jsx
+1:04:46 AM [vite] (client) hmr update /src/App.jsx
+1:05:05 AM [vite] (client) hmr update /src/components/Layout.jsx
+1:05:16 AM [vite] (client) hmr update /src/available.jsx
+1:05:16 AM [vite] (client) hmr update /src/map.jsx
+1:11:39 AM [vite] (client) hmr update /src/dashboard.jsx
+1:13:10 AM [vite] (client) hmr update /src/components/Layout.jsx
+1:13:45 AM [vite] (client) hmr update /src/components/Layout.jsx
+1:15:20 AM [vite] (client) hmr update /src/components/Layout.jsx
+1:15:20 AM [vite] Internal server error: Failed to resolve import "../assets/TKartD.png" from "src/components/Layout.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/components/Layout.jsx:8:19
+  23 |  import axios from "axios";
+  24 |  import { FiUser, FiHome, FiMap, FiBox, FiXCircle } from "react-icons/fi";
+  25 |  import tklogo from "../assets/TKartD.png";
+     |                      ^
+  26 |  const SidebarItem = ({ to, label, icon, onClick }) => /* @__PURE__ */ jsxDEV(
+  27 |    NavLink,
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:16:11 AM [vite] (client) hmr update /src/App.jsx
+1:16:11 AM [vite] Internal server error: Failed to resolve import "../assets/TKartD.png" from "src/components/Layout.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/components/Layout.jsx:8:19
+  23 |  import axios from "axios";
+  24 |  import { FiUser, FiHome, FiMap, FiBox, FiXCircle } from "react-icons/fi";
+  25 |  import tklogo from "../assets/TKartD.png";
+     |                      ^
+  26 |  const SidebarItem = ({ to, label, icon, onClick }) => /* @__PURE__ */ jsxDEV(
+  27 |    NavLink,
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+1:16:11 AM [vite] (client) Pre-transform error: Failed to resolve import "../assets/TKartD.png" from "src/components/Layout.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/components/Layout.jsx:8:19
+  23 |  import axios from "axios";
+  24 |  import { FiUser, FiHome, FiMap, FiBox, FiXCircle } from "react-icons/fi";
+  25 |  import tklogo from "../assets/TKartD.png";
+     |                      ^
+  26 |  const SidebarItem = ({ to, label, icon, onClick }) => /* @__PURE__ */ jsxDEV(
+  27 |    NavLink,
+1:16:24 AM [vite] Internal server error: Failed to resolve import "../assets/TKartD.png" from "src/components/Layout.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/components/Layout.jsx:8:19
+  23 |  import axios from "axios";
+  24 |  import { FiUser, FiHome, FiMap, FiBox, FiXCircle } from "react-icons/fi";
+  25 |  import tklogo from "../assets/TKartD.png";
+     |                      ^
+  26 |  const SidebarItem = ({ to, label, icon, onClick }) => /* @__PURE__ */ jsxDEV(
+  27 |    NavLink,
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:16:25 AM [vite] Internal server error: Failed to resolve import "../assets/TKartD.png" from "src/components/Layout.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/components/Layout.jsx:8:19
+  23 |  import axios from "axios";
+  24 |  import { FiUser, FiHome, FiMap, FiBox, FiXCircle } from "react-icons/fi";
+  25 |  import tklogo from "../assets/TKartD.png";
+     |                      ^
+  26 |  const SidebarItem = ({ to, label, icon, onClick }) => /* @__PURE__ */ jsxDEV(
+  27 |    NavLink,
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:16:25 AM [vite] Internal server error: Failed to resolve import "../assets/TKartD.png" from "src/components/Layout.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/components/Layout.jsx:8:19
+  23 |  import axios from "axios";
+  24 |  import { FiUser, FiHome, FiMap, FiBox, FiXCircle } from "react-icons/fi";
+  25 |  import tklogo from "../assets/TKartD.png";
+     |                      ^
+  26 |  const SidebarItem = ({ to, label, icon, onClick }) => /* @__PURE__ */ jsxDEV(
+  27 |    NavLink,
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:16:37 AM [vite] (client) hmr update /src/App.jsx
+1:18:02 AM [vite] (client) hmr update /src/login.jsx, /src/register.jsx
+1:18:02 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./tkart.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:18:02 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/login.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/login.jsx:7:19
+  22 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  23 |  import "react-toastify/dist/ReactToastify.css";
+  24 |  import tklogo from "./tkart.png";
+     |                      ^
+  25 |  const Login = () => {
+  26 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 9)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:18:03 AM [vite] (client) hmr update /src/components/Layout.jsx
+1:19:30 AM [vite] (client) hmr update /src/components/Layout.jsx
+1:19:33 AM [vite] (client) hmr update /src/components/Layout.jsx
+1:21:18 AM [vite] (client) hmr update /src/components/Layout.jsx
+1:21:18 AM [vite] Internal server error: Failed to resolve import "../assets/TKartD.png" from "src/components/Layout.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/components/Layout.jsx:8:19
+  23 |  import axios from "axios";
+  24 |  import { FiUser, FiHome, FiMap, FiBox, FiXCircle } from "react-icons/fi";
+  25 |  import tklogo from "../assets/TKartD.png";
+     |                      ^
+  26 |  const SidebarItem = ({ to, label, icon, onClick }) => /* @__PURE__ */ jsxDEV(
+  27 |    NavLink,
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:21:26 AM [vite] (client) hmr update /src/App.jsx
+1:21:26 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/login.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/login.jsx:7:19
+  22 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  23 |  import "react-toastify/dist/ReactToastify.css";
+  24 |  import tklogo from "./tkart.png";
+     |                      ^
+  25 |  const Login = () => {
+  26 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 9)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+1:21:26 AM [vite] (client) Pre-transform error: Failed to resolve import "./tkart.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./tkart.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+1:21:26 AM [vite] (client) Pre-transform error: Failed to resolve import "./tkart.png" from "src/login.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/login.jsx:7:19
+  22 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  23 |  import "react-toastify/dist/ReactToastify.css";
+  24 |  import tklogo from "./tkart.png";
+     |                      ^
+  25 |  const Login = () => {
+  26 |    _s();
+1:21:26 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./tkart.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:21:31 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/login.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/login.jsx:7:19
+  22 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  23 |  import "react-toastify/dist/ReactToastify.css";
+  24 |  import tklogo from "./tkart.png";
+     |                      ^
+  25 |  const Login = () => {
+  26 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 9)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:21:31 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./tkart.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:21:32 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/login.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/login.jsx:7:19
+  22 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  23 |  import "react-toastify/dist/ReactToastify.css";
+  24 |  import tklogo from "./tkart.png";
+     |                      ^
+  25 |  const Login = () => {
+  26 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 9)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:21:32 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./tkart.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:21:46 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/login.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/login.jsx:7:19
+  22 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  23 |  import "react-toastify/dist/ReactToastify.css";
+  24 |  import tklogo from "./tkart.png";
+     |                      ^
+  25 |  const Login = () => {
+  26 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 9)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:21:46 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./tkart.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:21:47 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/login.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/login.jsx:7:19
+  22 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  23 |  import "react-toastify/dist/ReactToastify.css";
+  24 |  import tklogo from "./tkart.png";
+     |                      ^
+  25 |  const Login = () => {
+  26 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 9)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:21:47 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./tkart.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:22:08 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/login.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/login.jsx:7:19
+  22 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  23 |  import "react-toastify/dist/ReactToastify.css";
+  24 |  import tklogo from "./tkart.png";
+     |                      ^
+  25 |  const Login = () => {
+  26 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 9)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:22:08 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./tkart.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:22:09 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/login.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/login.jsx:7:19
+  22 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  23 |  import "react-toastify/dist/ReactToastify.css";
+  24 |  import tklogo from "./tkart.png";
+     |                      ^
+  25 |  const Login = () => {
+  26 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 9)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:22:09 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./tkart.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:22:09 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/login.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/login.jsx:7:19
+  22 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  23 |  import "react-toastify/dist/ReactToastify.css";
+  24 |  import tklogo from "./tkart.png";
+     |                      ^
+  25 |  const Login = () => {
+  26 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 9)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:22:09 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./tkart.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:22:10 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/login.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/login.jsx:7:19
+  22 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  23 |  import "react-toastify/dist/ReactToastify.css";
+  24 |  import tklogo from "./tkart.png";
+     |                      ^
+  25 |  const Login = () => {
+  26 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 9)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:22:10 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./tkart.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:22:11 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/login.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/login.jsx:7:19
+  22 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  23 |  import "react-toastify/dist/ReactToastify.css";
+  24 |  import tklogo from "./tkart.png";
+     |                      ^
+  25 |  const Login = () => {
+  26 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 9)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:22:11 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./tkart.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:22:16 AM [vite] (client) hmr update /src/components/Layout.jsx
+1:22:16 AM [vite] (client) Pre-transform error: Failed to resolve import "../tkart.png" from "src/components/Layout.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/components/Layout.jsx:8:19
+  23 |  import axios from "axios";
+  24 |  import { FiUser, FiHome, FiMap, FiBox, FiXCircle } from "react-icons/fi";
+  25 |  import tklogo from "../tkart.png";
+     |                      ^
+  26 |  const SidebarItem = ({ to, label, icon, onClick }) => /* @__PURE__ */ jsxDEV(
+  27 |    NavLink,
+1:22:16 AM [vite] (client) Pre-transform error: Failed to resolve import "./tkart.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./tkart.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+1:22:16 AM [vite] (client) Pre-transform error: Failed to resolve import "./tkart.png" from "src/login.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/login.jsx:7:19
+  22 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  23 |  import "react-toastify/dist/ReactToastify.css";
+  24 |  import tklogo from "./tkart.png";
+     |                      ^
+  25 |  const Login = () => {
+  26 |    _s();
+1:22:16 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/login.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/login.jsx:7:19
+  22 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  23 |  import "react-toastify/dist/ReactToastify.css";
+  24 |  import tklogo from "./tkart.png";
+     |                      ^
+  25 |  const Login = () => {
+  26 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 9)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:22:16 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./tkart.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:22:16 AM [vite] Internal server error: Failed to resolve import "../tkart.png" from "src/components/Layout.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/components/Layout.jsx:8:19
+  23 |  import axios from "axios";
+  24 |  import { FiUser, FiHome, FiMap, FiBox, FiXCircle } from "react-icons/fi";
+  25 |  import tklogo from "../tkart.png";
+     |                      ^
+  26 |  const SidebarItem = ({ to, label, icon, onClick }) => /* @__PURE__ */ jsxDEV(
+  27 |    NavLink,
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:26:41 AM [vite] (client) hmr update /src/App.jsx
+1:26:41 AM [vite] (client) Pre-transform error: Failed to resolve import "./tkart.png" from "src/login.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/login.jsx:7:19
+  22 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  23 |  import "react-toastify/dist/ReactToastify.css";
+  24 |  import tklogo from "./tkart.png";
+     |                      ^
+  25 |  const Login = () => {
+  26 |    _s();
+1:26:41 AM [vite] (client) Pre-transform error: Failed to resolve import "../tkart.png" from "src/components/Layout.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/components/Layout.jsx:8:19
+  23 |  import axios from "axios";
+  24 |  import { FiUser, FiHome, FiMap, FiBox, FiXCircle } from "react-icons/fi";
+  25 |  import tklogo from "../tkart.png";
+     |                      ^
+  26 |  const SidebarItem = ({ to, label, icon, onClick }) => /* @__PURE__ */ jsxDEV(
+  27 |    NavLink,
+1:26:41 AM [vite] Internal server error: Failed to resolve import "./tkart.png" from "src/login.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/login.jsx:7:19
+  22 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  23 |  import "react-toastify/dist/ReactToastify.css";
+  24 |  import tklogo from "./tkart.png";
+     |                      ^
+  25 |  const Login = () => {
+  26 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 9)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:26:41 AM [vite] Internal server error: Failed to resolve import "../tkart.png" from "src/components/Layout.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/components/Layout.jsx:8:19
+  23 |  import axios from "axios";
+  24 |  import { FiUser, FiHome, FiMap, FiBox, FiXCircle } from "react-icons/fi";
+  25 |  import tklogo from "../tkart.png";
+     |                      ^
+  26 |  const SidebarItem = ({ to, label, icon, onClick }) => /* @__PURE__ */ jsxDEV(
+  27 |    NavLink,
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:26:43 AM [vite] (client) hmr update /src/App.jsx
+1:26:43 AM [vite] (client) Pre-transform error: Failed to resolve import "../tkart.png" from "src/components/Layout.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/components/Layout.jsx:8:19
+  23 |  import axios from "axios";
+  24 |  import { FiUser, FiHome, FiMap, FiBox, FiXCircle } from "react-icons/fi";
+  25 |  import tklogo from "../tkart.png";
+     |                      ^
+  26 |  const SidebarItem = ({ to, label, icon, onClick }) => /* @__PURE__ */ jsxDEV(
+  27 |    NavLink,
+1:26:43 AM [vite] Internal server error: Failed to resolve import "../tkart.png" from "src/components/Layout.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/components/Layout.jsx:8:19
+  23 |  import axios from "axios";
+  24 |  import { FiUser, FiHome, FiMap, FiBox, FiXCircle } from "react-icons/fi";
+  25 |  import tklogo from "../tkart.png";
+     |                      ^
+  26 |  const SidebarItem = ({ to, label, icon, onClick }) => /* @__PURE__ */ jsxDEV(
+  27 |    NavLink,
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 10)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+1:26:45 AM [vite] (client) hmr update /src/App.jsx
+1:43:47 AM [vite] (client) hmr update /src/Notifications.jsx
+1:44:47 AM [vite] (client) hmr update /src/Notifications.jsx
+1:52:00 AM [vite] (client) hmr update /src/Notifications.jsx
+1:52:09 AM [vite] (client) hmr update /src/Notifications.jsx
+1:52:17 AM [vite] (client) hmr update /src/Notifications.jsx
+
+--- Starting npm run dev at Mon Aug  3 01:53:09 2026 ---
+
+> thirumathi-delivery-frontend@0.0.0 dev
+> vite --port 5175
+
+
+  VITE v6.3.5  ready in 328 ms
+
+  ➜  Local:   http://localhost:5175/
+  ➜  Network: http://10.93.232.140:5175/
+  ➜  press h + enter to show help
+2:02:06 AM [vite] (client) hmr update /src/ActiveDelivery.jsx
+2:19:07 AM [vite] (client) hmr update /src/components/Layout.jsx
+2:23:16 AM [vite] (client) hmr update /src/register.jsx
+8:37:31 AM [vite] (client) Pre-transform error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+8:37:31 AM [vite] Internal server error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+8:42:50 AM [vite] Internal server error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+8:42:51 AM [vite] Internal server error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+8:42:51 AM [vite] Internal server error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+8:42:52 AM [vite] Internal server error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+8:42:52 AM [vite] Internal server error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+8:42:53 AM [vite] Internal server error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+8:42:53 AM [vite] Internal server error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+8:42:55 AM [vite] Internal server error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+8:42:55 AM [vite] Internal server error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+8:42:55 AM [vite] Internal server error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+8:42:55 AM [vite] Internal server error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+8:48:27 AM [vite] (client) hmr update /src/login.jsx
+8:48:27 AM [vite] (client) Pre-transform error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+8:48:27 AM [vite] Internal server error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+8:48:27 AM [vite] (client) hmr update /src/login.jsx
+8:48:27 AM [vite] (client) Pre-transform error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+8:48:27 AM [vite] Internal server error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+8:48:28 AM [vite] (client) hmr update /src/login.jsx
+8:48:28 AM [vite] (client) Pre-transform error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+8:48:28 AM [vite] Internal server error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+8:48:28 AM [vite] (client) hmr update /src/login.jsx
+8:48:28 AM [vite] (client) Pre-transform error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+8:48:28 AM [vite] Internal server error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+8:48:28 AM [vite] (client) hmr update /src/login.jsx
+8:48:28 AM [vite] (client) Pre-transform error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+8:48:28 AM [vite] Internal server error: Failed to resolve import "./TKartD.png" from "src/register.jsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/src/register.jsx:9:19
+  24 |  import { Bounce, ToastContainer, toast } from "react-toastify";
+  25 |  import "react-toastify/dist/ReactToastify.css";
+  26 |  import tklogo from "./TKartD.png";
+     |                      ^
+  27 |  const Register = () => {
+  28 |    _s();
+      at TransformPluginContext._formatLog (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 11)
+      at async TransformPluginContext.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///Users/pheonix/Documents/Internship/thirumathi_kart/tkart_delivery/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+8:48:38 AM [vite] (client) hmr update /src/App.jsx
+8:48:38 AM [vite] (client) hmr update /src/register.jsx
+8:48:38 AM [vite] (client) hmr update /src/register.jsx
+8:48:38 AM [vite] (client) hmr update /src/register.jsx
+8:57:14 AM [vite] (client) hmr update /src/dashboard.jsx
+8:57:15 AM [vite] (client) ✨ new dependencies optimized: react-confetti, react-use
+8:57:15 AM [vite] (client) ✨ optimized dependencies changed. reloading
+8:57:45 AM [vite] (client) hmr update /src/styles.css
+8:57:53 AM [vite] (client) hmr update /src/styles.css
+9:02:03 AM [vite] (client) hmr update /src/dashboard.jsx
+9:05:02 AM [vite] (client) hmr update /src/Notifications.jsx
+9:05:33 AM [vite] (client) hmr update /src/Notifications.jsx
+9:13:21 AM [vite] (client) hmr update /src/ActiveDelivery.jsx
+9:22:11 AM [vite] (client) hmr update /src/components/Layout.jsx
+9:26:45 AM [vite] (client) hmr update /src/components/Layout.jsx
+9:29:18 AM [vite] (client) hmr update /src/Notifications.jsx
+9:29:33 AM [vite] (client) hmr update /src/ActiveDelivery.jsx
+9:39:38 AM [vite] (client) hmr update /src/ActiveDelivery.jsx
+9:48:55 AM [vite] (client) hmr update /src/ActiveDelivery.jsx
+9:59:21 AM [vite] (client) hmr update /src/ActiveDelivery.jsx
+10:14:09 AM [vite] (client) hmr update /src/ActiveDelivery.jsx
+10:16:10 AM [vite] (client) hmr update /src/ActiveDelivery.jsx
+10:23:05 AM [vite] (client) hmr update /src/Notifications.jsx
+10:33:48 AM [vite] (client) hmr update /src/Notifications.jsx
+10:44:08 AM [vite] (client) hmr update /src/login.jsx
+10:44:08 AM [vite] (client) hmr update /src/register.jsx

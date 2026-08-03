@@ -333,6 +333,8 @@ type Order struct {
 	PaymentMethod string     `json:"paymentMethod"`
 	Status        string     `json:"status"`
 	Total         float64    `json:"total"`
+	Latitude      float64    `json:"latitude"`
+	Longitude     float64    `json:"longitude"`
 }
 
 func PlaceOrderHandler(w http.ResponseWriter, r *http.Request) {
@@ -372,9 +374,9 @@ func PlaceOrderHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	order.Total = total
 
-	_, err = db.Exec(`INSERT INTO orders (username, items, date, phone, address, city, state, pincode, payment_method, status, total) 
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
-		username, string(order.Items), order.Date, order.Phone, order.Address, order.City, order.State, order.Pincode, order.PaymentMethod, order.Status, order.Total)
+	_, err = db.Exec(`INSERT INTO orders (username, items, date, phone, address, city, state, pincode, payment_method, status, total, latitude, longitude) 
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
+		username, string(order.Items), order.Date, order.Phone, order.Address, order.City, order.State, order.Pincode, order.PaymentMethod, order.Status, order.Total, order.Latitude, order.Longitude)
 	if err != nil {
 		http.Error(w, "Order failed", http.StatusInternalServerError)
 		return
@@ -635,6 +637,10 @@ func main() {
 		`ALTER TABLE orders ADD COLUMN IF NOT EXISTS payment_method TEXT;`,
 		`ALTER TABLE orders ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'Processing';`,
 		`ALTER TABLE orders ADD COLUMN IF NOT EXISTS total NUMERIC;`,
+		`ALTER TABLE orders ADD COLUMN IF NOT EXISTS latitude NUMERIC;`,
+		`ALTER TABLE orders ADD COLUMN IF NOT EXISTS longitude NUMERIC;`,
+		`ALTER TABLE orders ADD COLUMN IF NOT EXISTS seller_latitude NUMERIC;`,
+		`ALTER TABLE orders ADD COLUMN IF NOT EXISTS seller_longitude NUMERIC;`,
 	}
 	for _, q := range alterQueries {
 		if _, err := db.Exec(q); err != nil {

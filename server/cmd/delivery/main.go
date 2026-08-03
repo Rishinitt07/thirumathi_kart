@@ -68,8 +68,8 @@ func initDB() {
 	}
 	fmt.Println("Connected to buyerdb")
 
-	// Connect to sellerdb (read-only)
-	sellerDB, err = sql.Open("postgres", "user=postgres password=dharun123 dbname=sellerdb sslmode=disable")
+	// Connect to sellerdb (mydb) (read-only)
+	sellerDB, err = sql.Open("postgres", "user=postgres password=dharun123 dbname=mydb sslmode=disable")
 	if err != nil {
 		panic(err)
 	}
@@ -114,10 +114,11 @@ func main() {
 	mux.Handle("/available/take", routes.AuthMiddleware(http.HandlerFunc(routes.TakeDeliveryHandler)))
 	mux.Handle("/delivery/", routes.AuthMiddleware(http.HandlerFunc(routes.UpdateStatusHandler)))
 	mux.Handle("/map/", routes.AuthMiddleware(http.HandlerFunc(routes.MapHandler)))
+	mux.Handle("/profile", routes.AuthMiddleware(http.HandlerFunc(routes.GetProfileHandler)))
 
 	// CORS configuration
 	handler := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:5174"},
+		AllowedOrigins:   []string{"http://localhost:5174", "http://localhost:5175"},
 		AllowedMethods:   []string{"GET", "POST", "PATCH", "OPTIONS"},
 		AllowedHeaders:   []string{"Content-Type", "Authorization"},
 		AllowCredentials: true,

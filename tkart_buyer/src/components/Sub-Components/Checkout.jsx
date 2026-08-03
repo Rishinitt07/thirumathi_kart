@@ -31,6 +31,41 @@ const Checkout = () => {
   const [cart, setCart] = useState([]);
   const [addresses, setAddresses] = useState([]);
   const [selectedAddressId, setSelectedAddressId] = useState(null);
+  const [deliveryFee, setDeliveryFee] = useState(32); // Default fallback
+
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    if (!lat1 || !lon1 || !lat2 || !lon2) return 0;
+    const R = 6371; 
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
+    const a = 
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * 
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; 
+  };
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const buyerLat = pos.coords.latitude;
+          const buyerLng = pos.coords.longitude;
+          const sellerLat = 10.8745; 
+          const sellerLng = 78.7066;
+          
+          let dist = calculateDistance(sellerLat, sellerLng, buyerLat, buyerLng);
+          if (!dist || dist === 0) dist = 2.5; 
+          else if (dist < 1.0) dist = 1.2;
+          
+          setDeliveryFee(Math.round(20 + (dist * 10)));
+        },
+        () => setDeliveryFee(32),
+        { timeout: 5000 }
+      );
+    }
+  }, []);
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -75,6 +110,8 @@ const Checkout = () => {
     return cart.reduce((sum, item) => sum + item.price * (item.qty || 1), 0);
   }, [cart]);
 
+  const finalTotal = useMemo(() => total + deliveryFee, [total, deliveryFee]);
+
   const handleConfirmOrder = async () => {
     const selectedAddress = addresses.find(a => a.id === selectedAddressId);
     if (!selectedAddress) {
@@ -82,7 +119,30 @@ const Checkout = () => {
       return;
     }
 
+    let lat = 0;
+    let lng = 0;
+
+    const getPosition = () => {
+      return new Promise((resolve) => {
+        if (!navigator.geolocation) {
+          resolve(null);
+          return;
+        }
+        navigator.geolocation.getCurrentPosition(
+          (pos) => resolve(pos.coords),
+          (err) => resolve(null),
+          { timeout: 5000 } // wait up to 5 seconds for user to allow
+        );
+      });
+    };
+
     try {
+      const coords = await getPosition();
+      if (coords) {
+        lat = coords.latitude;
+        lng = coords.longitude;
+      }
+
       await axios.post('http://localhost:8081/orders/place', {
         items: cart,
         phone: selectedAddress.mobile,
@@ -91,6 +151,8 @@ const Checkout = () => {
         pincode: selectedAddress.pincode,
         state: selectedAddress.state,
         paymentMethod: 'cod',
+        latitude: lat,
+        longitude: lng
       }, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       });
@@ -163,7 +225,7 @@ const Checkout = () => {
                     <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" /><path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3z" /><path d="M14 5h-3v8h3.05a2.5 2.5 0 014.5.9V10l-2-5h-2.5z" /></svg>
                     Estimated Delivery: Tomorrow
                   </p>
-                  <p className="text-sm text-green-600 mt-1 ml-8">Free Delivery on all orders</p>
+                  <p className="text-sm text-green-600 mt-1 ml-8">Delivery Charge: ₹{deliveryFee}</p>
                 </div>
               </div>
             </div>
@@ -176,7 +238,7 @@ const Checkout = () => {
                 <input type="radio" checked readOnly className="w-6 h-6 text-hotpink-600 accent-hotpink-500" />
                 <div>
                   <p className="text-lg font-normal text-gray-900">Cash on Delivery</p>
-                  <p className="text-base text-gray-500 mt-1">Pay ₹{total.toLocaleString()} at delivery</p>
+                  <p className="text-base text-gray-500 mt-1">Pay ₹{finalTotal.toLocaleString()} at delivery</p>
                 </div>
               </div>
             </div>
@@ -222,12 +284,12 @@ const Checkout = () => {
                   </div>
                   <div className="flex justify-between">
                     <span>Delivery</span>
-                    <span className="text-green-600 font-normal">FREE</span>
+                    <span className="text-green-600 font-normal">₹{deliveryFee}</span>
                   </div>
                 </div>
                 <div className="border-t border-gray-200 pt-4 flex justify-between font-normal text-2xl text-gray-900 mb-8">
                   <span>Total</span>
-                  <span>₹{total.toLocaleString()}</span>
+                  <span>₹{finalTotal.toLocaleString()}</span>
                 </div>
               </div>
 

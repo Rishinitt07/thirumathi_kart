@@ -964,7 +964,9 @@ func UpdateOrderStatusHandler(w http.ResponseWriter, r *http.Request) {
 	id = strings.TrimSuffix(id, "/status")
 
 	var body struct {
-		Status string `json:"status"`
+		Status    string  `json:"status"`
+		Latitude  float64 `json:"latitude"`
+		Longitude float64 `json:"longitude"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
@@ -974,7 +976,7 @@ func UpdateOrderStatusHandler(w http.ResponseWriter, r *http.Request) {
 	// Fast JSONB containment search for the seller's mobile to ensure they have an item in this order
 	searchJSON := fmt.Sprintf(`[{"seller_mobile": "%s"}]`, claims.Mobile)
 
-	res, err := buyerDB.Exec("UPDATE orders SET status=$1 WHERE id=$2 AND items @> $3", body.Status, id, searchJSON)
+	res, err := buyerDB.Exec("UPDATE orders SET status=$1, seller_latitude=$2, seller_longitude=$3 WHERE id=$4 AND items @> $5", body.Status, body.Latitude, body.Longitude, id, searchJSON)
 	if err != nil {
 		http.Error(w, "Failed to update status: "+err.Error(), http.StatusInternalServerError)
 		return

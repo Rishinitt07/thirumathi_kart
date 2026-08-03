@@ -4,8 +4,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import Login from './login';
 import Register from './register';
 import Dashboard from './dashboard';
-import Available from './available';
-import Map from './map';
+import Notifications from './Notifications';
+import ActiveDelivery from './ActiveDelivery';
+
+import Layout from './components/Layout';
+import Profile from './components/Profile';
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
@@ -15,35 +18,26 @@ const ProtectedRoute = ({ children }) => {
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-50">
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        
+        {/* Protected Routes wrapped in Layout */}
         <Route
-          path="/dashboard"
+          path="/"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <Layout />
             </ProtectedRoute>
           }
-        />
-        <Route
-          path="/available"
-          element={
-            <ProtectedRoute>
-              <Available />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/map"
-          element={
-            <ProtectedRoute>
-              <Map />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/" element={<Navigate to="/dashboard" />} />
+        >
+          <Route index element={<Navigate to="/dashboard" replace />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="notifications" element={<Notifications />} />
+          <Route path="active-delivery" element={<ActiveDelivery />} />
+          <Route path="profile" element={<Profile />} />
+        </Route>
       </Routes>
       <ToastContainer
         position="top-right"

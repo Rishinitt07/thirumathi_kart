@@ -1,0 +1,135 @@
+
+--- Starting go run main.go at Mon Aug  3 00:05:10 2026 ---
+Connected to deliverydb
+Connected to buyerdb
+Connected to sellerdb
+Database tables created/verified
+2026/08/03 00:05:11 FDW-based delivery system started
+Server starting on port 8082...
+signal: killed
+
+--- Starting go run main.go at Mon Aug  3 00:05:48 2026 ---
+Connected to deliverydb
+Connected to buyerdb
+Connected to sellerdb
+Database tables created/verified
+2026/08/03 00:05:49 FDW-based delivery system started
+Server starting on port 8082...
+signal: killed
+
+--- Starting go run main.go at Mon Aug  3 00:07:31 2026 ---
+Connected to deliverydb
+Connected to buyerdb
+Connected to sellerdb
+Database tables created/verified
+2026/08/03 00:07:31 FDW-based delivery system started
+Server starting on port 8082...
+signal: killed
+
+--- Starting go run main.go at Mon Aug  3 00:20:39 2026 ---
+Connected to deliverydb
+Connected to buyerdb
+Connected to sellerdb
+Database tables created/verified
+2026/08/03 00:20:41 FDW-based delivery system started
+Server starting on port 8082...
+signal: killed
+
+--- Starting go run main.go at Mon Aug  3 00:26:38 2026 ---
+Connected to deliverydb
+Connected to buyerdb
+Connected to sellerdb
+Database tables created/verified
+2026/08/03 00:26:40 FDW-based delivery system started
+Server starting on port 8082...
+🔍 MapHandler called for user: 1234567891
+📊 Summary: 0 orders processed, 0 total points generated
+📍 Total delivery points fetched: 0
+🗺️ Final route: 1 total points (0 pickups, 0 drops)
+🔍 MapHandler called for user: 1234567891
+📊 Summary: 0 orders processed, 0 total points generated
+📍 Total delivery points fetched: 0
+🗺️ Final route: 1 total points (0 pickups, 0 drops)
+🔍 MapHandler called for user: 1234567891
+📊 Summary: 0 orders processed, 0 total points generated
+📍 Total delivery points fetched: 0
+🗺️ Final route: 1 total points (0 pickups, 0 drops)
+🔍 MapHandler called for user: 1234567891
+📊 Summary: 0 orders processed, 0 total points generated
+📍 Total delivery points fetched: 0
+🗺️ Final route: 1 total points (0 pickups, 0 drops)
+signal: killed
+
+--- Starting go run main.go at Mon Aug  3 00:40:12 2026 ---
+Connected to deliverydb
+Connected to buyerdb
+Connected to sellerdb
+Database tables created/verified
+2026/08/03 00:40:14 FDW-based delivery system started
+Server starting on port 8082...
+🔍 MapHandler called for user: 1234567891
+📊 Summary: 0 orders processed, 0 total points generated
+📍 Total delivery points fetched: 0
+🗺️ Final route: 1 total points (0 pickups, 0 drops)
+🔍 MapHandler called for user: 1234567891
+📊 Summary: 0 orders processed, 0 total points generated
+📍 Total delivery points fetched: 0
+🗺️ Final route: 1 total points (0 pickups, 0 drops)
+🔍 MapHandler called for user: 1234567891
+📊 Summary: 0 orders processed, 0 total points generated
+📍 Total delivery points fetched: 0
+🗺️ Final route: 1 total points (0 pickups, 0 drops)
+🔍 MapHandler called for user: 1234567891
+📊 Summary: 0 orders processed, 0 total points generated
+📍 Total delivery points fetched: 0
+🗺️ Final route: 1 total points (0 pickups, 0 drops)
+🔍 MapHandler called for user: 1234567891
+📊 Summary: 0 orders processed, 0 total points generated
+📍 Total delivery points fetched: 0
+🗺️ Final route: 1 total points (0 pickups, 0 drops)
+🔍 MapHandler called for user: 1234567891
+📊 Summary: 0 orders processed, 0 total points generated
+📍 Total delivery points fetched: 0
+🗺️ Final route: 1 total points (0 pickups, 0 drops)
+🔍 MapHandler called for user: 1234567891
+📊 Summary: 0 orders processed, 0 total points generated
+📍 Total delivery points fetched: 0
+🗺️ Final route: 1 total points (0 pickups, 0 drops)
+🔍 MapHandler called for user: 1234567891
+📊 Summary: 0 orders processed, 0 total points generated
+📍 Total delivery points fetched: 0
+🗺️ Final route: 1 total points (0 pickups, 0 drops)
+🔍 MapHandler called for user: 1234567891
+📊 Summary: 0 orders processed, 0 total points generated
+📍 Total delivery points fetched: 0
+🗺️ Final route: 1 total points (0 pickups, 0 drops)
+🔍 MapHandler called for user: 1234567891
+📊 Summary: 0 orders processed, 0 total points generated
+📍 Total delivery points fetched: 0
+🗺️ Final route: 1 total points (0 pickups, 0 drops)
+🔍 MapHandler called for user: 1234567891
+📊 Summary: 0 orders processed, 0 total points generated
+📍 Total delivery points fetched: 0
+🗺️ Final route: 1 total points (0 pickups, 0 drops)
+🔍 MapHandler called for user: 1234567891
+📊 Summary: 0 orders processed, 0 total points generated
+📍 Total delivery points fetched: 0
+🗺️ Final route: 1 total points (0 pickups, 0 drops)
+🔍 MapHandler called for user: 1234567891
+📊 Summary: 0 orders processed, 0 total points generated
+📍 Total delivery points fetched: 0
+🗺️ Final route: 1 total points (0 pickups, 0 drops)
+🔍 MapHandler called for user: 1234567891
+📊 Summary: 0 orders processed, 0 total points generated
+📍 Total delivery points fetched: 0
+🗺️ Final route: 1 total points (0 pickups, 0 drops)
+signal: killed
+
+--- Starting go run main.go at Mon Aug  3 01:53:09 2026 ---
+Connected to deliverydb
+Connected to buyerdb
+Connected to sellerdb
+Database tables created/verified
+2026/08/03 01:53:09 FDW-based delivery system started
+Server starting on port 8082...
+signal: killed

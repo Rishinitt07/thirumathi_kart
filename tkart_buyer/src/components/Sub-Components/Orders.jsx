@@ -341,6 +341,8 @@ const Orders = () => {
 
   useEffect(() => {
     fetchOrders();
+    const interval = setInterval(fetchOrders, 5000);
+    return () => clearInterval(interval);
   }, [fetchOrders]);
 
   const initiateCancel = (orderId) => {

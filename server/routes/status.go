@@ -24,7 +24,7 @@ func UpdateStatusHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Extract delivery ID from URL path
+	// Extract delivery ID from URL path: /delivery/{id}/status
 	pathParts := strings.Split(r.URL.Path, "/")
 	if len(pathParts) < 4 || pathParts[3] != "status" {
 		http.Error(w, "Invalid URL format", http.StatusBadRequest)
@@ -55,13 +55,16 @@ func UpdateStatusHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Update delivery status
+	deliveryDB := db.GetDeliveryDB()
+	buyerDB := db.GetBuyerDB()
+
+	// Update delivery_orders status
 	query := `
 		UPDATE delivery_orders 
 		SET status = $1, updated_at = NOW()
 		WHERE id = $2 AND delivery_user = $3`
 
-	result, err := db.GetDeliveryDB().Exec(query, req.Status, deliveryID, username)
+	result, err := deliveryDB.Exec(query, req.Status, deliveryID, username)
 	if err != nil {
 		http.Error(w, "Error updating status", http.StatusInternalServerError)
 		return
@@ -78,6 +81,26 @@ func UpdateStatusHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// ─── Propagate status to buyerdb.orders ────────────────────────────────────
+	// Get the order_id linked to this delivery record
+	var orderID int
+	err = deliveryDB.QueryRow("SELECT order_id FROM delivery_orders WHERE id = $1", deliveryID).Scan(&orderID)
+	if err == nil && buyerDB != nil {
+		var buyerStatus string
+		switch req.Status {
+		case "in_progress":
+			buyerStatus = "Out for delivery"
+		case "completed":
+			buyerStatus = "Delivered"
+		}
+		// Only update if we have a meaningful buyer status to set
+		if buyerStatus != "" {
+			buyerDB.Exec("UPDATE orders SET status = $1 WHERE id = $2", buyerStatus, orderID)
+		}
+	}
+	// ───────────────────────────────────────────────────────────────────────────
+
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]string{"message": "Status updated successfully"})
 }
+

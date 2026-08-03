@@ -67,6 +67,8 @@ const Orders = () => {
 
   useEffect(() => {
     fetchOrders();
+    const interval = setInterval(fetchOrders, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   const fetchOrders = () => {
@@ -113,9 +115,34 @@ const Orders = () => {
       });
   };
 
-  const updateOrderStatus = (id, newStatus) => {
+  const updateOrderStatus = async (id, newStatus) => {
+    let lat = 0;
+    let lng = 0;
+    
+    if (newStatus === 'Shipped') {
+      const getPosition = () => {
+        return new Promise((resolve) => {
+          if (!navigator.geolocation) {
+            resolve(null);
+            return;
+          }
+          navigator.geolocation.getCurrentPosition(
+            (pos) => resolve(pos.coords),
+            (err) => resolve(null),
+            { timeout: 5000 }
+          );
+        });
+      };
+      
+      const coords = await getPosition();
+      if (coords) {
+        lat = coords.latitude;
+        lng = coords.longitude;
+      }
+    }
+
     axios
-      .put(`http://localhost:8080/orders/${id}/status`, { status: newStatus }, {
+      .put(`http://localhost:8080/orders/${id}/status`, { status: newStatus, latitude: lat, longitude: lng }, {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then((res) => {

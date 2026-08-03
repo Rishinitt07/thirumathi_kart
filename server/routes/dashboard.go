@@ -1,7 +1,9 @@
 package routes
 
 import (
+	"database/sql"
 	"encoding/json"
+	"log"
 	"net/http"
 	"server/db"
 )
@@ -15,6 +17,14 @@ type DeliveryOrder struct {
 	DropPincode   string `json:"drop_pincode"`
 	PickupAddress string `json:"pickup_address"`
 	PickupPincode string `json:"pickup_pincode"`
+	BuyerName     string `json:"buyer_name"`
+	BuyerMobile   string `json:"buyer_mobile"`
+	SellerName    string  `json:"seller_name"`
+	SellerMobile  string  `json:"seller_mobile"`
+	BuyerLat      float64 `json:"buyer_lat"`
+	BuyerLng      float64 `json:"buyer_lng"`
+	SellerLat     float64 `json:"seller_lat"`
+	SellerLng     float64 `json:"seller_lng"`
 }
 
 func DashboardHandler(w http.ResponseWriter, r *http.Request) {
@@ -46,18 +56,54 @@ func DashboardHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer rows.Close()
 
+	buyerDB := db.GetBuyerDB()
 	var deliveries []DeliveryOrder
 	for rows.Next() {
 		var delivery DeliveryOrder
-		err := rows.Scan(
-			&delivery.ID, &delivery.OrderID, &delivery.Status, &delivery.AssignedAt,
-			&delivery.DropAddress, &delivery.DropPincode,
-			&delivery.PickupAddress, &delivery.PickupPincode)
-		if err != nil {
-			http.Error(w, "Error scanning delivery", http.StatusInternalServerError)
-			return
+		if err := rows.Scan(&delivery.ID, &delivery.OrderID, &delivery.Status, &delivery.AssignedAt, &delivery.DropAddress, &delivery.DropPincode, &delivery.PickupAddress, &delivery.PickupPincode); err != nil {
+			log.Printf("Error scanning delivery order: %v", err)
+			continue
 		}
+
+		// Fetch buyer details
+		var buyerUsername, buyerPhone string
+		var bLat, bLng, sLat, sLng sql.NullFloat64
+		if buyerDB != nil {
+			buyerDB.QueryRow(`
+				SELECT COALESCE(username, ''), COALESCE(phone, ''), latitude, longitude, seller_latitude, seller_longitude
+				FROM orders WHERE id = $1`, delivery.OrderID).Scan(&buyerUsername, &buyerPhone, &bLat, &bLng, &sLat, &sLng)
+		}
+		
+		delivery.BuyerName = buyerUsername
+		if delivery.BuyerName == "" {
+			delivery.BuyerName = "Buyer (Unknown)"
+		}
+		delivery.BuyerMobile = buyerPhone
+		if bLat.Valid {
+			delivery.BuyerLat = bLat.Float64
+		}
+		if bLng.Valid {
+			delivery.BuyerLng = bLng.Float64
+		}
+		if sLat.Valid {
+			delivery.SellerLat = sLat.Float64
+		}
+		if sLng.Valid {
+			delivery.SellerLng = sLng.Float64
+		}
+
+		// Fetch seller details
+		sellerName, sellerMobile, _, _ := getPickupAddressForOrderRelaxed(delivery.OrderID)
+		delivery.SellerName = sellerName
+		delivery.SellerMobile = sellerMobile
+
 		deliveries = append(deliveries, delivery)
+	}
+
+	if err = rows.Err(); err != nil {
+		log.Printf("Error iterating rows: %v", err)
+		http.Error(w, "Error reading database", http.StatusInternalServerError)
+		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")

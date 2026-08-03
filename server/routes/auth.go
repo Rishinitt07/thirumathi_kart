@@ -2,8 +2,6 @@ package routes
 
 import (
 	"context"
-	"crypto/rand"
-	"encoding/hex"
 	"encoding/json"
 	"net/http"
 	"server/db"
@@ -14,18 +12,8 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// Generate a random secret key for JWT
-func generateSecretKey() string {
-	bytes := make([]byte, 64)
-	_, err := rand.Read(bytes)
-	if err != nil {
-		panic(err)
-	}
-	return hex.EncodeToString(bytes)
-}
-
-var secretKey = generateSecretKey()
-var jwtKey = []byte(secretKey)
+// Fixed JWT secret — ensures tokens survive server restarts
+var jwtKey = []byte("thirumathi-kart-delivery-secret-key-2026")
 
 type RegisterRequest struct {
 	Username string `json:"username"`
@@ -36,7 +24,7 @@ type RegisterRequest struct {
 }
 
 type LoginRequest struct {
-	Username   string `json:"username"`
+	Mobile     string `json:"mobile"`
 	Password   string `json:"password"`
 	RememberMe bool   `json:"rememberMe"`
 }
@@ -107,9 +95,9 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Get user from database
-	var storedHash string
-	query := `SELECT password_hash FROM users WHERE username = $1`
-	err := db.GetDeliveryDB().QueryRow(query, req.Username).Scan(&storedHash)
+	var storedHash, username string
+	query := `SELECT password_hash, username FROM users WHERE phone = $1`
+	err := db.GetDeliveryDB().QueryRow(query, req.Mobile).Scan(&storedHash, &username)
 	if err != nil {
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
 		return
@@ -129,7 +117,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	claims := &Claims{
-		Username: req.Username,
+		Username: username,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expirationTime),
 		},
@@ -178,4 +166,37 @@ func GetUsernameFromContext(ctx context.Context) string {
 		return ""
 	}
 	return username
+}
+
+type ProfileResponse struct {
+	Username string `json:"username"`
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	Phone    string `json:"phone"`
+}
+
+func GetProfileHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	username := GetUsernameFromContext(r.Context())
+	if username == "" {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+
+	var profile ProfileResponse
+	profile.Username = username
+
+	query := `SELECT name, email, phone FROM users WHERE username = $1`
+	err := db.GetDeliveryDB().QueryRow(query, username).Scan(&profile.Name, &profile.Email, &profile.Phone)
+	if err != nil {
+		http.Error(w, "User not found", http.StatusNotFound)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(profile)
 }

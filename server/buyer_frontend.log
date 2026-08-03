@@ -1,0 +1,89 @@
+
+--- Starting npm run dev at Mon Aug  3 00:05:10 2026 ---
+
+> tkart_buyer@0.0.0 dev
+> vite
+
+
+  VITE v6.3.5  ready in 340 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+12:05:33 AM [vite] vite.config.js changed, restarting server...
+12:05:33 AM [vite] server restarted.
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://10.93.232.140:5173/
+
+--- Starting npm run dev at Mon Aug  3 00:05:48 2026 ---
+
+> tkart_buyer@0.0.0 dev
+> vite
+
+
+  VITE v6.3.5  ready in 279 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://10.93.232.140:5173/
+
+--- Starting npm run dev at Mon Aug  3 00:07:31 2026 ---
+
+> tkart_buyer@0.0.0 dev
+> vite
+
+
+  VITE v6.3.5  ready in 278 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://10.93.232.140:5173/
+
+--- Starting npm run dev at Mon Aug  3 00:20:39 2026 ---
+
+> tkart_buyer@0.0.0 dev
+> vite
+
+
+  VITE v6.3.5  ready in 325 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://10.93.232.140:5173/
+
+--- Starting npm run dev at Mon Aug  3 00:26:38 2026 ---
+
+> tkart_buyer@0.0.0 dev
+> vite
+
+
+  VITE v6.3.5  ready in 416 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://10.93.232.140:5173/
+
+--- Starting npm run dev at Mon Aug  3 00:40:12 2026 ---
+
+> tkart_buyer@0.0.0 dev
+> vite
+
+
+  VITE v6.3.5  ready in 430 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://10.93.232.140:5173/
+
+--- Starting npm run dev at Mon Aug  3 01:53:09 2026 ---
+
+> tkart_buyer@0.0.0 dev
+> vite
+
+
+  VITE v6.3.5  ready in 583 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://10.93.232.140:5173/
+  ➜  press h + enter to show help
+9:28:38 AM [vite] (client) hmr update /src/components/Sub-Components/Orders.jsx, /src/index.css
+9:37:46 AM [vite] (client) hmr update /src/components/Sub-Components/Checkout.jsx, /src/index.css
+10:37:39 AM [vite] (client) hmr update /src/components/Sub-Components/Checkout.jsx, /src/index.css
+10:42:24 AM [vite] (client) hmr update /src/components/Sub-Components/Checkout.jsx, /src/index.css
+10:43:18 AM [vite] (client) hmr update /src/components/Sub-Components/Checkout.jsx, /src/index.css
+10:43:26 AM [vite] (client) hmr update /src/components/Sub-Components/Checkout.jsx, /src/index.css

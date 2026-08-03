@@ -147,6 +147,7 @@
 package routes
 
 import (
+	"database/sql"
 	"encoding/json"
 	"net/http"
 	"server/db"
@@ -158,9 +159,13 @@ type AvailableOrder struct {
 	Buyer         string `json:"buyer"`
 	DropAddress   string `json:"drop_address"`
 	DropPincode   string `json:"drop_pincode"`
-	Phone         string `json:"phone"`
-	PickupAddress string `json:"pickup_address"`
-	PickupPincode string `json:"pickup_pincode"`
+	Phone         string  `json:"phone"`
+	PickupAddress string  `json:"pickup_address"`
+	PickupPincode string  `json:"pickup_pincode"`
+	BuyerLat      float64 `json:"buyer_lat"`
+	BuyerLng      float64 `json:"buyer_lng"`
+	SellerLat     float64 `json:"seller_lat"`
+	SellerLng     float64 `json:"seller_lng"`
 }
 
 type TakeDeliveryRequest struct {
@@ -173,20 +178,34 @@ func AvailableHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Query using actual buyer_orders schema with real address data
-	query := `
-        SELECT bo.id, bo.username, bo.phone, bo.address, bo.pincode
-        FROM buyer_orders bo
-        WHERE bo.id NOT IN (
-            SELECT DISTINCT order_id 
-            FROM delivery_orders 
-            WHERE status IN ('assigned', 'in_progress','completed')
-        )
-        ORDER BY bo.date DESC
-        LIMIT 20`
-
 	deliveryDB := db.GetDeliveryDB()
-	rows, err := deliveryDB.Query(query)
+	buyerDB := db.GetBuyerDB()
+
+	// 1. Get IDs of orders already taken by delivery partners
+	assignedRows, err := deliveryDB.Query("SELECT DISTINCT order_id FROM delivery_orders WHERE status IN ('assigned', 'in_progress', 'completed')")
+	if err != nil {
+		http.Error(w, "Error fetching assigned orders: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer assignedRows.Close()
+
+	assignedMap := make(map[int]bool)
+	for assignedRows.Next() {
+		var oID int
+		if err := assignedRows.Scan(&oID); err == nil {
+			assignedMap[oID] = true
+		}
+	}
+
+	// 2. Query buyerdb for orders marked 'Shipped' (seller packed & ready for delivery)
+	query := `
+        SELECT id, COALESCE(username, ''), COALESCE(phone, ''), COALESCE(address, ''), COALESCE(pincode, ''), latitude, longitude, seller_latitude, seller_longitude
+        FROM orders
+        WHERE status = 'Shipped'
+        ORDER BY date DESC
+        LIMIT 50`
+
+	rows, err := buyerDB.Query(query)
 	if err != nil {
 		http.Error(w, "Error fetching orders: "+err.Error(), http.StatusInternalServerError)
 		return
@@ -197,129 +216,99 @@ func AvailableHandler(w http.ResponseWriter, r *http.Request) {
 	for rows.Next() {
 		var orderID int
 		var username, phone, address, pincode string
+		var bLat, bLng, sLat, sLng sql.NullFloat64
 
-		err := rows.Scan(&orderID, &username, &phone, &address, &pincode)
+		err := rows.Scan(&orderID, &username, &phone, &address, &pincode, &bLat, &bLng, &sLat, &sLng)
 		if err != nil {
-			http.Error(w, "Error scanning order: "+err.Error(), http.StatusInternalServerError)
-			return
+			continue // Skip problematic rows
+		}
+
+		// Check if already assigned
+		if assignedMap[orderID] {
+			continue
 		}
 
 		// Get pickup address using relaxed matching
-		pickupAddress, pickupPincode := getPickupAddressForOrderRelaxed(orderID)
+		_, _, pickupAddress, pickupPincode := getPickupAddressForOrderRelaxed(orderID)
 
-		availableOrders = append(availableOrders, AvailableOrder{
+		order := AvailableOrder{
 			OrderID:       orderID,
 			Buyer:         username,
-			DropAddress:   address,       // Real customer address from buyer_orders
-			DropPincode:   pincode,       // Real customer pincode from buyer_orders
-			Phone:         phone,         // Real customer phone from buyer_orders
-			PickupAddress: pickupAddress, // Real seller warehouse address
-			PickupPincode: pickupPincode, // Real seller warehouse pincode
-		})
+			DropAddress:   address,
+			DropPincode:   pincode,
+			Phone:         phone,
+			PickupAddress: pickupAddress,
+			PickupPincode: pickupPincode,
+		}
+
+		if bLat.Valid { order.BuyerLat = bLat.Float64 }
+		if bLng.Valid { order.BuyerLng = bLng.Float64 }
+		if sLat.Valid { order.SellerLat = sLat.Float64 }
+		if sLng.Valid { order.SellerLng = sLng.Float64 }
+
+		availableOrders = append(availableOrders, order)
+		
+		if len(availableOrders) >= 20 {
+			break // Limit to 20 returned to frontend
+		}
 	}
 
 	w.Header().Set("Content-Type", "application/json")
+	if availableOrders == nil {
+		availableOrders = []AvailableOrder{}
+	}
 	json.NewEncoder(w).Encode(availableOrders)
 }
 
-// Relaxed matching function to get pickup address for an order
-func getPickupAddressForOrderRelaxed(orderID int) (string, string) {
-	deliveryDB := db.GetDeliveryDB()
+func getPickupAddressForOrderRelaxed(orderID int) (string, string, string, string) {
+	buyerDB := db.GetBuyerDB()
+	sellerDB := db.GetSellerDB()
 
-	// Strategy 1: Try exact name matching first
-	exactQuery := `
-        SELECT DISTINCT su.address, su.district, su.state, su.pincode, su.name
-        FROM buyer_order_items boi
-        JOIN seller_products sp ON LOWER(TRIM(boi.name)) = LOWER(TRIM(sp.name))
-        JOIN seller_users su ON sp.username = su.username
-        WHERE boi.order_id = $1
-        LIMIT 1`
-
-	var address, district, state, pincode, sellerName string
-	err := deliveryDB.QueryRow(exactQuery, orderID).Scan(&address, &district, &state, &pincode, &sellerName)
-
-	if err == nil {
-		// Found exact match
-		return buildFullAddress(address, district, state), pincode
+	// 1. Get the seller_mobile from the first item in the order
+	var itemsJSON string
+	err := buyerDB.QueryRow("SELECT items FROM orders WHERE id = $1", orderID).Scan(&itemsJSON)
+	if err != nil {
+		return "Thirumathi Seller", "9876543210", "Default Warehouse, Chennai, Tamil Nadu", "600032"
 	}
 
-	// Strategy 2: Try partial matching with key words
-	partialQuery := `
-        SELECT DISTINCT su.address, su.district, su.state, su.pincode, su.name,
-               boi.name as buyer_product, sp.name as seller_product
-        FROM buyer_order_items boi
-        JOIN seller_products sp ON (
-            -- Match if any word from buyer product appears in seller product
-            LOWER(sp.name) LIKE '%' || LOWER(SPLIT_PART(boi.name, ' ', 1)) || '%'
-            OR LOWER(sp.name) LIKE '%' || LOWER(SPLIT_PART(boi.name, ' ', 2)) || '%'
-            OR LOWER(boi.name) LIKE '%' || LOWER(SPLIT_PART(sp.name, ' ', 1)) || '%'
-            OR LOWER(boi.name) LIKE '%' || LOWER(SPLIT_PART(sp.name, ' ', 2)) || '%'
-            -- Also try category-based matching
-            OR (LOWER(boi.name) LIKE '%rice%' AND LOWER(sp.name) LIKE '%rice%')
-            OR (LOWER(boi.name) LIKE '%milk%' AND LOWER(sp.name) LIKE '%milk%')
-            OR (LOWER(boi.name) LIKE '%flour%' AND LOWER(sp.name) LIKE '%flour%')
-            OR (LOWER(boi.name) LIKE '%oil%' AND LOWER(sp.name) LIKE '%oil%')
-            OR (LOWER(boi.name) LIKE '%dal%' AND LOWER(sp.name) LIKE '%dal%')
-            OR (LOWER(boi.name) LIKE '%bread%' AND LOWER(sp.name) LIKE '%bread%')
-            OR (LOWER(boi.name) LIKE '%egg%' AND LOWER(sp.name) LIKE '%egg%')
-            OR (LOWER(boi.name) LIKE '%chicken%' AND LOWER(sp.name) LIKE '%chicken%')
-            OR (LOWER(boi.name) LIKE '%fish%' AND LOWER(sp.name) LIKE '%fish%')
-            OR (LOWER(boi.name) LIKE '%ghee%' AND LOWER(sp.name) LIKE '%ghee%')
-        )
-        JOIN seller_users su ON sp.username = su.username
-        WHERE boi.order_id = $1
-        ORDER BY (
-            -- Prioritize better matches
-            CASE 
-                WHEN LOWER(boi.name) = LOWER(sp.name) THEN 1
-                WHEN LOWER(boi.name) LIKE '%' || LOWER(sp.name) || '%' THEN 2
-                WHEN LOWER(sp.name) LIKE '%' || LOWER(boi.name) || '%' THEN 3
-                ELSE 4
-            END
-        )
-        LIMIT 1`
-
-	var buyerProduct, sellerProduct string
-	err = deliveryDB.QueryRow(partialQuery, orderID).Scan(&address, &district, &state, &pincode, &sellerName, &buyerProduct, &sellerProduct)
-
-	if err == nil {
-		// Found partial match
-		return buildFullAddress(address, district, state), pincode
+	var items []map[string]interface{}
+	if err := json.Unmarshal([]byte(itemsJSON), &items); err != nil || len(items) == 0 {
+		return "Thirumathi Seller", "9876543210", "Default Warehouse, Chennai, Tamil Nadu", "600032"
 	}
 
-	// Strategy 3: If no product matches, get the first available seller (fallback)
-	fallbackQuery := `
-        SELECT DISTINCT su.address, su.district, su.state, su.pincode, su.name
-        FROM seller_users su
-        WHERE su.username IN (
-            SELECT DISTINCT username FROM seller_products WHERE in_stock = true
-        )
-        LIMIT 1`
-
-	err = deliveryDB.QueryRow(fallbackQuery).Scan(&address, &district, &state, &pincode, &sellerName)
-
-	if err == nil {
-		// Found fallback seller
-		return buildFullAddress(address, district, state), pincode
+	sellerMobile, ok := items[0]["seller_mobile"].(string)
+	if !ok || sellerMobile == "" {
+		return "Thirumathi Seller", "9876543210", "Default Warehouse, Chennai, Tamil Nadu", "600032"
 	}
 
-	// Strategy 4: Ultimate fallback - default address
-	return "Default Warehouse, Chennai, Tamil Nadu", "600032"
-}
+	// 2. Query sellerDB for the seller's address and name
+	var firstName, lastName, addr1, addr2, area, city, state, pincode string
+	err = sellerDB.QueryRow(`
+		SELECT COALESCE(first_name, ''), COALESCE(last_name, ''), COALESCE(address_line_1, ''), COALESCE(address_line_2, ''), COALESCE(area, ''), COALESCE(city, ''), COALESCE(state, ''), COALESCE(pincode, '')
+		FROM users WHERE mobile = $1`, sellerMobile).Scan(&firstName, &lastName, &addr1, &addr2, &area, &city, &state, &pincode)
 
-// Helper function to build full address from components
-func buildFullAddress(address, district, state string) string {
-	parts := []string{address}
-
-	if strings.TrimSpace(district) != "" {
-		parts = append(parts, strings.TrimSpace(district))
+	if err != nil {
+		return "Thirumathi Seller", sellerMobile, "Default Warehouse, Chennai, Tamil Nadu", "600032"
 	}
 
-	if strings.TrimSpace(state) != "" {
-		parts = append(parts, strings.TrimSpace(state))
+	sellerName := strings.TrimSpace(firstName + " " + lastName)
+	if sellerName == "" {
+		sellerName = "Thirumathi Seller"
 	}
 
-	return strings.Join(parts, ", ")
+	// Build the full address
+	var parts []string
+	for _, p := range []string{addr1, addr2, area, city, state} {
+		if strings.TrimSpace(p) != "" {
+			parts = append(parts, strings.TrimSpace(p))
+		}
+	}
+	
+	if len(parts) == 0 {
+		return sellerName, sellerMobile, "Default Warehouse, Chennai, Tamil Nadu", "600032"
+	}
+
+	return sellerName, sellerMobile, strings.Join(parts, ", "), pincode
 }
 
 func TakeDeliveryHandler(w http.ResponseWriter, r *http.Request) {
@@ -342,7 +331,7 @@ func TakeDeliveryHandler(w http.ResponseWriter, r *http.Request) {
 
 	deliveryDB := db.GetDeliveryDB()
 
-	// Check if user already has 3 or more active deliveries
+	// Check if user already has 1 or more active deliveries
 	countQuery := `
         SELECT COUNT(*) FROM delivery_orders 
         WHERE delivery_user = $1 AND status != 'completed'`
@@ -353,31 +342,35 @@ func TakeDeliveryHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if activeCount >= 3 {
-		http.Error(w, "Maximum of 3 active deliveries allowed", http.StatusBadRequest)
+	if activeCount >= 1 {
+		http.Error(w, "You already have an active delivery. Complete it before taking a new one.", http.StatusBadRequest)
 		return
 	}
 
-	// Check if order is still available
-	checkQuery := `
-        SELECT bo.username, bo.phone, bo.address, bo.pincode
-        FROM buyer_orders bo
-        WHERE bo.id = $1
-        AND bo.id NOT IN (
-            SELECT DISTINCT order_id 
-            FROM delivery_orders 
-            WHERE status IN ('assigned', 'in_progress')
-        )`
+	buyerDB := db.GetBuyerDB()
 
+	// 1. Check if it's already assigned
+	var assignedStatus string
+	err = deliveryDB.QueryRow("SELECT status FROM delivery_orders WHERE order_id = $1 AND status IN ('assigned', 'in_progress')", req.OrderID).Scan(&assignedStatus)
+	if err == nil {
+		// Found it, so it's already assigned
+		http.Error(w, "Order already assigned", http.StatusConflict)
+		return
+	}
+
+	// 2. Fetch order details from buyerdb
 	var buyerUsername, buyerPhone, buyerAddress, buyerPincode string
-	err = deliveryDB.QueryRow(checkQuery, req.OrderID).Scan(&buyerUsername, &buyerPhone, &buyerAddress, &buyerPincode)
+	err = buyerDB.QueryRow(`
+        SELECT COALESCE(username, ''), COALESCE(phone, ''), COALESCE(address, ''), COALESCE(pincode, '')
+        FROM orders
+        WHERE id = $1 AND status = 'Shipped'`, req.OrderID).Scan(&buyerUsername, &buyerPhone, &buyerAddress, &buyerPincode)
 	if err != nil {
-		http.Error(w, "Order not available or already assigned", http.StatusNotFound)
+		http.Error(w, "Order not available or not ready for pickup", http.StatusNotFound)
 		return
 	}
 
-	// Get pickup address using the same relaxed matching
-	pickupAddress, pickupPincode := getPickupAddressForOrderRelaxed(req.OrderID)
+	// Get pickup address using relaxed matching
+	_, _, pickupAddress, pickupPincode := getPickupAddressForOrderRelaxed(req.OrderID)
 
 	// Insert delivery assignment with real addresses
 	insertQuery := `
