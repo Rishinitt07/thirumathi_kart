@@ -1,0 +1,480 @@
+
+--- Starting go run main.go at Wed Aug  5 17:07:28 2026 ---
+✅ Connected to PostgreSQL (Seller, Buyer, Delivery)
+🚀 Server running on http://localhost:8080
+[cors] 2026/08/05 17:07:51 Handler: Actual request
+[cors] 2026/08/05 17:07:51   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:07:51 Handler: Actual request
+[cors] 2026/08/05 17:07:51   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:08:12 Handler: Actual request
+[cors] 2026/08/05 17:08:12   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:08:12 Handler: Actual request
+[cors] 2026/08/05 17:08:12   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:08:14 Handler: Actual request
+[cors] 2026/08/05 17:08:14   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:08:14 Handler: Actual request
+[cors] 2026/08/05 17:08:14   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:08:16 Handler: Actual request
+[cors] 2026/08/05 17:08:16   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:08:16 Handler: Actual request
+[cors] 2026/08/05 17:08:16   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:09:43 Handler: Preflight request
+[cors] 2026/08/05 17:09:43   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[content-type] Access-Control-Allow-Methods:[POST] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 17:09:43 Handler: Actual request
+[cors] 2026/08/05 17:09:43   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 17:09:44 Handler: Preflight request
+[cors] 2026/08/05 17:09:44   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 17:09:44 Handler: Preflight request
+[cors] 2026/08/05 17:09:44   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 17:09:44 Handler: Preflight request
+[cors] 2026/08/05 17:09:44   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 17:09:44 Handler: Preflight request
+[cors] 2026/08/05 17:09:44   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 17:09:44 Handler: Actual request
+[cors] 2026/08/05 17:09:44   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 17:09:44 Handler: Actual request
+[cors] 2026/08/05 17:09:44   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 17:09:44 Handler: Actual request
+[cors] 2026/08/05 17:09:44   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 17:09:44 Handler: Preflight request
+[cors] 2026/08/05 17:09:44   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 17:09:44 Handler: Actual request
+[cors] 2026/08/05 17:09:44   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 17:09:44 Handler: Actual request
+[cors] 2026/08/05 17:09:44   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 17:09:44 Handler: Actual request
+[cors] 2026/08/05 17:09:44   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 17:09:44 Handler: Actual request
+[cors] 2026/08/05 17:09:44   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 17:09:44 Handler: Actual request
+[cors] 2026/08/05 17:09:44   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 17:10:06 Handler: Preflight request
+[cors] 2026/08/05 17:10:06 Handler: Preflight request
+[cors] 2026/08/05 17:10:06   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 17:10:06   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 17:10:06 Handler: Actual request
+[cors] 2026/08/05 17:10:06   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 17:10:06 Handler: Actual request
+[cors] 2026/08/05 17:10:06   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 17:10:38 Handler: Preflight request
+[cors] 2026/08/05 17:10:38   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 17:10:38 Handler: Actual request
+[cors] 2026/08/05 17:10:38   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 17:10:38 Handler: Actual request
+[cors] 2026/08/05 17:10:38   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 17:10:43 Handler: Preflight request
+[cors] 2026/08/05 17:10:43   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 17:10:43 Handler: Actual request
+[cors] 2026/08/05 17:10:43   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 17:10:48 Handler: Preflight request
+[cors] 2026/08/05 17:10:48   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 17:10:48 Handler: Actual request
+[cors] 2026/08/05 17:10:48   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 17:10:53 Handler: Actual request
+[cors] 2026/08/05 17:10:53   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 17:10:58 Handler: Preflight request
+[cors] 2026/08/05 17:10:58   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 17:10:58 Handler: Actual request
+[cors] 2026/08/05 17:10:58   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 17:11:03 Handler: Actual request
+[cors] 2026/08/05 17:11:03   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 17:11:08 Handler: Preflight request
+[cors] 2026/08/05 17:11:08   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 17:11:08 Handler: Actual request
+[cors] 2026/08/05 17:11:08   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 17:11:12 Handler: Preflight request
+[cors] 2026/08/05 17:11:12   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 17:11:12 Handler: Preflight request
+[cors] 2026/08/05 17:11:12   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 17:11:12 Handler: Actual request
+[cors] 2026/08/05 17:11:12   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 17:11:12 Handler: Actual request
+[cors] 2026/08/05 17:11:12   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 17:57:51 Handler: Actual request
+[cors] 2026/08/05 17:57:51   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:57:51 Handler: Actual request
+[cors] 2026/08/05 17:57:51   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:58:01 Handler: Actual request
+[cors] 2026/08/05 17:58:01   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:58:01 Handler: Actual request
+[cors] 2026/08/05 17:58:01   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:58:08 Handler: Actual request
+[cors] 2026/08/05 17:58:08   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:58:08 Handler: Actual request
+[cors] 2026/08/05 17:58:08   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:58:10 Handler: Actual request
+[cors] 2026/08/05 17:58:10   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:58:10 Handler: Actual request
+[cors] 2026/08/05 17:58:10   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:58:16 Handler: Actual request
+[cors] 2026/08/05 17:58:16   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:58:16 Handler: Actual request
+[cors] 2026/08/05 17:58:16   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:58:40 Handler: Actual request
+[cors] 2026/08/05 17:58:40   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:58:41 Handler: Actual request
+[cors] 2026/08/05 17:58:41   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:58:43 Handler: Actual request
+[cors] 2026/08/05 17:58:43   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:58:44 Handler: Actual request
+[cors] 2026/08/05 17:58:44   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:58:45 Handler: Actual request
+[cors] 2026/08/05 17:58:45   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:59:54 Handler: Actual request
+[cors] 2026/08/05 17:59:54   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:59:56 Handler: Actual request
+[cors] 2026/08/05 17:59:56   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:59:57 Handler: Actual request
+[cors] 2026/08/05 17:59:57   Actual request no headers added: missing origin
+[cors] 2026/08/05 17:59:58 Handler: Actual request
+[cors] 2026/08/05 17:59:58   Actual request no headers added: missing origin
+[cors] 2026/08/05 18:00:00 Handler: Actual request
+[cors] 2026/08/05 18:00:00   Actual request no headers added: missing origin
+[cors] 2026/08/05 18:00:51 Handler: Preflight request
+[cors] 2026/08/05 18:00:51 Handler: Preflight request
+[cors] 2026/08/05 18:00:51 Handler: Preflight request
+[cors] 2026/08/05 18:00:51   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:00:51 Handler: Preflight request
+[cors] 2026/08/05 18:00:51   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:00:51   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:00:51   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:00:51 Handler: Actual request
+[cors] 2026/08/05 18:00:51   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 18:00:51 Handler: Actual request
+[cors] 2026/08/05 18:00:51   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 18:00:51 Handler: Actual request
+[cors] 2026/08/05 18:00:51   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 18:00:51 Handler: Actual request
+[cors] 2026/08/05 18:00:51   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 18:01:02 Handler: Preflight request
+[cors] 2026/08/05 18:01:02 Handler: Preflight request
+[cors] 2026/08/05 18:01:02   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:01:02   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:01:02 Handler: Actual request
+[cors] 2026/08/05 18:01:02   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:01:02 Handler: Actual request
+[cors] 2026/08/05 18:01:02   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:01:07 Handler: Preflight request
+[cors] 2026/08/05 18:01:07   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:01:07 Handler: Actual request
+[cors] 2026/08/05 18:01:07   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:01:12 Handler: Actual request
+[cors] 2026/08/05 18:01:12   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:01:18 Handler: Preflight request
+[cors] 2026/08/05 18:01:18   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:01:18 Handler: Actual request
+[cors] 2026/08/05 18:01:18   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:01:23 Handler: Actual request
+[cors] 2026/08/05 18:01:23   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:01:28 Handler: Preflight request
+[cors] 2026/08/05 18:01:28   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:01:28 Handler: Actual request
+[cors] 2026/08/05 18:01:28   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:01:33 Handler: Preflight request
+[cors] 2026/08/05 18:01:33   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:01:33 Handler: Actual request
+[cors] 2026/08/05 18:01:33   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:01:38 Handler: Actual request
+[cors] 2026/08/05 18:01:38   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:01:43 Handler: Preflight request
+[cors] 2026/08/05 18:01:43   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:01:43 Handler: Actual request
+[cors] 2026/08/05 18:01:43   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:01:48 Handler: Actual request
+[cors] 2026/08/05 18:01:48   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:01:53 Handler: Preflight request
+[cors] 2026/08/05 18:01:53   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:01:53 Handler: Actual request
+[cors] 2026/08/05 18:01:53   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:01:58 Handler: Actual request
+[cors] 2026/08/05 18:01:58   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:02:03 Handler: Preflight request
+[cors] 2026/08/05 18:02:03   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:02:03 Handler: Actual request
+[cors] 2026/08/05 18:02:03   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:02:08 Handler: Actual request
+[cors] 2026/08/05 18:02:08   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:02:13 Handler: Preflight request
+[cors] 2026/08/05 18:02:13   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:02:13 Handler: Actual request
+[cors] 2026/08/05 18:02:13   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:02:31 Handler: Preflight request
+[cors] 2026/08/05 18:02:31   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:02:31 Handler: Actual request
+[cors] 2026/08/05 18:02:31   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:03:31 Handler: Preflight request
+[cors] 2026/08/05 18:03:31   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:03:31 Handler: Actual request
+[cors] 2026/08/05 18:03:31   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:04:31 Handler: Preflight request
+[cors] 2026/08/05 18:04:31   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:04:31 Handler: Actual request
+[cors] 2026/08/05 18:04:31   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:04:32 Handler: Actual request
+[cors] 2026/08/05 18:04:32   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:04:35 Handler: Preflight request
+[cors] 2026/08/05 18:04:35   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:04:35 Handler: Preflight request
+[cors] 2026/08/05 18:04:35   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:04:35 Handler: Actual request
+[cors] 2026/08/05 18:04:35   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 18:04:35 Handler: Actual request
+[cors] 2026/08/05 18:04:35   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 18:04:46 Handler: Preflight request
+[cors] 2026/08/05 18:04:46 Handler: Preflight request
+[cors] 2026/08/05 18:04:46   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:04:46   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:04:46 Handler: Actual request
+[cors] 2026/08/05 18:04:46   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 18:04:46 Handler: Actual request
+[cors] 2026/08/05 18:04:46   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 18:08:05 Handler: Preflight request
+[cors] 2026/08/05 18:08:05   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:08:05 Handler: Preflight request
+[cors] 2026/08/05 18:08:05   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:08:05 Handler: Preflight request
+[cors] 2026/08/05 18:08:05   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:08:05 Handler: Preflight request
+[cors] 2026/08/05 18:08:05   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:08:05 Handler: Actual request
+[cors] 2026/08/05 18:08:05   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 18:08:05 Handler: Actual request
+[cors] 2026/08/05 18:08:05   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 18:08:05 Handler: Actual request
+[cors] 2026/08/05 18:08:05   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 18:08:05 Handler: Actual request
+[cors] 2026/08/05 18:08:05   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 18:08:10 Handler: Preflight request
+[cors] 2026/08/05 18:08:10   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:08:10 Handler: Preflight request
+[cors] 2026/08/05 18:08:10   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:08:10 Handler: Actual request
+[cors] 2026/08/05 18:08:10   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:08:10 Handler: Actual request
+[cors] 2026/08/05 18:08:10   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+Error fetching delivery info: pq: syntax error at or near "do"
+[cors] 2026/08/05 18:08:11 Handler: Preflight request
+[cors] 2026/08/05 18:08:11   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:08:11 Handler: Preflight request
+[cors] 2026/08/05 18:08:11   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:08:11 Handler: Preflight request
+[cors] 2026/08/05 18:08:11   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:08:11 Handler: Preflight request
+[cors] 2026/08/05 18:08:11   Preflight response headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Headers:[authorization] Access-Control-Allow-Methods:[GET] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin, Access-Control-Request-Method, Access-Control-Request-Headers]]
+[cors] 2026/08/05 18:08:11 Handler: Actual request
+[cors] 2026/08/05 18:08:11   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 18:08:11 Handler: Actual request
+[cors] 2026/08/05 18:08:11   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 18:08:11 Handler: Actual request
+[cors] 2026/08/05 18:08:11   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]
+[cors] 2026/08/05 18:08:11 Handler: Actual request
+[cors] 2026/08/05 18:08:11   Actual response added headers: map[Access-Control-Allow-Credentials:[true] Access-Control-Allow-Origin:[http://localhost:5174] Vary:[Origin]]

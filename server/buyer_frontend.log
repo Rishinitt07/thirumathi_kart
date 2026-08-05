@@ -1,0 +1,13 @@
+
+--- Starting npm run dev at Wed Aug  5 17:07:28 2026 ---
+
+> tkart_buyer@0.0.0 dev
+> vite
+
+
+  VITE v6.3.5  ready in 643 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://10.110.233.140:5173/
+  ➜  press h + enter to show help
+5:14:24 PM [vite] (client) hmr update /src/index.css

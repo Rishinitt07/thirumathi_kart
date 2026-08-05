@@ -10,10 +10,13 @@
   --color-hotpink-700: #C71585; /* Medium Violet Red */
 }
 
-body {
+body, html {
   font-family: 'Josefin Sans', sans-serif;
   background-color: #FAFAFA; /* Off white background */
   color: #1F2937; /* Gray-800 for primary text */
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
 }
 
 /* Custom Utilities for Animations and Shadows */

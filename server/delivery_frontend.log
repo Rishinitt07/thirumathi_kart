@@ -1,0 +1,13 @@
+
+--- Starting npm run dev at Wed Aug  5 17:07:28 2026 ---
+
+> thirumathi-delivery-frontend@0.0.0 dev
+> vite --port 5175
+
+
+  VITE v6.3.5  ready in 256 ms
+
+  ➜  Local:   http://localhost:5175/
+  ➜  Network: http://10.110.233.140:5175/
+  ➜  press h + enter to show help
+5:14:48 PM [vite] (client) hmr update /src/styles.css
