@@ -12,6 +12,8 @@ import (
 	"io"
 	"math/big"
 	"net/http"
+	"net/smtp"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -45,7 +47,7 @@ func initDB() {
 	if err = buyerDB.Ping(); err != nil {
 		panic(err)
 	}
-	
+
 	deliveryConnStr := "user=postgres password=dharun123 dbname=deliverydb sslmode=disable"
 	deliveryDB, err = sql.Open("postgres", deliveryConnStr)
 	if err != nil {
@@ -78,6 +80,8 @@ type RegisterRequest struct {
 	LastName  string `json:"lastName"`
 	Mobile    string `json:"mobile"`
 	Password  string `json:"password"`
+
+	Email string `json:"email"`
 }
 
 type Claims struct {
@@ -122,12 +126,12 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	name := strings.TrimSpace(req.FirstName + " " + req.LastName)
-	_, err = db.Exec("INSERT INTO users (mobile, name, first_name, last_name, password) VALUES ($1, $2, $3, $4, $5)",
-		req.Mobile, name, req.FirstName, req.LastName, string(hashedPassword))
+	_, err = db.Exec("INSERT INTO users (mobile, name, first_name, last_name, password, email) VALUES ($1, $2, $3, $4, $5, $6)",
+		req.Mobile, name, req.FirstName, req.LastName, string(hashedPassword), req.Email)
 	if err != nil {
 		fmt.Println("DB Insert error:", err)
 		if strings.Contains(err.Error(), "duplicate key value") {
-			http.Error(w, "Mobile already registered", http.StatusConflict)
+			http.Error(w, "Account already registered", http.StatusConflict)
 		} else {
 			http.Error(w, "Registration failed", http.StatusInternalServerError)
 		}
@@ -148,7 +152,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var hashedPassword, mobile string
-	err := db.QueryRow(`SELECT password, mobile FROM users WHERE mobile=$1`, creds.Mobile).
+	err := db.QueryRow(`SELECT password, mobile FROM users WHERE mobile=$1 OR email=$1`, creds.Mobile).
 		Scan(&hashedPassword, &mobile)
 
 	if err != nil {
@@ -493,9 +497,9 @@ func GetAllProductsHandler(w http.ResponseWriter, r *http.Request) {
 	subcategory := r.URL.Query().Get("subcategory")
 	sellerMobile := r.URL.Query().Get("seller_mobile")
 
-	query := `SELECT p.id, p.name, p.category, p.subcategory, p.unit, p.description, p.price, p.quantity, 
+	query := `SELECT p.id, p.name, COALESCE(p.category, ''), COALESCE(p.subcategory, ''), COALESCE(p.unit, ''), COALESCE(p.description, ''), p.price, p.quantity, 
 		p.image1, p.image2, p.image3, p.image4, p.in_stock,
-		u.mobile, u.name, u.city, u.state, u.created_at
+		u.mobile, u.name, COALESCE(u.city, ''), COALESCE(u.state, ''), u.created_at, u.latitude, u.longitude
 		FROM products p
 		JOIN users u ON p.mobile = u.mobile
 		WHERE p.in_stock=true`
@@ -538,11 +542,12 @@ func GetAllProductsHandler(w http.ResponseWriter, r *http.Request) {
 			inStock                                            bool
 			sellerMob, sellerName, sellerDistrict, sellerState string
 			sellerCreatedAt                                    time.Time
+			sellerLat, sellerLng                               float64
 		)
 
 		if err := rows.Scan(&id, &name, &category, &subcategory, &unit, &description, &price, &quantity,
 			&image1, &image2, &image3, &image4, &inStock,
-			&sellerMob, &sellerName, &sellerDistrict, &sellerState, &sellerCreatedAt); err != nil {
+			&sellerMob, &sellerName, &sellerDistrict, &sellerState, &sellerCreatedAt, &sellerLat, &sellerLng); err != nil {
 			continue
 		}
 
@@ -561,6 +566,8 @@ func GetAllProductsHandler(w http.ResponseWriter, r *http.Request) {
 			"seller_district": sellerDistrict,
 			"seller_state":    sellerState,
 			"seller_joined":   sellerCreatedAt.Format("January 2006"),
+			"seller_lat":      sellerLat,
+			"seller_lng":      sellerLng,
 		}
 
 		if len(image1) > 0 {
@@ -763,6 +770,7 @@ func DeleteAccountHandler(w http.ResponseWriter, r *http.Request) {
 var otpStore = make(map[string]string)
 
 type OTPRequest struct {
+	Email  string `json:"email"`
 	Mobile string `json:"mobile"`
 	OTP    string `json:"otp,omitempty"`
 }
@@ -778,15 +786,54 @@ func SendOTPHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// We expect req.Email to be provided
+	identifier := req.Email
+	if identifier == "" {
+		identifier = req.Mobile
+	}
+
 	max := big.NewInt(1000000)
 	n, err := rand.Int(rand.Reader, max)
 	otpVal := "123456"
 	if err == nil {
 		otpVal = fmt.Sprintf("%06d", n.Int64())
 	}
-	otpStore[req.Mobile] = otpVal
+	otpStore[identifier] = otpVal
 
-	fmt.Printf("\n--- OTP FOR %s IS: %s ---\n\n", req.Mobile, otpVal)
+	fmt.Printf("\n--- OTP FOR %s IS: %s ---\n\n", identifier, otpVal)
+
+	// SMTP Logic
+	smtpHost := os.Getenv("SMTP_HOST")
+	smtpPort := os.Getenv("SMTP_PORT")
+	smtpEmail := os.Getenv("SMTP_EMAIL")
+	smtpPass := os.Getenv("SMTP_PASS")
+
+	if smtpEmail != "" && smtpPass != "" {
+		auth := smtp.PlainAuth("", smtpEmail, smtpPass, smtpHost)
+		subject := "Subject: Verify Your Email - TKart\r\n"
+		headers := "MIME-version: 1.0;\r\nContent-Type: text/html; charset=\"UTF-8\";\r\n"
+
+		body := "Hello,<br><br>" +
+			"Welcome to TKart! 🌸<br><br>" +
+			"Your verification code is:<br><br>" +
+			"<strong>" + otpVal + "</strong><br><br>" +
+			"This OTP is valid for 10 minutes.<br><br>" +
+			"Please do not share this code with anyone.<br><br>" +
+			"If you did not request this verification, you can safely ignore this email.<br><br>" +
+			"Thank you,<br>" +
+			"Team TKart<br>" +
+			"Empowering Women Entrepreneurs<br>"
+
+		msg := []byte("To: " + identifier + "\r\n" + subject + headers + "\r\n" + body)
+		err = smtp.SendMail(smtpHost+":"+smtpPort, auth, smtpEmail, []string{identifier}, msg)
+		if err != nil {
+			fmt.Printf("SMTP Error: %v\n", err)
+		} else {
+			fmt.Printf("OTP sent to %s via email!\n", identifier)
+		}
+	} else {
+		fmt.Printf("SMTP credentials not provided in .env! Printing OTP to console instead.\n")
+	}
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{"message": "OTP Sent", "otp": otpVal})
@@ -803,7 +850,11 @@ func VerifyOTPHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	storedOTP, exists := otpStore[req.Mobile]
+	identifier := req.Email
+	if identifier == "" {
+		identifier = req.Mobile
+	}
+	storedOTP, exists := otpStore[identifier]
 	if !exists || storedOTP != req.OTP {
 		http.Error(w, "Invalid OTP", http.StatusUnauthorized)
 		return
@@ -845,6 +896,208 @@ func GetSellerInfoHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(seller)
 }
 
+func GetDashboardStatsHandler(w http.ResponseWriter, r *http.Request) {
+	claims, err := getClaimsFromRequest(r)
+	if err != nil {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+
+	sellerMobile := claims.Mobile
+
+	// Fetch Orders & Revenue from buyerdb
+	query := `
+		SELECT o.id, o.date, o.status, o.items
+		FROM orders o
+		WHERE o.items @> $1
+		ORDER BY o.date ASC
+	`
+	searchJSON := fmt.Sprintf(`[{"seller_mobile": "%s"}]`, sellerMobile)
+	rows, err := buyerDB.Query(query, searchJSON)
+
+	var totalRevenue float64 = 0
+	var totalOrders int = 0
+	var deliveredOrders int = 0
+	var pendingOrders int = 0
+	var cancelledOrders int = 0
+
+	// Analytics Data map: "2026-08-01" -> {sales, orders}
+	dailyStats := make(map[string]map[string]float64)
+	monthlyStats := make(map[string]map[string]float64)
+	yearlyStats := make(map[string]map[string]float64)
+
+	if err == nil {
+		defer rows.Close()
+		for rows.Next() {
+			var id int
+			var date time.Time
+			var status, itemsJSON string
+
+			if err := rows.Scan(&id, &date, &status, &itemsJSON); err != nil {
+				continue
+			}
+
+			var items []map[string]interface{}
+			if err := json.Unmarshal([]byte(itemsJSON), &items); err != nil {
+				continue
+			}
+
+			var orderRevenue float64 = 0
+			var hasSellerItems bool = false
+
+			for _, item := range items {
+				if sm, ok := item["seller_mobile"].(string); ok && sm == sellerMobile {
+					hasSellerItems = true
+					priceVal := 0.0
+					if p, ok := item["price"].(float64); ok {
+						priceVal = p
+					}
+					qtyVal := 1.0
+					if q, ok := item["qty"].(float64); ok {
+						qtyVal = q
+					} else if q, ok := item["quantity"].(float64); ok {
+						qtyVal = q
+					}
+					orderRevenue += (priceVal * qtyVal)
+				}
+			}
+
+			if !hasSellerItems {
+				continue
+			}
+
+			// Check delivery status
+			var deliveryStatus string
+			err = deliveryDB.QueryRow(`SELECT status FROM delivery_orders WHERE order_id = $1 ORDER BY updated_at DESC LIMIT 1`, id).Scan(&deliveryStatus)
+			if err == nil && (deliveryStatus == "completed" || deliveryStatus == "Delivered") {
+				status = "Delivered"
+			}
+
+			totalOrders++
+			if status == "Delivered" {
+				totalRevenue += orderRevenue
+				deliveredOrders++
+			} else if status == "Cancelled" || status == "Returned" {
+				cancelledOrders++
+			} else {
+				pendingOrders++
+			}
+
+			// Grouping for charts
+			dayStr := date.Format("2006-01-02")
+			monthStr := date.Format("Jan 2006")
+			yearStr := date.Format("2006")
+
+			if _, exists := dailyStats[dayStr]; !exists {
+				dailyStats[dayStr] = map[string]float64{"sales": 0, "orders": 0}
+			}
+			if _, exists := monthlyStats[monthStr]; !exists {
+				monthlyStats[monthStr] = map[string]float64{"sales": 0, "orders": 0}
+			}
+			if _, exists := yearlyStats[yearStr]; !exists {
+				yearlyStats[yearStr] = map[string]float64{"sales": 0, "orders": 0}
+			}
+
+			dailyStats[dayStr]["orders"] += 1
+			monthlyStats[monthStr]["orders"] += 1
+			yearlyStats[yearStr]["orders"] += 1
+
+			if status == "Delivered" {
+				dailyStats[dayStr]["sales"] += orderRevenue
+				monthlyStats[monthStr]["sales"] += orderRevenue
+				yearlyStats[yearStr]["sales"] += orderRevenue
+			}
+		}
+		if err = rows.Err(); err != nil {
+			fmt.Println("Rows error:", err)
+		}
+	}
+
+	// Convert to arrays
+	var weeklyData []map[string]interface{}
+	for i := 6; i >= 0; i-- {
+		d := time.Now().AddDate(0, 0, -i)
+		dStr := d.Format("2006-01-02")
+		sales := 0.0
+		orders := 0.0
+		if val, exists := dailyStats[dStr]; exists {
+			sales = val["sales"]
+			orders = val["orders"]
+		}
+		weeklyData = append(weeklyData, map[string]interface{}{
+			"name": d.Format("Mon"), "sales": sales, "orders": orders,
+		})
+	}
+
+	var monthlyData []map[string]interface{}
+	for i := 5; i >= 0; i-- {
+		d := time.Now().AddDate(0, -i, 0)
+		mStr := d.Format("Jan 2006")
+		sales := 0.0
+		orders := 0.0
+		if val, exists := monthlyStats[mStr]; exists {
+			sales = val["sales"]
+			orders = val["orders"]
+		}
+		monthlyData = append(monthlyData, map[string]interface{}{
+			"name": d.Format("Jan"), "sales": sales, "orders": orders,
+		})
+	}
+
+	var yearlyData []map[string]interface{}
+	for i := 4; i >= 0; i-- {
+		d := time.Now().AddDate(-i, 0, 0)
+		yStr := d.Format("2006")
+		sales := 0.0
+		orders := 0.0
+		if val, exists := yearlyStats[yStr]; exists {
+			sales = val["sales"]
+			orders = val["orders"]
+		}
+		yearlyData = append(yearlyData, map[string]interface{}{
+			"name": yStr, "sales": sales, "orders": orders,
+		})
+	}
+
+	ordersToday := 0.0
+	if val, exists := dailyStats[time.Now().Format("2006-01-02")]; exists {
+		ordersToday = val["orders"]
+	}
+
+	thisMonthRevenue := 0.0
+	if val, exists := monthlyStats[time.Now().Format("Jan 2006")]; exists {
+		thisMonthRevenue = val["sales"]
+	}
+
+	lastMonthRevenue := 0.0
+	if val, exists := monthlyStats[time.Now().AddDate(0, -1, 0).Format("Jan 2006")]; exists {
+		lastMonthRevenue = val["sales"]
+	}
+
+	var revenueGrowth float64 = 0
+	if lastMonthRevenue > 0 {
+		revenueGrowth = ((thisMonthRevenue - lastMonthRevenue) / lastMonthRevenue) * 100
+	}
+
+	response := map[string]interface{}{
+		"totalRevenue":    totalRevenue,
+		"totalOrders":     totalOrders,
+		"deliveredOrders": deliveredOrders,
+		"pendingOrders":   pendingOrders,
+		"cancelledOrders": cancelledOrders,
+		"ordersToday":     ordersToday,
+		"revenueGrowth":   revenueGrowth,
+		"analyticsData": map[string]interface{}{
+			"weekly":  weeklyData,
+			"monthly": monthlyData,
+			"yearly":  yearlyData,
+		},
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
 func GetSellerOrdersHandler(w http.ResponseWriter, r *http.Request) {
 	claims, err := getClaimsFromRequest(r)
 	if err != nil {
@@ -855,16 +1108,16 @@ func GetSellerOrdersHandler(w http.ResponseWriter, r *http.Request) {
 	sellerMobile := claims.Mobile
 
 	query := `
-		SELECT o.id, o.date, o.phone, o.address, o.city, o.state, o.pincode, o.payment_method, o.status, o.total, u.name, o.items
+		SELECT o.id, o.date, o.phone, o.address, o.city, o.state, o.pincode, o.payment_method, o.status, o.total, u.name, o.items, o.delivery_charge
 		FROM orders o
 		JOIN users u ON o.username = u.username
 		WHERE o.items @> $1
 		ORDER BY o.date DESC
 	`
-	
+
 	// Fast JSONB containment search for the seller's mobile
 	searchJSON := fmt.Sprintf(`[{"seller_mobile": "%s"}]`, sellerMobile)
-	
+
 	rows, err := buyerDB.Query(query, searchJSON)
 	if err != nil {
 		fmt.Println("Error querying buyer orders:", err)
@@ -878,9 +1131,9 @@ func GetSellerOrdersHandler(w http.ResponseWriter, r *http.Request) {
 		var id int
 		var date time.Time
 		var phone, address, city, state, pincode, paymentMethod, status, buyerName, itemsJSON string
-		var total float64
+		var total, deliveryCharge float64
 
-		if err := rows.Scan(&id, &date, &phone, &address, &city, &state, &pincode, &paymentMethod, &status, &total, &buyerName, &itemsJSON); err != nil {
+		if err := rows.Scan(&id, &date, &phone, &address, &city, &state, &pincode, &paymentMethod, &status, &total, &buyerName, &itemsJSON, &deliveryCharge); err != nil {
 			fmt.Println("Scan error:", err)
 			continue
 		}
@@ -906,7 +1159,7 @@ func GetSellerOrdersHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		var deliveryName, deliveryPhone, deliveryStatus string
-		
+
 		// Query delivery info
 		deliveryQuery := `
 			SELECT u.name, u.phone, do.status 
@@ -941,8 +1194,13 @@ func GetSellerOrdersHandler(w http.ResponseWriter, r *http.Request) {
 			"delivery_name":   deliveryName,
 			"delivery_phone":  deliveryPhone,
 			"delivery_status": deliveryStatus,
+			"delivery_charge": deliveryCharge,
 		}
 		orders = append(orders, order)
+	}
+
+	if err = rows.Err(); err != nil {
+		fmt.Println("Rows error:", err)
 	}
 
 	if orders == nil {
@@ -981,7 +1239,7 @@ func UpdateOrderStatusHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to update status: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
-	
+
 	rowsAffected, _ := res.RowsAffected()
 	if rowsAffected == 0 {
 		http.Error(w, "Order not found or unauthorized", http.StatusNotFound)
@@ -1050,13 +1308,14 @@ func main() {
 	mux.HandleFunc("/verify-otp", VerifyOTPHandler)
 	mux.HandleFunc("/login", LoginHandler)
 	mux.Handle("/dashboard", AuthMiddleware(http.HandlerFunc(ProtectedHandler)))
+	mux.Handle("/dashboard/stats", AuthMiddleware(http.HandlerFunc(GetDashboardStatsHandler)))
 	mux.Handle("/upload", AuthMiddleware(http.HandlerFunc(UploadProductHandler)))
 	mux.Handle("/profile", AuthMiddleware(http.HandlerFunc(GetProfileHandler)))
 	mux.Handle("/profile/update", AuthMiddleware(http.HandlerFunc(UpdateProfileHandler)))
 	mux.Handle("/account", AuthMiddleware(http.HandlerFunc(DeleteAccountHandler)))
 	mux.HandleFunc("/public/products", GetAllProductsHandler)
 	mux.HandleFunc("/public/seller", GetSellerInfoHandler)
-	
+
 	mux.Handle("/orders", AuthMiddleware(http.HandlerFunc(GetSellerOrdersHandler)))
 	mux.Handle("/orders/", AuthMiddleware(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == http.MethodPut && strings.HasSuffix(r.URL.Path, "/status") {

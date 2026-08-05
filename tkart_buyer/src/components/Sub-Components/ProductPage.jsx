@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
+
 import { syncCartToDB } from '../../utils/sync';
+
+
+
+
+const Bounce = null;
+const toast = {
+  success: (msg) => console.log(msg),
+  error: (msg) => console.log(msg),
+  info: (msg) => console.log(msg),
+  warn: (msg) => console.log(msg)
+};
 
 const ProductCard = ({ item, onClick }) => (
   <div 
@@ -148,7 +159,7 @@ const ProductPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 font-josefin pb-16">
-      <ToastContainer position="top-center" autoClose={2000} />
+      
       
       {/* Top Navigation Bar */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
@@ -253,20 +264,20 @@ const ProductPage = () => {
             <div className="mb-10 bg-orange-50/50 p-6 rounded-2xl border border-orange-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <h3 className="text-sm text-gray-500 mb-2 uppercase tracking-wide font-normal flex items-center gap-2">
-                  🏪 Sold by
+                   Sold by
                 </h3>
                 <div className="flex flex-col gap-1">
                   <div className="flex items-center gap-3">
                     <span className="font-normal text-gray-900 text-lg">{product.seller_name || 'Seller'}</span>
                     <span className="text-sm bg-green-100 text-green-800 px-2 py-0.5 rounded-md flex items-center gap-1 font-normal">
-                      ⭐ 4.8
+                       4.8
                     </span>
                   </div>
                   <span className="text-sm text-gray-600 flex items-center gap-1.5 mt-1">
-                    📍 {product.seller_district ? `${product.seller_district}, ${product.seller_state}` : 'Location Unavailable'}
+                     {product.seller_district ? `${product.seller_district}, ${product.seller_state}` : 'Location Unavailable'}
                   </span>
                   <span className="text-sm text-hotpink-600 font-normal flex items-center gap-1.5 mt-1">
-                    ✔ Women Entrepreneur
+                     Women Entrepreneur
                   </span>
                 </div>
               </div>

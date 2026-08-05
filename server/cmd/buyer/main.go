@@ -1,6 +1,8 @@
 package main
 
 import (
+	"net/smtp"
+	"os"
 	"crypto/rand"
 	"database/sql"
 	"encoding/hex"
@@ -42,7 +44,7 @@ func generateSecretKey() string {
 	return hex.EncodeToString(bytes)
 }
 
-var jwtKey = []byte(generateSecretKey())
+var jwtKey = []byte("thirumathi_kart_buyer_secret_key")
 
 type Credentials struct {
 	Mobile   string `json:"mobile"`
@@ -54,6 +56,8 @@ type RegisterRequest struct {
 	LastName  string `json:"lastName"`
 	Mobile    string `json:"mobile"`
 	Password  string `json:"password"`
+
+	Email    string `json:"email"`
 }
 
 type Claims struct {
@@ -104,10 +108,15 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	name := strings.TrimSpace(req.FirstName + " " + req.LastName)
-	_, err = db.Exec("INSERT INTO users (name, first_name, last_name, username, password, mobile) VALUES ($1, $2, $3, $4, $5, $6)",
-		name, req.FirstName, req.LastName, req.Mobile, string(hash), req.Mobile)
+	_, err = db.Exec("INSERT INTO users (name, first_name, last_name, username, password, mobile, email) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+		name, req.FirstName, req.LastName, req.Mobile, string(hash), req.Mobile, req.Email)
 	if err != nil {
-		http.Error(w, "Error saving user", http.StatusInternalServerError)
+		fmt.Println("DB Insert error:", err)
+		if strings.Contains(err.Error(), "duplicate key value") {
+			http.Error(w, "Account already registered", http.StatusConflict)
+		} else {
+			http.Error(w, "Error saving user", http.StatusInternalServerError)
+		}
 		return
 	}
 	w.WriteHeader(http.StatusCreated)
@@ -121,15 +130,15 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid request", http.StatusBadRequest)
 		return
 	}
-	var storedHash string
-	err = db.QueryRow("SELECT password FROM users WHERE username=$1 OR mobile=$1", creds.Mobile).Scan(&storedHash)
+	var storedHash, actualUsername string
+	err = db.QueryRow("SELECT password, username FROM users WHERE username=$1 OR mobile=$1 OR email=$1", creds.Mobile).Scan(&storedHash, &actualUsername)
 	if err != nil || bcrypt.CompareHashAndPassword([]byte(storedHash), []byte(creds.Password)) != nil {
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
 		return
 	}
 	expiration := time.Now().Add(24 * time.Hour)
 	claims := &Claims{
-		Username: creds.Mobile,
+		Username: actualUsername,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expiration),
 		},
@@ -335,6 +344,7 @@ type Order struct {
 	Total         float64    `json:"total"`
 	Latitude      float64    `json:"latitude"`
 	Longitude     float64    `json:"longitude"`
+	DeliveryCharge float64   `json:"deliveryCharge"`
 }
 
 func PlaceOrderHandler(w http.ResponseWriter, r *http.Request) {
@@ -372,11 +382,11 @@ func PlaceOrderHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		total += price * qty
 	}
-	order.Total = total
+	order.Total = total + order.DeliveryCharge
 
-	_, err = db.Exec(`INSERT INTO orders (username, items, date, phone, address, city, state, pincode, payment_method, status, total, latitude, longitude) 
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
-		username, string(order.Items), order.Date, order.Phone, order.Address, order.City, order.State, order.Pincode, order.PaymentMethod, order.Status, order.Total, order.Latitude, order.Longitude)
+	_, err = db.Exec(`INSERT INTO orders (username, items, date, phone, address, city, state, pincode, payment_method, status, total, latitude, longitude, delivery_charge) 
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`,
+		username, string(order.Items), order.Date, order.Phone, order.Address, order.City, order.State, order.Pincode, order.PaymentMethod, order.Status, order.Total, order.Latitude, order.Longitude, order.DeliveryCharge)
 	if err != nil {
 		http.Error(w, "Order failed", http.StatusInternalServerError)
 		return
@@ -391,7 +401,7 @@ func GetOrdersHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
-	rows, err := db.Query(`SELECT o.id, u.name, o.items, o.date, o.phone, o.address, o.city, o.state, o.pincode, o.payment_method, o.status, o.total 
+	rows, err := db.Query(`SELECT o.id, u.name, o.items, o.date, o.phone, o.address, o.city, o.state, o.pincode, o.payment_method, o.status, o.total, o.delivery_charge 
 		FROM orders o JOIN users u ON o.username = u.username WHERE o.username=$1 ORDER BY o.date DESC`, username)
 	if err != nil {
 		http.Error(w, "Query failed", http.StatusInternalServerError)
@@ -403,9 +413,9 @@ func GetOrdersHandler(w http.ResponseWriter, r *http.Request) {
 	for rows.Next() {
 		var id int
 		var items, dbUsername, phone, address, city, state, pincode, payment, status string
-		var total float64
+		var total, deliveryCharge float64
 		var date time.Time
-		rows.Scan(&id, &dbUsername, &items, &date, &phone, &address, &city, &state, &pincode, &payment, &status, &total)
+		rows.Scan(&id, &dbUsername, &items, &date, &phone, &address, &city, &state, &pincode, &payment, &status, &total, &deliveryCharge)
 		var parsedItems []map[string]interface{}
 		json.Unmarshal([]byte(items), &parsedItems)
 		orders = append(orders, map[string]interface{}{
@@ -421,6 +431,7 @@ func GetOrdersHandler(w http.ResponseWriter, r *http.Request) {
 			"payment_method": payment,
 			"status":         status,
 			"total":          total,
+			"deliveryCharge": deliveryCharge,
 		})
 	}
 	json.NewEncoder(w).Encode(orders)
@@ -553,6 +564,7 @@ func DeleteAccountHandler(w http.ResponseWriter, r *http.Request) {
 var otpStore = make(map[string]string)
 
 type OTPRequest struct {
+	Email  string `json:"email"`
 	Mobile string `json:"mobile"`
 	OTP    string `json:"otp,omitempty"`
 }
@@ -567,6 +579,12 @@ func SendOTPHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid request", http.StatusBadRequest)
 		return
 	}
+    
+    // We expect req.Email to be provided
+    identifier := req.Email
+    if identifier == "" {
+        identifier = req.Mobile
+    }
 
 	max := big.NewInt(1000000)
 	n, err := rand.Int(rand.Reader, max)
@@ -574,9 +592,43 @@ func SendOTPHandler(w http.ResponseWriter, r *http.Request) {
 	if err == nil {
 		otpVal = fmt.Sprintf("%06d", n.Int64())
 	}
-	otpStore[req.Mobile] = otpVal
+	otpStore[identifier] = otpVal
 
-	fmt.Printf("\n--- OTP FOR %s IS: %s ---\n\n", req.Mobile, otpVal)
+	fmt.Printf("\n--- OTP FOR %s IS: %s ---\n\n", identifier, otpVal)
+    
+    
+	// SMTP Logic
+	smtpHost := os.Getenv("SMTP_HOST")
+	smtpPort := os.Getenv("SMTP_PORT")
+	smtpEmail := os.Getenv("SMTP_EMAIL")
+	smtpPass := os.Getenv("SMTP_PASS")
+
+	if smtpEmail != "" && smtpPass != "" {
+		auth := smtp.PlainAuth("", smtpEmail, smtpPass, smtpHost)
+		subject := "Subject: Verify Your Email - TKart\r\n"
+		headers := "MIME-version: 1.0;\r\nContent-Type: text/html; charset=\"UTF-8\";\r\n"
+		
+		body := "Hello,<br><br>" +
+			"Welcome to TKart! 🌸<br><br>" +
+			"Your verification code is:<br><br>" +
+			"<strong>" + otpVal + "</strong><br><br>" +
+			"This OTP is valid for 10 minutes.<br><br>" +
+			"Please do not share this code with anyone.<br><br>" +
+			"If you did not request this verification, you can safely ignore this email.<br><br>" +
+			"Thank you,<br>" +
+			"Team TKart<br>" +
+			"Empowering Women Entrepreneurs<br>"
+
+		msg := []byte("To: " + identifier + "\r\n" + subject + headers + "\r\n" + body)
+		err = smtp.SendMail(smtpHost+":"+smtpPort, auth, smtpEmail, []string{identifier}, msg)
+		if err != nil {
+			fmt.Printf("SMTP Error: %v\n", err)
+		} else {
+			fmt.Printf("OTP sent to %s via email!\n", identifier)
+		}
+	} else {
+		fmt.Printf("SMTP credentials not provided in .env! Printing OTP to console instead.\n")
+	}
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{"message": "OTP Sent", "otp": otpVal})
@@ -593,7 +645,11 @@ func VerifyOTPHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	storedOTP, exists := otpStore[req.Mobile]
+		identifier := req.Email
+	if identifier == "" {
+		identifier = req.Mobile
+	}
+	storedOTP, exists := otpStore[identifier]
 	if !exists || storedOTP != req.OTP {
 		http.Error(w, "Invalid OTP", http.StatusUnauthorized)
 		return

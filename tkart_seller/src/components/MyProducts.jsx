@@ -4,8 +4,19 @@ import { useNavigate } from 'react-router-dom';
 import { BsStarFill, BsBoxSeam } from 'react-icons/bs';
 import { FiSearch, FiEdit2, FiTrash2, FiPlus } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
+
+
+
+
+
+const Bounce = null;
+const toast = {
+  success: (msg) => console.log(msg),
+  error: (msg) => console.log(msg),
+  info: (msg) => console.log(msg),
+  warn: (msg) => console.log(msg)
+};
 
 const MyProducts = () => {
   const [products, setProducts] = useState([]);
@@ -199,7 +210,7 @@ const MyProducts = () => {
           </motion.div>
         )}
       </div>
-      <ToastContainer position="top-right" autoClose={2000} />
+      
     </div>
   );
 };

@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+
 import { FiUser, FiPhone, FiCheckCircle, FiEdit2, FiHelpCircle, FiLogOut } from 'react-icons/fi';
 import { FaMotorcycle, FaIdCard, FaCarAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+
+
+
+
+const Bounce = null;
+const toast = {
+  success: (msg) => console.log(msg),
+  error: (msg) => console.log(msg),
+  info: (msg) => console.log(msg),
+  warn: (msg) => console.log(msg)
+};
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);

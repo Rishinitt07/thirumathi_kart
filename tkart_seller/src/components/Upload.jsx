@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { 
+
   FiUploadCloud, FiImage, FiInfo, FiTag, FiBox, FiCheckCircle,
   FiType, FiFileText, FiList, FiDollarSign, FiPackage, FiHash
 } from "react-icons/fi";
-import "react-toastify/dist/ReactToastify.css";
+
 
 // Sample categories
+
+
 const categoriesData = [
   {
     category: "Beauty and Healthcare",
@@ -130,6 +133,14 @@ const categoriesData = [
     ]
   }
 ];
+
+const Bounce = null;
+const toast = {
+  success: (msg) => console.log(msg),
+  error: (msg) => console.log(msg),
+  info: (msg) => console.log(msg),
+  warn: (msg) => console.log(msg)
+};
 
 const Upload = () => {
   const [form, setForm] = useState({
@@ -575,7 +586,7 @@ const Upload = () => {
         )}
       </AnimatePresence>
 
-      <ToastContainer position="top-right" autoClose={2000} />
+      
     </div>
   );
 };

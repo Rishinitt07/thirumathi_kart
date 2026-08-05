@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+
 import { FaBoxOpen, FaStore, FaUser, FaMapMarkerAlt, FaMoneyBillWave } from 'react-icons/fa';
 import { MdNotificationsActive, MdCheckCircle, MdCancel } from 'react-icons/md';
+
+
+
+
+const Bounce = null;
+const toast = {
+  success: (msg) => console.log(msg),
+  error: (msg) => console.log(msg),
+  info: (msg) => console.log(msg),
+  warn: (msg) => console.log(msg)
+};
 
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
   if (!lat1 || !lon1 || !lat2 || !lon2) return 0;
@@ -138,8 +149,8 @@ const Notifications = () => {
               }
               
               const distanceFormatted = distance.toFixed(1);
-              // Base charge ₹20, plus ₹10 per km
-              const deliveryFee = Math.round(20 + (distance * 10));
+              // Base charge ₹20, plus ₹10 per km. Use backend charge if available.
+              const deliveryFee = order.delivery_charge ? Number(order.delivery_charge) : Math.round(20 + (distance * 10));
               
               return (
                 <div key={order.order_id} className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">

@@ -2,9 +2,12 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+
+
 import {
+
+
+
   FiShoppingBag,
   FiClock,
   FiCheckCircle,
@@ -17,6 +20,14 @@ import {
 } from "react-icons/fi";
 
 // Toast CSS Override
+const Bounce = null;
+const toast = {
+  success: (msg) => console.log(msg),
+  error: (msg) => console.log(msg),
+  info: (msg) => console.log(msg),
+  warn: (msg) => console.log(msg)
+};
+
 const ToastifyCSS = () => (
   <style>{`
     .Toastify__toast {
@@ -89,7 +100,9 @@ const OrderCard = React.memo(
   ({ order, onCancelClick }) => {
     const [expanded, setExpanded] = useState(false);
     const [trackingVisible, setTrackingVisible] = useState(false);
-    const grandTotal = order.total || order.items.reduce((sum, item) => sum + item.price * (item.qty || item.quantity || 1), 0);
+    const itemsTotal = order.items.reduce((sum, item) => sum + item.price * (item.qty || item.quantity || 1), 0);
+    const deliveryCharge = order.deliveryCharge || 0;
+    const grandTotal = itemsTotal + deliveryCharge;
     
     // Check if cancellation is allowed
     const canCancel = ![
@@ -282,11 +295,11 @@ const OrderCard = React.memo(
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-gray-500">Items Subtotal</span>
-                        <span className="font-normal text-gray-800">₹{grandTotal.toLocaleString()}</span>
+                        <span className="font-normal text-gray-800">₹{itemsTotal.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-gray-500">Delivery Fee</span>
-                        <span className="font-normal text-green-600 bg-green-50 px-2 py-0.5 rounded text-xs">FREE</span>
+                        <span className="font-normal text-green-600 bg-green-50 px-2 py-0.5 rounded text-xs">{deliveryCharge > 0 ? `₹${deliveryCharge}` : 'FREE'}</span>
                       </div>
                       <div className="border-t border-gray-200 pt-3 mt-1 flex justify-between font-normal text-lg text-gray-900">
                         <span>Grand Total</span>
@@ -394,7 +407,7 @@ const Orders = () => {
   return (
     <div className="min-h-screen font-josefin bg-[#fafafa] relative overflow-hidden">
       <ToastifyCSS />
-      <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
+      
       
       <div className="min-h-screen py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
         

@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineUser, AiOutlineLock } from "react-icons/ai";
 import axios from 'axios';
-import { Bounce, ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import tklogo from './tkart.png';
+
+
+import tklogo from '../assets/tklogo.png';
+
+
+
+
+
 
 const Login = () => {
   const [mobile, setMobile] = useState('');
@@ -39,6 +46,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-hotpink-50 py-10 px-4 font-josefin">
+      <ToastContainer />
       <div className="bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
         
         {/* Left Panel */}
@@ -72,7 +80,7 @@ const Login = () => {
               <input
                 type="text"
                 name="mobile"
-                placeholder="Mobile Number"
+                placeholder="Mobile Number or Email"
                 value={mobile}
                 onChange={(e) => setMobile(e.target.value)}
                 className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-normal"
@@ -127,7 +135,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
+      
     </div>
   );
 };

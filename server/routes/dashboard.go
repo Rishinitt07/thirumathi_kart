@@ -25,6 +25,7 @@ type DeliveryOrder struct {
 	BuyerLng      float64 `json:"buyer_lng"`
 	SellerLat     float64 `json:"seller_lat"`
 	SellerLng     float64 `json:"seller_lng"`
+	DeliveryCharge float64 `json:"delivery_charge"`
 }
 
 func DashboardHandler(w http.ResponseWriter, r *http.Request) {
@@ -67,11 +68,11 @@ func DashboardHandler(w http.ResponseWriter, r *http.Request) {
 
 		// Fetch buyer details
 		var buyerUsername, buyerPhone string
-		var bLat, bLng, sLat, sLng sql.NullFloat64
+		var bLat, bLng, sLat, sLng, dCharge sql.NullFloat64
 		if buyerDB != nil {
 			buyerDB.QueryRow(`
-				SELECT COALESCE(username, ''), COALESCE(phone, ''), latitude, longitude, seller_latitude, seller_longitude
-				FROM orders WHERE id = $1`, delivery.OrderID).Scan(&buyerUsername, &buyerPhone, &bLat, &bLng, &sLat, &sLng)
+				SELECT COALESCE(username, ''), COALESCE(phone, ''), latitude, longitude, seller_latitude, seller_longitude, delivery_charge
+				FROM orders WHERE id = $1`, delivery.OrderID).Scan(&buyerUsername, &buyerPhone, &bLat, &bLng, &sLat, &sLng, &dCharge)
 		}
 		
 		delivery.BuyerName = buyerUsername
@@ -90,6 +91,9 @@ func DashboardHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		if sLng.Valid {
 			delivery.SellerLng = sLng.Float64
+		}
+		if dCharge.Valid {
+			delivery.DeliveryCharge = dCharge.Float64
 		}
 
 		// Fetch seller details

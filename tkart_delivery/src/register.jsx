@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { BiUser } from "react-icons/bi";
-import { AiOutlineLock, AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
+import { AiOutlineLock, AiOutlineMail, AiOutlinePhone, AiOutlineCheckCircle } from "react-icons/ai";
 import { MdOutlinePerson } from "react-icons/md";
 import axios from 'axios';
-import { Bounce, ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import tklogo from "./assets/TKartD.png";
+
+
+import tklogo from "./assets/tklogo.png";
+
+
+
+
+
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +25,9 @@ const Register = () => {
     confirmPassword: ''
   });
   const [loading, setLoading] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [otpVerified, setOtpVerified] = useState(false);
   const navigate = useNavigate();
 
   const showError = (message) => {
@@ -55,8 +65,37 @@ const Register = () => {
     });
   };
 
+  
+  const handleSendOtp = () => {
+    if (!formData.email || !formData.email.includes("@")) {
+      showError("Please enter a valid email address");
+      return;
+    }
+    axios.post("http://localhost:8082/send-otp", { email: formData.email, mobile: formData.phone })
+      .then((res) => {
+        setOtpSent(true);
+        showSuccess("OTP Sent to your email!");
+      })
+      .catch(() => {
+        showError("Failed to send OTP. Try again.");
+      });
+  };
+
+  const handleVerifyOtp = () => {
+    if (!otp) return;
+    axios.post("http://localhost:8082/verify-otp", { email: formData.email, mobile: formData.phone, otp: otp })
+      .then(() => {
+        setOtpVerified(true);
+        showSuccess("Email Verified!");
+      })
+      .catch(() => {
+        showError("Invalid OTP. Please try again.");
+      });
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
+    if(!otpVerified) { showError("Please verify your email first"); return; }
 
     if (formData.password !== formData.confirmPassword) {
       showError('Passwords do not match');
@@ -95,7 +134,8 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-50 py-10 px-4 font-sans">
-      <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer />
+      
       <div className="bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
 
         {/* Left Panel */}
@@ -153,7 +193,7 @@ const Register = () => {
 
             {/* Email & Phone */}
             <div className="flex space-x-4">
-              <div className="flex-1 flex items-center border-2 border-gray-100 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-blue-500 focus-within:bg-white transition-colors">
+              <div className="flex-1 flex items-center border-2 border-gray-100 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-blue-500 focus-within:bg-white transition-colors relative">
                 <AiOutlineMail className="text-gray-400 mr-3 text-xl" />
                 <input
                   type="email"
@@ -161,9 +201,21 @@ const Register = () => {
                   placeholder="Email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium"
+                  disabled={otpVerified}
+                  className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium disabled:opacity-50"
                   required
                 />
+                {otpVerified ? (
+                  <AiOutlineCheckCircle className="text-green-500 text-xl absolute right-3" />
+                ) : (
+                  <button
+                    type="button"
+                    onClick={handleSendOtp}
+                    className="absolute right-1 bg-blue-100 text-blue-600 px-3 py-1 rounded-lg text-sm font-semibold hover:bg-blue-200 transition-colors"
+                  >
+                    {otpSent ? "Resend" : "OTP"}
+                  </button>
+                )}
               </div>
               <div className="flex-1 flex items-center border-2 border-gray-100 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-blue-500 focus-within:bg-white transition-colors">
                 <AiOutlinePhone className="text-gray-400 mr-3 text-xl" />
@@ -178,6 +230,29 @@ const Register = () => {
                 />
               </div>
             </div>
+
+            {/* OTP Input (Conditionally Rendered) */}
+            {otpSent && !otpVerified && (
+              <div className="flex items-center gap-2">
+                <div className="flex-1 flex items-center border-2 border-blue-200 rounded-xl px-4 py-3 bg-blue-50 focus-within:border-blue-400 focus-within:bg-white transition-colors">
+                  <input
+                    type="text"
+                    name="otp"
+                    placeholder="Enter 6-digit OTP"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                    className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium tracking-widest"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={handleVerifyOtp}
+                  className="bg-blue-500 text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-600 transition-colors shadow-md"
+                >
+                  Verify
+                </button>
+              </div>
+            )}
 
             {/* Password */}
             <div className="flex items-center border-2 border-gray-100 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-blue-500 focus-within:bg-white transition-colors">
@@ -209,11 +284,12 @@ const Register = () => {
 
             <button
               type="submit"
-              disabled={loading}
-              className={`w-full py-3 mt-6 text-lg font-bold rounded-full shadow-lg transition-all duration-300 transform ${loading
-                ? 'bg-blue-400 cursor-not-allowed'
-                : 'bg-blue-600 text-white hover:bg-blue-700 hover:-translate-y-1'
-                }`}
+              disabled={loading || !otpVerified}
+              className={`w-full py-3 mt-6 text-lg font-bold rounded-full shadow-lg transition-all duration-300 transform ${
+                (loading || !otpVerified)
+                  ? 'bg-blue-400 cursor-not-allowed text-white'
+                  : 'bg-blue-600 text-white hover:bg-blue-700 hover:-translate-y-1'
+              }`}
             >
               {loading ? 'Creating Account...' : 'SIGN UP'}
             </button>

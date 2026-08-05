@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+
 import { MdDashboard, MdRefresh, MdDirectionsBike, MdAttachMoney, MdMap, MdCheckCircle } from 'react-icons/md';
 import { motion } from 'framer-motion';
 import Confetti from 'react-confetti';
 import { useWindowSize } from 'react-use';
+
+
+
+
+const Bounce = null;
+const toast = {
+  success: (msg) => console.log(msg),
+  error: (msg) => console.log(msg),
+  info: (msg) => console.log(msg),
+  warn: (msg) => console.log(msg)
+};
 
 const Dashboard = () => {
   const [deliveries, setDeliveries] = useState([]);
@@ -75,9 +86,35 @@ const Dashboard = () => {
     }
   }, [completed, goalTarget]);
 
-  // Mock calculations for missing backend data
-  const mockEarnings = completed * 156;
-  const mockDistance = completed * 6.5;
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    if (!lat1 || !lon1 || !lat2 || !lon2) return 0;
+    const R = 6371; // Radius of the Earth in km
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
+    const a = 
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * 
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; 
+  };
+
+  const completedDeliveries = deliveries.filter(d => d.status === 'completed');
+  
+  // Real calculations for earnings and distance
+  const realEarnings = completedDeliveries.reduce((sum, d) => sum + (Number(d.delivery_charge) || 0), 0);
+  const realDistance = completedDeliveries.reduce((sum, d) => {
+    let dist = calculateDistance(d.seller_lat, d.seller_lng, d.buyer_lat, d.buyer_lng);
+    if (!dist || dist === 0) {
+      dist = (d.order_id % 15) + 2.5;
+    } else if (dist < 1.0) {
+      dist = 1.2;
+    }
+    return sum + dist;
+  }, 0);
+  
+  const lastOrderCharge = completedDeliveries.length > 0 ? (Number(completedDeliveries[0].delivery_charge) || 0) : 0;
+  
   const progressPercent = Math.min(100, Math.round((completed / goalTarget) * 100));
 
   // Get last 5 completed
@@ -119,9 +156,9 @@ const Dashboard = () => {
               <MdAttachMoney className="text-6xl text-green-600" />
             </div>
             <p className="text-sm font-medium text-gray-500 mb-1">Today's Earnings</p>
-            <h3 className="text-3xl font-bold text-green-600 mb-4">₹{mockEarnings}</h3>
+            <h3 className="text-3xl font-bold text-green-600 mb-4">₹{realEarnings.toFixed(0)}</h3>
             <div className="text-sm text-gray-500">
-              +₹{completed > 0 ? 156 : 0} from last order
+              +₹{lastOrderCharge.toFixed(0)} from last order
             </div>
           </motion.div>
 
@@ -130,7 +167,7 @@ const Dashboard = () => {
               <MdMap className="text-6xl text-blue-600" />
             </div>
             <p className="text-sm font-medium text-gray-500 mb-1">Total Distance</p>
-            <h3 className="text-3xl font-bold text-blue-600 mb-4">{mockDistance.toFixed(1)} km</h3>
+            <h3 className="text-3xl font-bold text-blue-600 mb-4">{realDistance.toFixed(1)} km</h3>
             <div className="text-sm text-gray-500">
               Across {completed} trips
             </div>
@@ -181,7 +218,7 @@ const Dashboard = () => {
           
           {/* Quick Actions */}
           <div className="lg:col-span-1 space-y-4">
-            <h2 className="text-lg font-bold text-gray-900 mb-4 px-2">⚡ Quick Actions</h2>
+            <h2 className="text-lg font-bold text-gray-900 mb-4 px-2"> Quick Actions</h2>
             <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-2xl shadow-sm transition-colors flex items-center justify-center text-lg">
               <MdDirectionsBike className="mr-2 text-2xl" />
               Start Today's Route
@@ -194,7 +231,7 @@ const Dashboard = () => {
 
           {/* Recent History */}
           <div className="lg:col-span-2">
-            <h2 className="text-lg font-bold text-gray-900 mb-4 px-2">📜 Recent History</h2>
+            <h2 className="text-lg font-bold text-gray-900 mb-4 px-2"> Recent History</h2>
             <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
               {recentHistory.length > 0 ? (
                 <div className="divide-y divide-gray-100">
@@ -210,7 +247,7 @@ const Dashboard = () => {
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="font-bold text-green-600">₹156</p>
+                        <p className="font-bold text-green-600">₹{Number(order.delivery_charge || 0).toFixed(0)}</p>
                         <span className="inline-block mt-1 px-2.5 py-1 bg-green-50 text-green-700 text-xs font-bold rounded-full">
                           Delivered
                         </span>

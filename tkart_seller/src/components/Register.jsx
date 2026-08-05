@@ -1,16 +1,24 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { AiOutlineUser, AiOutlineMobile, AiOutlineLock, AiOutlineCheckCircle } from "react-icons/ai";
-import axios from "axios";
-import tklogo from '../tkart.png';
-import { toast, ToastContainer, Bounce } from 'react-toastify';
+import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link, useNavigate } from "react-router-dom";
+import { AiOutlineUser, AiOutlineMobile, AiOutlineMail, AiOutlineLock, AiOutlineCheckCircle } from "react-icons/ai";
+import axios from "axios";
+import tklogo from '../assets/tklogo.png';
+
+
+
+
+
+
+
 
 const Register = () => {
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
     mobile: "",
+    email: "",
     password: ""
   });
   
@@ -24,17 +32,16 @@ const Register = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSendOtp = () => {
-    if (!form.mobile || form.mobile.length < 10) {
-      toast.error("Please enter a valid 10-digit mobile number", { theme: "dark", transition: Bounce });
+    if (!form.email || !form.email.includes("@")) {
+      toast.error("Please enter a valid email address", { theme: "dark", transition: Bounce });
       return;
     }
-    axios.post("http://localhost:8080/send-otp", { mobile: form.mobile })
+    axios.post("http://localhost:8080/send-otp", { email: form.email, mobile: form.mobile })
       .then((res) => {
         setOtpSent(true);
-        const generatedOtp = res.data.otp;
         toast.success(
-          `🔑 Your OTP is: ${generatedOtp}`,
-          { theme: "dark", autoClose: 30000, position: "top-center" }
+          "OTP Sent to your email!",
+          { theme: "dark", autoClose: 5000, position: "top-center" }
         );
       })
       .catch(() => {
@@ -44,10 +51,10 @@ const Register = () => {
 
   const handleVerifyOtp = () => {
     if (!otp) return;
-    axios.post("http://localhost:8080/verify-otp", { mobile: form.mobile, otp: otp })
+    axios.post("http://localhost:8080/verify-otp", { email: form.email, mobile: form.mobile, otp: otp })
       .then(() => {
         setOtpVerified(true);
-        toast.success("Mobile Number Verified!", { theme: "dark", transition: Bounce });
+        toast.success("Email Verified!", { theme: "dark", transition: Bounce });
       })
       .catch(() => {
         toast.error("Invalid OTP. Please try again.", { theme: "dark", transition: Bounce });
@@ -57,7 +64,7 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!otpVerified) {
-      toast.error("Please verify your mobile number first", { theme: "dark", transition: Bounce });
+      toast.error("Please verify your email first", { theme: "dark", transition: Bounce });
       return;
     }
     axios
@@ -74,7 +81,8 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-hotpink-50 py-10 px-4 font-josefin">
-      <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer />
+      
       <div className="bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
         
         {/* Left Panel */}
@@ -130,14 +138,29 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Mobile Number & OTP Trigger */}
-            <div className="flex items-center border-2 border-gray-100 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-hotpink-400 focus-within:bg-white transition-colors relative">
+            
+            {/* Mobile Number */}
+            <div className="flex items-center border-2 border-gray-100 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-hotpink-400 focus-within:bg-white transition-colors">
               <AiOutlineMobile className="text-gray-400 mr-3 text-xl" />
               <input
                 type="text"
                 name="mobile"
                 placeholder="Mobile Number"
                 value={form.mobile}
+                onChange={handleChange}
+                className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium"
+                required
+              />
+            </div>
+
+            {/* Email & OTP Trigger */}
+            <div className="flex items-center border-2 border-gray-100 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-hotpink-400 focus-within:bg-white transition-colors relative">
+              <AiOutlineMail className="text-gray-400 mr-3 text-xl" />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                value={form.email}
                 onChange={handleChange}
                 disabled={otpVerified}
                 className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium disabled:opacity-50"

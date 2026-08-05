@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Layout from './components/Layout';            // 💼 Seller Layout
+import Layout from './components/Layout';            //  Seller Layout
 import Dashboard from './components/Dashboard';      // Public Landing
 import Login from './components/Login';
 import Register from './components/Register';
@@ -11,7 +11,7 @@ import MyProducts from './components/MyProducts';    // Seller's own listings
 import About from './components/About.jsx'
 import EditProduct from './components/EditProduct';
 
-// 🔐 ProtectedRoute wrapper
+//  ProtectedRoute wrapper
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('token');
   return token ? children : <Navigate to="/login" replace />;
@@ -21,12 +21,12 @@ function App() {
   return (
     <div className="font-josefin">
       <Routes>
-        {/* 🆓 Public Routes */}
+        {/*  Public Routes */}
         <Route path="/" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* 🔐 Protected Routes inside Layout */}
+        {/*  Protected Routes inside Layout */}
         <Route element={
           <ProtectedRoute>
             <Layout />
@@ -41,7 +41,7 @@ function App() {
           <Route path="/about" element={<About />} />
         </Route>
 
-        {/* 🌐 Catch-all route */}
+        {/*  Catch-all route */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>

@@ -1,8 +1,13 @@
 package main
 
 import (
-	"database/sql"
+	"net/smtp"
+	"os"
+	"encoding/json"
+	"math/big"
+	"crypto/rand"
 	"fmt"
+	"database/sql"
 	"log"
 	"net/http"
 	"server/db"
@@ -94,6 +99,100 @@ func initDB() {
 	db.SetSellerDB(sellerDB)
 }
 
+
+type OTPRequest struct {
+	Email  string `json:"email"`
+	Mobile string `json:"mobile"`
+	OTP    string `json:"otp,omitempty"`
+}
+
+var otpStore = make(map[string]string)
+
+func SendOTPHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	var req OTPRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "Invalid request", http.StatusBadRequest)
+		return
+	}
+	identifier := req.Email
+	if identifier == "" {
+		identifier = req.Mobile
+	}
+	max := big.NewInt(1000000)
+	n, err := rand.Int(rand.Reader, max)
+	otpVal := "123456"
+	if err == nil {
+		otpVal = fmt.Sprintf("%06d", n.Int64())
+	}
+	otpStore[identifier] = otpVal
+
+	fmt.Printf("\n--- OTP FOR %s IS: %s ---\n\n", identifier, otpVal)
+
+	// SMTP Logic
+	smtpHost := os.Getenv("SMTP_HOST")
+	smtpPort := os.Getenv("SMTP_PORT")
+	smtpEmail := os.Getenv("SMTP_EMAIL")
+	smtpPass := os.Getenv("SMTP_PASS")
+
+	if smtpEmail != "" && smtpPass != "" {
+		auth := smtp.PlainAuth("", smtpEmail, smtpPass, smtpHost)
+		subject := "Subject: Verify Your Email - TKart\r\n"
+		headers := "MIME-version: 1.0;\r\nContent-Type: text/html; charset=\"UTF-8\";\r\n"
+		
+		body := "Hello,<br><br>" +
+			"Welcome to TKart! 🌸<br><br>" +
+			"Your verification code is:<br><br>" +
+			"<strong>" + otpVal + "</strong><br><br>" +
+			"This OTP is valid for 10 minutes.<br><br>" +
+			"Please do not share this code with anyone.<br><br>" +
+			"If you did not request this verification, you can safely ignore this email.<br><br>" +
+			"Thank you,<br>" +
+			"Team TKart<br>" +
+			"Empowering Women Entrepreneurs<br>"
+
+		msg := []byte("To: " + identifier + "\r\n" + subject + headers + "\r\n" + body)
+		err = smtp.SendMail(smtpHost+":"+smtpPort, auth, smtpEmail, []string{identifier}, msg)
+		if err != nil {
+			fmt.Printf("SMTP Error: %v\n", err)
+		} else {
+			fmt.Printf("OTP sent to %s via email!\n", identifier)
+		}
+	} else {
+		fmt.Printf("SMTP credentials not provided in .env! Printing OTP to console instead.\n")
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{"message": "OTP Sent", "otp": otpVal})
+}
+
+func VerifyOTPHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	var req OTPRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "Invalid request", http.StatusBadRequest)
+		return
+	}
+	identifier := req.Email
+	if identifier == "" {
+		identifier = req.Mobile
+	}
+	storedOTP, exists := otpStore[identifier]
+	if !exists || storedOTP != req.OTP {
+		http.Error(w, "Invalid OTP", http.StatusUnauthorized)
+		return
+	}
+	delete(otpStore, identifier)
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{"message": "Verified"})
+}
+
 func main() {
 	initDB()
 	defer deliveryDB.Close()
@@ -107,6 +206,8 @@ func main() {
 	// Auth routes
 	mux.HandleFunc("/register", routes.RegisterHandler)
 	mux.HandleFunc("/login", routes.LoginHandler)
+	mux.HandleFunc("/send-otp", SendOTPHandler)
+	mux.HandleFunc("/verify-otp", VerifyOTPHandler)
 
 	// Protected routes
 	mux.Handle("/dashboard", routes.AuthMiddleware(http.HandlerFunc(routes.DashboardHandler)))

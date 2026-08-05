@@ -1,22 +1,28 @@
-/* Import Tailwind CSS */
-@import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
+@import "tailwindcss";
+
+@theme {
+  --color-hotpink-50: #FFF0F5;
+  --color-hotpink-100: #FFE4E1;
+  --color-hotpink-200: #FFC0CB;
+  --color-hotpink-300: #FFB6C1;
+  --color-hotpink-400: #FF69B4;
+  --color-hotpink-500: #FF1493;
+  --color-hotpink-600: #E71081;
+  --color-hotpink-700: #C71585;
+}
 
 .hide-arrows::-webkit-outer-spin-button,
 .hide-arrows::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 .hide-arrows {
   -moz-appearance: textfield;
   appearance: textfield;
 }
 
-/* Base styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+
 
 body {
   font-family: 'Josefin Sans', sans-serif;
@@ -36,6 +42,7 @@ code {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -46,15 +53,19 @@ code {
   from {
     transform: translateX(-100%);
   }
+
   to {
     transform: translateX(0);
   }
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.5;
   }
@@ -78,12 +89,12 @@ code {
   background: white;
   border-radius: 0.5rem;
   padding: 1.5rem;
-  shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   transition: all 0.3s ease;
 }
 
 .card:hover {
-  shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   transform: translateY(-2px);
 }
 
@@ -248,8 +259,13 @@ code {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Responsive utilities */
@@ -348,6 +364,7 @@ code {
   background-color: #3b82f6;
   transition: width 0.3s ease;
 }
+
 /* Hide the routing instructions panel but keep the route */
 .leaflet-routing-container {
   display: none !important;

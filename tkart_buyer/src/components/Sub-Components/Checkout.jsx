@@ -1,7 +1,18 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
+
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+
+
+
+const Bounce = null;
+const toast = {
+  success: (msg) => console.log(msg),
+  error: (msg) => console.log(msg),
+  info: (msg) => console.log(msg),
+  warn: (msg) => console.log(msg)
+};
 
 const ToastifyCSS = () => (
   <style>{`
@@ -47,13 +58,13 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    if (navigator.geolocation) {
+    if (cart.length > 0 && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           const buyerLat = pos.coords.latitude;
           const buyerLng = pos.coords.longitude;
-          const sellerLat = 10.8745; 
-          const sellerLng = 78.7066;
+          const sellerLat = cart[0].seller_lat || 10.8745; 
+          const sellerLng = cart[0].seller_lng || 78.7066;
           
           let dist = calculateDistance(sellerLat, sellerLng, buyerLat, buyerLng);
           if (!dist || dist === 0) dist = 2.5; 
@@ -65,7 +76,7 @@ const Checkout = () => {
         { timeout: 5000 }
       );
     }
-  }, []);
+  }, [cart]);
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -152,7 +163,8 @@ const Checkout = () => {
         state: selectedAddress.state,
         paymentMethod: 'cod',
         latitude: lat,
-        longitude: lng
+        longitude: lng,
+        deliveryCharge: deliveryFee
       }, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       });
@@ -168,7 +180,7 @@ const Checkout = () => {
   return (
     <div className="min-h-[80vh] font-josefin bg-gray-50 flex flex-col items-center py-10 px-4 sm:px-6 lg:px-8">
       <ToastifyCSS />
-      <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
+      
 
       <div className="w-full max-w-7xl">
         <div className="mb-8 flex items-center justify-between">
@@ -232,7 +244,7 @@ const Checkout = () => {
 
             <div className="bg-white p-6 sm:p-10 rounded-2xl shadow-sm border border-gray-100">
               <h3 className="text-2xl font-normal text-gray-900 flex items-center gap-2 mb-6">
-                💵 Payment Method
+                 Payment Method
               </h3>
               <div className="flex items-center gap-4 bg-gray-50 p-5 rounded-2xl border border-gray-200">
                 <input type="radio" checked readOnly className="w-6 h-6 text-hotpink-600 accent-hotpink-500" />
@@ -249,7 +261,7 @@ const Checkout = () => {
           <aside className="w-full lg:w-[450px] shrink-0 flex flex-col gap-8">
             <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-100">
               <h3 className="text-xl font-normal text-gray-900 flex items-center gap-2 mb-6">
-                📦 Order Summary <span className="text-base font-normal text-gray-500">({cart.reduce((sum, item) => sum + item.qty, 0)} Items)</span>
+                 Order Summary <span className="text-base font-normal text-gray-500">({cart.reduce((sum, item) => sum + item.qty, 0)} Items)</span>
               </h3>
               
               <div className="flex flex-col gap-4 mb-6 max-h-[40vh] overflow-y-auto pr-2">
@@ -307,10 +319,10 @@ const Checkout = () => {
               <h3 className="text-sm text-gray-500 mb-2 uppercase tracking-wide font-normal">Seller</h3>
               <div className="flex flex-col gap-1">
                 <span className="font-normal text-gray-900 text-lg flex items-center gap-2">
-                  🏪 {cart[0]?.seller_name || 'Seller'}
+                   {cart[0]?.seller_name || 'Seller'}
                 </span>
                 <span className="text-gray-600 text-sm flex items-center gap-1.5">
-                  📍 {cart[0]?.seller_district ? `${cart[0]?.seller_district}, ${cart[0]?.seller_state}` : 'Location Unavailable'}
+                   {cart[0]?.seller_district ? `${cart[0]?.seller_district}, ${cart[0]?.seller_state}` : 'Location Unavailable'}
                 </span>
               </div>
             </div>

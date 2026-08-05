@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+
 import {
   AiOutlineUser,
   AiOutlineMail,
@@ -12,8 +12,19 @@ import {
 } from "react-icons/ai";
 import { FiMapPin, FiSettings, FiEdit3, FiChevronRight, FiLogOut } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
-import "react-toastify/dist/ReactToastify.css";
-import profileIcon from "./profileIcon.png";
+
+import profileIcon from "../assets/profileIcon.png";
+
+
+
+
+const Bounce = null;
+const toast = {
+  success: (msg) => console.log(msg),
+  error: (msg) => console.log(msg),
+  info: (msg) => console.log(msg),
+  warn: (msg) => console.log(msg)
+};
 
 const ProfileField = ({ icon, label, name, value, editable, onChange, type = "text", options = [] }) => {
   return (
@@ -237,7 +248,7 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 font-josefin py-12">
-      <ToastContainer position="top-right" autoClose={3000} theme="colored" />
+      
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-8 items-start">

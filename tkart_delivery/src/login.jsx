@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { AiOutlineMobile, AiOutlineLock } from "react-icons/ai";
-import axios from 'axios';
-import { Bounce, ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import tklogo from "./assets/TKartD.png";
+import { Link, useNavigate } from 'react-router-dom';
+import { AiOutlineMobile, AiOutlineLock, AiOutlineUser } from "react-icons/ai";
+import axios from 'axios';
+
+
+import tklogo from "./assets/tklogo.png";
+
+
+
+
+
 
 
 const Login = () => {
@@ -68,6 +75,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-50 py-10 px-4 font-sans">
+      <ToastContainer />
       <div className="bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
 
         {/* Left Panel */}
@@ -97,11 +105,11 @@ const Login = () => {
           <form onSubmit={handleLogin} className="space-y-5">
             {/* Mobile */}
             <div className="flex items-center border-2 border-gray-100 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-blue-500 focus-within:bg-white transition-colors">
-              <AiOutlineMobile className="text-gray-400 mr-3 text-xl" />
+              <AiOutlineUser className="text-gray-400 mr-3 text-xl" />
               <input
                 type="text"
                 name="mobile"
-                placeholder="Mobile Number"
+                placeholder="Mobile Number or Email"
                 value={mobile}
                 onChange={(e) => setMobile(e.target.value)}
                 className="w-full focus:outline-none bg-transparent text-gray-700 placeholder-gray-400 font-medium"
@@ -157,7 +165,7 @@ const Login = () => {
         </div>
       </div>
 
-      <ToastContainer />
+      
     </div>
   );
 };

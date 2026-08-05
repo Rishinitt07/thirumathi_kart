@@ -1,201 +1,243 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-  FaSearch, FaHeart, FaShoppingCart, FaUser,
-  FaTruck, FaBox, FaShieldAlt, FaStar, FaShoppingBag,
-  FaGithub, FaLinkedin, FaHome, FaInfoCircle
-} from 'react-icons/fa';
-import heroImage from './tkart.png'; // Ensure this path is correct
+import { 
+  BsBagHeart, BsTruck, BsShieldCheck, BsStarFill, BsPeople, BsLightningCharge, BsArrowRight 
+} from 'react-icons/bs';
+import { FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import tkLogo from '../assets/tklogo.png';
 
-// ✅ Enhanced Hero Section with Image
-const HeroSection = () => (
-  <section className="relative bg-gradient-to-r from-hotpink-50 to-hotpink-100 py-12 px-4 overflow-hidden">
-    <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center justify-between gap-8">
-
-      {/* Left Content */}
-      <div className="text-center lg:text-left flex-1">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h1 className="text-4xl md:text-5xl font-normal text-hotpink-800 mb-4 leading-tight">
-            Empowering Women Through <br className="hidden md:block" />
-            <span className="text-hotpink-600">Smart Shopping</span>
-          </h1>
-          <p className="text-lg text-hotpink-700 mb-8 max-w-xl">
-            Curated products, exceptional quality, and seamless delivery — just for you.
-          </p>
-          <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
-            <Link to="/Login">
-              <button className="bg-hotpink-600 hover:bg-hotpink-700 text-white px-6 py-3 rounded-full font-normal shadow-md hover:shadow-lg transition-all flex items-center justify-center">
-                <FaShoppingBag className="mr-2" />
-                Shop Now
-              </button>
-            </Link>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Right Image */}
-      <div className="flex-1">
-        <img
-          src={heroImage}
-          alt="Thirumathi Kart Illustration"
-          className="w-full h-auto max-h-[450px] object-contain"
-        />
-      </div>
-    </div>
-  </section>
-);
-
-// ✅ Features Section (unchanged)
-const FeaturesSection = () => {
-  const features = [
-    { icon: <FaTruck />, title: 'Fast Delivery', desc: '24-48 hour delivery across Tamil Nadu' },
-    { icon: <FaBox />, title: 'Quality Products', desc: 'Verified sellers and authentic goods' },
-    { icon: <FaShieldAlt />, title: 'Secure Payments', desc: '100% secure payment gateway' },
-    { icon: <FaStar />, title: 'Women-Centric', desc: 'By women, for everyone' }
-  ];
-
+const Dashboard = () => {
   return (
-    <section className="py-12 bg-white px-4">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl font-normal text-center text-hotpink-800 mb-12">Why Choose Us</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((f, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ y: -5 }}
-              className="bg-hotpink-50 rounded-xl p-6 text-center"
+    <div className="min-h-screen bg-slate-50 font-josefin selection:bg-hotpink-500 selection:text-white overflow-x-hidden">
+      {/* Hero Section */}
+      <div className="relative min-h-[90vh] flex items-center pt-20 pb-16 overflow-hidden">
+        {/* Animated Background Blobs */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-hotpink-300 to-rose-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-[pulse_8s_ease-in-out_infinite] pointer-events-none"></div>
+        <div className="absolute top-40 -left-20 w-[500px] h-[500px] bg-gradient-to-tr from-purple-300 to-hotpink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-[pulse_10s_ease-in-out_infinite] pointer-events-none delay-1000"></div>
+        <div className="absolute -bottom-20 left-1/3 w-[500px] h-[500px] bg-gradient-to-bl from-rose-300 to-hotpink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-[pulse_9s_ease-in-out_infinite] pointer-events-none delay-2000"></div>
+        
+        <div className="container mx-auto px-4 md:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+            
+            {/* Left Content */}
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="max-w-2xl mx-auto lg:mx-0 text-center lg:text-left pt-10 lg:pt-0"
             >
-              <div className="mb-4 text-3xl text-hotpink-600">{f.icon}</div>
-              <h3 className="text-xl font-normal text-hotpink-700 mb-2">{f.title}</h3>
-              <p className="text-hotpink-600">{f.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// ✅ Enhanced About Section
-const AboutSection = () => (
-  <section className="py-16 bg-gray-50 px-4 relative">
-    {/* Decorative elements */}
-    <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-hotpink-50 to-transparent"></div>
-
-    <div className="max-w-5xl mx-auto relative z-10">
-      <motion.div
-        className="bg-white rounded-xl shadow-lg overflow-hidden"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <div className="p-8 md:p-12">
-          <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-3xl md:text-4xl font-normal text-hotpink-800 mb-6 text-center"
-          >
-            About <span className="text-hotpink-600">Thirumathi Kart</span>
-          </motion.h2>
-
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-            >
-              <p className="text-lg text-hotpink-700 mb-6 leading-relaxed">
-                <strong>Thirumathi Kart</strong> is an initiative by <strong>NIT Trichy</strong>, aimed at empowering rural entrepreneurs, artisans, and self-help groups (SHGs) by providing them with a digital platform to showcase and sell their products.
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-[1.1] mb-6 tracking-tight">
+                Empowering <span className="text-transparent bg-clip-text bg-gradient-to-r from-hotpink-500 to-rose-500">Women</span><br/>
+                Through Smart Shopping
+              </h1>
+              
+              <p className="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed max-w-xl mx-auto lg:mx-0 font-light">
+                Discover authentic, handcrafted, and organic products directly from women artisans and self-help groups across India.
               </p>
-              <p className="text-lg text-hotpink-700 leading-relaxed">
-                <strong>The e-commerce platform for SHGs</strong> enables self-help groups to reach a wider audience, increase their income, and achieve financial independence. We are committed to promoting local craftsmanship and sustainable livelihoods.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="bg-hotpink-100 rounded-lg p-6 h-full flex items-center justify-center"
-            >
-              <div className="text-center">
-                <div className="text-5xl mb-4 text-hotpink-600">👩‍🌾</div>
-                <h3 className="text-xl font-normal text-hotpink-800">Supporting Women Entrepreneurs</h3>
-                <p className="text-hotpink-700 mt-2">Connecting artisans with customers nationwide</p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <Link to="/login">
+                  <motion.button 
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-hotpink-500 to-rose-500 text-white rounded-2xl font-medium text-lg shadow-xl shadow-hotpink-500/30 flex items-center justify-center gap-2"
+                  >
+                    <BsBagHeart className="text-xl" /> Start Shopping
+                  </motion.button>
+                </Link>
+                <Link to="/register">
+                  <motion.button 
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full sm:w-auto px-8 py-4 bg-white text-gray-800 border-2 border-gray-100 hover:border-hotpink-200 rounded-2xl font-medium text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2"
+                  >
+                    Join the Community
+                  </motion.button>
+                </Link>
               </div>
             </motion.div>
+            
+            {/* Right Illustration */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative hidden lg:block"
+            >
+              <div className="absolute inset-0 bg-gradient-to-tr from-hotpink-500/20 to-transparent rounded-full blur-3xl"></div>
+              <img 
+                src={tkLogo} 
+                alt="Thirumathi Kart Logo" 
+                className="w-full h-auto max-w-lg mx-auto relative z-10 drop-shadow-2xl hover:-translate-y-2 transition-transform duration-500 object-contain aspect-square"
+              />
+            </motion.div>
           </div>
         </div>
-      </motion.div>
-    </div>
-
-    <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-hotpink-50 to-transparent"></div>
-  </section>
-);
-
-// ✅ Footer (unchanged)
-const Footer = () => (
-  <footer className="bg-hotpink-800 text-white pt-8 pb-4 px-4">
-    <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6">
-      <div>
-        <h4 className="font-normal text-lg mb-2">Thirumathi Kart</h4>
-        <p className="text-sm mb-4">
-          Empowering rural artisans, women entrepreneurs, and SHGs.
-        </p>
-        <div className="flex space-x-4">
-          <a href="#"><FaGithub className="text-xl" /></a>
-          <a href="#"><FaLinkedin className="text-xl" /></a>
+      </div>
+      
+      {/* Features Section */}
+      <section className="py-24 bg-white relative">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 tracking-tight">Why Choose Thirumathi Kart?</h2>
+            <div className="w-20 h-1.5 bg-hotpink-500 rounded-full mx-auto mb-6"></div>
+            <p className="text-gray-600 text-lg">We provide an ecosystem that ensures quality for buyers while supporting rural women entrepreneurs.</p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { icon: <BsTruck/>, title: 'Fast Delivery', desc: 'Secure and rapid delivery network across the state.' },
+              { icon: <BsShieldCheck/>, title: 'Authentic Quality', desc: 'Products directly from verified artisans and SHGs.' },
+              { icon: <BsPeople/>, title: 'Empowering Women', desc: 'Every purchase directly supports female entrepreneurs.' },
+              { icon: <BsLightningCharge/>, title: 'Secure Payments', desc: '100% safe transactions with easy refund policies.' }
+            ].map((feature, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                className="bg-slate-50 border border-slate-100 hover:border-hotpink-200 rounded-3xl p-8 hover:shadow-xl hover:shadow-hotpink-100/50 transition-all group"
+              >
+                <div className="w-14 h-14 bg-white shadow-sm rounded-2xl flex items-center justify-center text-hotpink-500 text-2xl mb-6 group-hover:scale-110 group-hover:bg-hotpink-500 group-hover:text-white transition-all duration-300">
+                  {feature.icon}
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
+                <p className="text-gray-600 leading-relaxed font-light">{feature.desc}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </div>
-
-      <div>
-        <h4 className="font-normal text-lg mb-2">Quick Links</h4>
-        <ul className="space-y-1">
-          <li><Link to="/" className="hover:text-hotpink-300 flex items-center"><FaHome className="mr-2" /> Home</Link></li>
-          <li><Link to="/about" className="hover:text-hotpink-300 flex items-center"><FaInfoCircle className="mr-2" /> About</Link></li>
-          <li><Link to="/products" className="hover:text-hotpink-300 flex items-center"><FaShoppingBag className="mr-2" /> Products</Link></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 className="font-normal text-lg mb-2">Contact</h4>
-        <p className="text-sm">NIT-Trichy Campus, Tamil Nadu</p>
-        <p className="text-sm">📞 +91 12345 67890</p>
-        <p className="text-sm">📧 contact@thirumathikart.com</p>
-      </div>
-
-      <div>
-        <h4 className="font-normal text-lg mb-2">Stay Updated</h4>
-        <p className="text-sm mb-2">Subscribe for offers</p>
-        <div className="flex">
-          <input type="email" placeholder="Email" className="px-3 py-2 rounded-l text-black text-sm" />
-          <button className="bg-hotpink-600 hover:bg-hotpink-700 px-3 py-2 rounded-r text-sm">Subscribe</button>
+      </section>
+      
+      {/* About Section */}
+      <section className="py-24 bg-slate-900 text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-hotpink-900/40 to-transparent pointer-events-none"></div>
+        <div className="container mx-auto px-4 md:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div 
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">Our Mission & Vision</h2>
+              <p className="text-slate-300 text-lg mb-6 leading-relaxed font-light">
+                Thirumathi Kart is an initiative designed to bridge the gap between talented rural artisans (Self-Help Groups) and conscientious buyers. We believe in creating a sustainable ecosystem where women achieve financial independence through their skills.
+              </p>
+              <p className="text-slate-300 text-lg mb-8 leading-relaxed font-light">
+                Every product on our platform tells a story of hard work, tradition, and empowerment. By choosing us, you aren't just buying a product; you are investing in someone's dream.
+              </p>
+              <div className="grid grid-cols-2 gap-6 pt-4 border-t border-slate-700/50">
+                <div>
+                  <h4 className="text-4xl font-bold text-hotpink-400 mb-1">5000+</h4>
+                  <p className="text-slate-400 font-medium uppercase tracking-wider text-xs">Women Sellers</p>
+                </div>
+                <div>
+                  <h4 className="text-4xl font-bold text-hotpink-400 mb-1">100K+</h4>
+                  <p className="text-slate-400 font-medium uppercase tracking-wider text-xs">Happy Buyers</p>
+                </div>
+              </div>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-700/50"
+            >
+              <div className="absolute inset-0 bg-hotpink-500/20 mix-blend-overlay"></div>
+              <img 
+                src="https://images.unsplash.com/photo-1573164574572-cb89e39749b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                alt="Women empowerment" 
+                className="w-full h-[500px] object-cover"
+              />
+            </motion.div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div className="border-t border-hotpink-700 mt-4 pt-4 text-center text-sm text-hotpink-200">
-      © {new Date().getFullYear()} Thirumathi Kart. All rights reserved.
-    </div>
-  </footer>
-);
+      </section>
 
-// ✅ Main Dashboard (without Navbar)
-const Dashboard = () => (
-  <div className="min-h-screen flex flex-col font-sans">
-    <main className="flex-grow">
-      <HeroSection />
-      <FeaturesSection />
-      <AboutSection />
-    </main>
-    <Footer />
-  </div>
-);
+      {/* CTA Section */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-4 md:px-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-gradient-to-br from-hotpink-50 to-rose-100 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden border border-hotpink-200"
+          >
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-hotpink-300/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+            
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 relative z-10 tracking-tight">Ready to experience the best?</h2>
+            <p className="text-xl text-gray-700 mb-10 max-w-2xl mx-auto relative z-10 font-light">Join thousands of customers who are already enjoying premium handcrafted products while supporting a noble cause.</p>
+            <Link to="/register">
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-10 py-5 bg-hotpink-600 hover:bg-hotpink-700 text-white rounded-full font-bold text-lg shadow-xl shadow-hotpink-500/30 transition-all relative z-10 inline-flex items-center gap-3"
+              >
+                Create Free Account <BsArrowRight />
+              </motion.button>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-slate-50 pt-16 pb-8 border-t border-slate-200">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <div className="col-span-1 md:col-span-1">
+              <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-hotpink-500 to-rose-500 mb-4 tracking-tight">TKart</h3>
+              <p className="text-gray-500 text-sm leading-relaxed mb-6">
+                Empowering rural women entrepreneurs by connecting them with conscientious buyers nationwide.
+              </p>
+              <div className="flex gap-4">
+                <a href="#" className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-hotpink-500 hover:border-hotpink-500 transition-colors shadow-sm"><FaTwitter/></a>
+                <a href="#" className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-hotpink-500 hover:border-hotpink-500 transition-colors shadow-sm"><FaInstagram/></a>
+                <a href="#" className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-hotpink-500 hover:border-hotpink-500 transition-colors shadow-sm"><FaLinkedin/></a>
+              </div>
+            </div>
+            
+            <div>
+              <h4 className="font-bold text-gray-900 mb-6 uppercase tracking-wider text-sm">Quick Links</h4>
+              <ul className="space-y-3">
+                <li><Link to="/login" className="text-gray-500 hover:text-hotpink-500 transition-colors text-sm">Shop Now</Link></li>
+                <li><Link to="/about" className="text-gray-500 hover:text-hotpink-500 transition-colors text-sm">About Us</Link></li>
+                <li><Link to="/register" className="text-gray-500 hover:text-hotpink-500 transition-colors text-sm">Create Account</Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-bold text-gray-900 mb-6 uppercase tracking-wider text-sm">Legal</h4>
+              <ul className="space-y-3">
+                <li><a href="#" className="text-gray-500 hover:text-hotpink-500 transition-colors text-sm">Privacy Policy</a></li>
+                <li><a href="#" className="text-gray-500 hover:text-hotpink-500 transition-colors text-sm">Terms of Service</a></li>
+                <li><a href="#" className="text-gray-500 hover:text-hotpink-500 transition-colors text-sm">Refund Policy</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-bold text-gray-900 mb-6 uppercase tracking-wider text-sm">Contact</h4>
+              <ul className="space-y-3">
+                <li className="text-gray-500 text-sm">NIT-Trichy Campus, Tamil Nadu</li>
+                <li className="text-gray-500 text-sm">+91 98765 43210</li>
+                <li className="text-gray-500 text-sm">support@thirumathikart.com</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-t border-slate-200 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-gray-400 text-sm"> {new Date().getFullYear()} Thirumathi Kart. All rights reserved.</p>
+            <p className="text-gray-400 text-sm">Made with  for Rural Empowerment</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
 
 export default Dashboard;

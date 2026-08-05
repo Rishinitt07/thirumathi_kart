@@ -1,10 +1,21 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
+
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { syncCartToDB } from '../../utils/sync';
 import ProductDetailModal from './ProductDetailModal';
+
+
+
+
+const Bounce = null;
+const toast = {
+  success: (msg) => console.log(msg),
+  error: (msg) => console.log(msg),
+  info: (msg) => console.log(msg),
+  warn: (msg) => console.log(msg)
+};
 
 const ToastifyCSS = () => (
   <style>{`
@@ -233,7 +244,7 @@ const MyCart = () => {
         </div>
 
 
-        <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
+        
 
         <ProductDetailModal 
           product={selectedProduct} 

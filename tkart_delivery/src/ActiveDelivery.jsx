@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+
 import { useNavigate } from 'react-router-dom';
 import { FaPhoneAlt, FaDirections, FaStore, FaUser, FaBox, FaQrcode } from 'react-icons/fa';
 import { MdOutlineLocalShipping, MdCheckCircle } from 'react-icons/md';
+
+
+
+
+const Bounce = null;
+const toast = {
+  success: (msg) => console.log(msg),
+  error: (msg) => console.log(msg),
+  info: (msg) => console.log(msg),
+  warn: (msg) => console.log(msg)
+};
 
 const ActiveDelivery = () => {
   const [activeDelivery, setActiveDelivery] = useState(null);
@@ -124,7 +135,7 @@ const ActiveDelivery = () => {
   const handlePaymentSuccess = () => {
     setDeliveryStage('completed');
     updateStatus('completed');
-    toast.success('Delivery Completed! ₹156 added to earnings.');
+    toast.success(`Delivery Completed! ₹${Number(activeDelivery.delivery_charge || 0).toFixed(0)} added to earnings.`);
     setTimeout(() => {
       navigate('/dashboard');
     }, 2000);
@@ -369,7 +380,7 @@ const ActiveDelivery = () => {
 
         {deliveryStage === 'qr' && (
           <div className="text-center py-4 animate-fade-in">
-            <p className="text-gray-900 font-bold text-xl mb-2">Collect ₹156</p>
+            <p className="text-gray-900 font-bold text-xl mb-2">Collect ₹{Number(activeDelivery.delivery_charge || 0).toFixed(0)}</p>
             <p className="text-gray-500 mb-6">Buyer can scan this to pay.</p>
             <div className="flex justify-center mb-6">
               <div className="bg-white p-4 rounded-2xl border-4 border-gray-100 shadow-sm">

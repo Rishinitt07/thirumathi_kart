@@ -21,9 +21,9 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 
-import ad1 from "../assects/ad1.png";
-import ad2 from "../assects/ad2.png";
-import ad3 from "../assects/ad3.png";
+import ad1 from "../assets/ad1.png";
+import ad2 from "../assets/ad2.png";
+import ad3 from "../assets/ad3.png";
 
 const ads = [ad1, ad2, ad3];
 // Main Home Page Component

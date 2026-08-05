@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
+
 import axios from 'axios';
 import { FiUser, FiHome, FiMap, FiBox, FiXCircle } from 'react-icons/fi';
-import tklogo from '../assets/TKartD.png';
+import tklogo from '../assets/tklogo.png';
+
+
+
 
 // Reusable Sidebar Component
+const Bounce = null;
+const toast = {
+  success: (msg) => console.log(msg),
+  error: (msg) => console.log(msg),
+  info: (msg) => console.log(msg),
+  warn: (msg) => console.log(msg)
+};
+
 const SidebarItem = ({ to, label, icon, onClick }) => (
   <NavLink
     to={to}
@@ -254,7 +265,7 @@ export const Layout = () => {
           const hasNew = currentOrderIds.some(id => !prevOrderIdsRef.current.includes(id));
           if (hasNew) {
             playNotificationSound();
-            toast.info('🔔 New Delivery Order Available!', {
+            toast.info(' New Delivery Order Available!', {
               position: "top-center",
               autoClose: 3000,
               theme: "light",

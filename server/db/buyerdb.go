@@ -25,6 +25,7 @@ type OrderWithDetails struct {
 	PickupAddress string    `json:"pickup_address"`
 	PickupPincode string    `json:"pickup_pincode"`
 	Phone         string    `json:"phone"`
+	DeliveryCharge float64  `json:"delivery_charge"`
 }
 
 // GetAvailableOrders fetches orders using FDW with seller pickup addresses
@@ -35,6 +36,7 @@ func GetAvailableOrders() ([]OrderWithDetails, error) {
             bo.id,
             bo.username,
             bo.date,
+            bo.delivery_charge,
             sp.username as seller_username,
             su.address,
             su.district,
@@ -65,7 +67,8 @@ func GetAvailableOrders() ([]OrderWithDetails, error) {
                 ' | ' 
                 ORDER BY seller_username LIMIT 1
             ) as pickup_address,
-            STRING_AGG(pincode, ' | ' ORDER BY seller_username LIMIT 1) as pickup_pincode
+            STRING_AGG(pincode, ' | ' ORDER BY seller_username LIMIT 1) as pickup_pincode,
+            MAX(delivery_charge) as delivery_charge
         FROM order_sellers
         GROUP BY id, username, date
     )
@@ -77,7 +80,8 @@ func GetAvailableOrders() ([]OrderWithDetails, error) {
         '000000' as drop_pincode,           -- Placeholder
         op.pickup_address,
         op.pickup_pincode,
-        'No Phone' as phone                -- Placeholder - you might want to add this to buyer_orders
+        'No Phone' as phone,               -- Placeholder - you might want to add this to buyer_orders
+        op.delivery_charge
     FROM order_pickup op
     ORDER BY op.date DESC`
 
@@ -96,7 +100,7 @@ func GetAvailableOrders() ([]OrderWithDetails, error) {
 			&order.ID, &order.Username, &date,
 			&order.DropAddress, &order.DropPincode,
 			&order.PickupAddress, &order.PickupPincode,
-			&order.Phone,
+			&order.Phone, &order.DeliveryCharge,
 		)
 		if err != nil {
 			return nil, err

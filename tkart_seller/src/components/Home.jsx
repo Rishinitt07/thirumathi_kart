@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { FiSearch, FiChevronRight } from 'react-icons/fi';
-import { BsStarFill, BsGem, BsFlower1, BsBasket, BsShop, BsDroplet } from 'react-icons/bs';
+import { BsStarFill, BsGem, BsFlower1, BsBasket, BsShop, BsDroplet, BsPlusCircle, BsBoxSeam, BsTag } from 'react-icons/bs';
 import { GiClothes, GiFruitBowl, GiOfficeChair } from 'react-icons/gi';
 import { BiLeaf } from 'react-icons/bi';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
@@ -14,6 +14,7 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
   const [myProducts, setMyProducts] = useState([]);
+  const [stats, setStats] = useState(null);
 
 
   useEffect(() => {
@@ -24,9 +25,10 @@ const Home = () => {
     }
 
     axios
-      .get('http://localhost:8080/dashboard', {
+      .get('http://localhost:8080/dashboard/stats', {
         headers: { Authorization: `Bearer ${token}` },
       })
+      .then(res => setStats(res.data))
       .catch(err => {
         console.error('Access denied', err);
         localStorage.removeItem('token');
@@ -125,36 +127,12 @@ const Home = () => {
 
   const [timeRange, setTimeRange] = useState('monthly');
 
-  const analyticsData = {
-    weekly: [
-      { name: 'Mon', sales: 4000, orders: 24 },
-      { name: 'Tue', sales: 3000, orders: 13 },
-      { name: 'Wed', sales: 5000, orders: 48 },
-      { name: 'Thu', sales: 2780, orders: 39 },
-      { name: 'Fri', sales: 6890, orders: 68 },
-      { name: 'Sat', sales: 8390, orders: 88 },
-      { name: 'Sun', sales: 9490, orders: 93 },
-    ],
-    monthly: [
-      { name: 'Jan', sales: 24000, orders: 150 },
-      { name: 'Feb', sales: 21000, orders: 130 },
-      { name: 'Mar', sales: 36000, orders: 270 },
-      { name: 'Apr', sales: 29000, orders: 220 },
-      { name: 'May', sales: 49000, orders: 390 },
-      { name: 'Jun', sales: 51000, orders: 400 },
-    ],
-    yearly: [
-      { name: '2021', sales: 150000, orders: 800 },
-      { name: '2022', sales: 230000, orders: 1200 },
-      { name: '2023', sales: 340000, orders: 1800 },
-      { name: '2024', sales: 290000, orders: 1500 },
-      { name: '2025', sales: 420000, orders: 2200 },
-    ]
-  };
-
+  
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
-      return (
+      if (!stats) return null;
+
+  return (
         <div className="bg-white/90 backdrop-blur-md p-4 rounded-xl shadow-xl border border-hotpink-100">
           <p className="font-normal text-gray-800 mb-2">{label}</p>
           {payload.map((entry, index) => (
@@ -168,40 +146,50 @@ const Home = () => {
     return null;
   };
 
+  if (!stats) return null;
+
   return (
     <div className="min-h-screen bg-white font-josefin">
       <main className="container mx-auto px-4 py-8">
         {/* Analytics Dashboard */}
         <section className="mb-12">
           {/* Top KPI Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-6 mb-6">
             <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} className="bg-gradient-to-br from-hotpink-400 to-hotpink-600 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 bg-white/20 rounded-full blur-xl -translate-y-1/2 translate-x-1/3"></div>
               <h3 className="text-white/80 font-normal text-sm uppercase tracking-wider mb-2">Total Earnings</h3>
-              <p className="text-4xl font-normal drop-shadow-sm">₹1,28,450</p>
-              <div className="mt-4 text-sm font-normal bg-white/20 inline-block px-3 py-1 rounded-full">+14.5% from last month</div>
+              <p className="text-4xl font-normal drop-shadow-sm">₹{stats.totalRevenue.toLocaleString('en-IN')}</p>
+              <div className="mt-4 text-sm font-normal bg-white/20 inline-block px-3 py-1 rounded-full">{stats.revenueGrowth > 0 ? '+' : ''}{stats.revenueGrowth?.toFixed(1) || '0.0'}% from last month</div>
             </motion.div>
 
             <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay:0.1}} className="glass-card rounded-3xl p-6 shadow-sm border border-hotpink-100">
               <h3 className="text-gray-500 font-normal text-sm uppercase tracking-wider mb-2">Total Orders</h3>
-              <p className="text-4xl font-normal text-gray-800">438</p>
-              <div className="mt-4 text-sm font-normal text-hotpink-500 bg-hotpink-50 inline-block px-3 py-1 rounded-full">+22 new today</div>
+              <p className="text-4xl font-normal text-gray-800">{stats.totalOrders}</p>
+              <div className="mt-4 text-sm font-normal text-hotpink-500 bg-hotpink-50 inline-block px-3 py-1 rounded-full">+{stats.ordersToday || 0} new today</div>
             </motion.div>
             
             <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay:0.2}} className="glass-card rounded-3xl p-6 shadow-sm border border-hotpink-100 flex items-center justify-between">
               <div>
                 <h3 className="text-gray-500 font-normal text-sm uppercase tracking-wider mb-2">Delivered</h3>
-                <p className="text-4xl font-normal text-gray-800">328</p>
+                <p className="text-4xl font-normal text-gray-800">{stats.deliveredOrders}</p>
               </div>
-              <CircularProgressbar value={75} text={`75%`} strokeWidth={12} styles={buildStyles({textColor: '#ff69b4', pathColor: '#ff69b4', trailColor: '#ffe4e6'})} className="w-20 h-20 font-normal" />
+              <CircularProgressbar value={stats.totalOrders > 0 ? (stats.deliveredOrders / stats.totalOrders) * 100 : 0} text={`${stats.totalOrders > 0 ? Math.round((stats.deliveredOrders / stats.totalOrders) * 100) : 0}%`} strokeWidth={12} styles={buildStyles({textColor: '#ff69b4', pathColor: '#ff69b4', trailColor: '#ffe4e6'})} className="w-20 h-20 font-normal" />
             </motion.div>
 
             <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay:0.3}} className="glass-card rounded-3xl p-6 shadow-sm border border-hotpink-100 flex items-center justify-between">
               <div>
                 <h3 className="text-gray-500 font-normal text-sm uppercase tracking-wider mb-2">Pending</h3>
-                <p className="text-4xl font-normal text-gray-800">110</p>
+                <p className="text-4xl font-normal text-gray-800">{stats.pendingOrders}</p>
               </div>
-              <CircularProgressbar value={25} text={`25%`} strokeWidth={12} styles={buildStyles({textColor: '#f59e0b', pathColor: '#f59e0b', trailColor: '#fef3c7'})} className="w-20 h-20 font-normal" />
+              <CircularProgressbar value={stats.totalOrders > 0 ? (stats.pendingOrders / stats.totalOrders) * 100 : 0} text={`${stats.totalOrders > 0 ? Math.round((stats.pendingOrders / stats.totalOrders) * 100) : 0}%`} strokeWidth={12} styles={buildStyles({textColor: '#f59e0b', pathColor: '#f59e0b', trailColor: '#fef3c7'})} className="w-20 h-20 font-normal" />
+            </motion.div>
+
+            <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay:0.35}} className="glass-card rounded-3xl p-6 shadow-sm border border-hotpink-100 flex items-center justify-between">
+              <div>
+                <h3 className="text-gray-500 font-normal text-sm uppercase tracking-wider mb-2">Cancelled</h3>
+                <p className="text-4xl font-normal text-gray-800">{stats.cancelledOrders || 0}</p>
+              </div>
+              <CircularProgressbar value={stats.totalOrders > 0 ? ((stats.cancelledOrders || 0) / stats.totalOrders) * 100 : 0} text={`${stats.totalOrders > 0 ? Math.round(((stats.cancelledOrders || 0) / stats.totalOrders) * 100) : 0}%`} strokeWidth={12} styles={buildStyles({textColor: '#ef4444', pathColor: '#ef4444', trailColor: '#fee2e2'})} className="w-20 h-20 font-normal" />
             </motion.div>
           </div>
 
@@ -228,7 +216,7 @@ const Home = () => {
 
             <div className="h-[350px] w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={analyticsData[timeRange]} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                <AreaChart data={stats.analyticsData[timeRange]} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                   <defs>
                     <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="#ff69b4" stopOpacity={0.8}/>
@@ -252,20 +240,39 @@ const Home = () => {
             </div>
           </motion.div>
         </section>
-         {/* Featured Deals */}
+         {/* Quick Actions */}
         <section className="mb-12">
-          <h2 className="text-2xl font-normal text-gray-800 mb-6 drop-shadow-sm">Featured Deals</h2>
+          <h2 className="text-2xl font-normal text-gray-800 mb-6 drop-shadow-sm">Quick Actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {featuredDeals.map((deal, index) => (
-              <div key={index} className={`${deal.bgColor} rounded-2xl p-6 flex items-center justify-between hover-lift shadow-sm`}>
-                <div>
-                  <h3 className="text-xl font-normal text-gray-800">{deal.title}</h3>
-                  <p className="text-hotpink-600 font-normal mb-1">{deal.subtitle}</p>
-                  <p className="text-sm font-normal text-gray-600">{deal.tagline}</p>
-                </div>
-                <div className="bg-white/60 backdrop-blur-sm p-4 rounded-full shadow-inner">{deal.icon}</div>
+            <Link to="/upload" className="bg-hotpink-100 rounded-2xl p-6 flex items-center justify-between hover-lift shadow-sm group">
+              <div>
+                <h3 className="text-xl font-normal text-gray-800 group-hover:text-hotpink-600 transition-colors">Add Products</h3>
+                <p className="text-sm font-normal text-gray-600 mt-1">Upload new items to your store</p>
               </div>
-            ))}
+              <div className="bg-white/60 backdrop-blur-sm p-4 rounded-full shadow-inner">
+                <BsPlusCircle className="text-3xl text-hotpink-600" />
+              </div>
+            </Link>
+            
+            <Link to="/orders" className="bg-blue-100 rounded-2xl p-6 flex items-center justify-between hover-lift shadow-sm group">
+              <div>
+                <h3 className="text-xl font-normal text-gray-800 group-hover:text-blue-600 transition-colors">Manage Orders</h3>
+                <p className="text-sm font-normal text-gray-600 mt-1">View and update customer orders</p>
+              </div>
+              <div className="bg-white/60 backdrop-blur-sm p-4 rounded-full shadow-inner">
+                <BsBoxSeam className="text-3xl text-blue-600" />
+              </div>
+            </Link>
+
+            <Link to="/myproducts" className="bg-purple-100 rounded-2xl p-6 flex items-center justify-between hover-lift shadow-sm group">
+              <div>
+                <h3 className="text-xl font-normal text-gray-800 group-hover:text-purple-600 transition-colors">Make Offer</h3>
+                <p className="text-sm font-normal text-gray-600 mt-1">Create special deals on products</p>
+              </div>
+              <div className="bg-white/60 backdrop-blur-sm p-4 rounded-full shadow-inner">
+                <BsTag className="text-3xl text-purple-600" />
+              </div>
+            </Link>
           </div>
         </section>
 

@@ -96,7 +96,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Get user from database
 	var storedHash, username string
-	query := `SELECT password_hash, username FROM users WHERE phone = $1`
+	query := `SELECT password_hash, username FROM users WHERE phone = $1 OR email = $1`
 	err := db.GetDeliveryDB().QueryRow(query, req.Mobile).Scan(&storedHash, &username)
 	if err != nil {
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)

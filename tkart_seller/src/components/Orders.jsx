@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
-import { ToastContainer, toast } from 'react-toastify';
+
 import {
   FiDownload, FiClock, FiCheckCircle, FiTruck, FiSearch,
   FiUser, FiPhone, FiMapPin, FiCalendar, FiPackage, FiHash
 } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
-import 'react-toastify/dist/ReactToastify.css';
+
+
+
+
 // Removed fakeOrders
 
 const ORDER_STATUS = {
@@ -28,6 +31,14 @@ const TRACKING_STEPS = [
   { id: 'out_delivery', label: 'Order Picked', statusMatch: [ORDER_STATUS.OUT_FOR_DELIVERY, ORDER_STATUS.NEAR_DOORSTEP, ORDER_STATUS.DELIVERED] },
   { id: 'doorstep', label: 'Delivered', statusMatch: [ORDER_STATUS.NEAR_DOORSTEP, ORDER_STATUS.DELIVERED] },
 ];
+
+const Bounce = null;
+const toast = {
+  success: (msg) => console.log(msg),
+  error: (msg) => console.log(msg),
+  info: (msg) => console.log(msg),
+  warn: (msg) => console.log(msg)
+};
 
 const getStatusConfig = (status) => {
   switch (status) {
@@ -271,24 +282,25 @@ const Orders = () => {
         </div>
 
         {/* Stats Row */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+        <div className="flex flex-wrap gap-4 mb-8 justify-between">
           {[
-            { label: 'Total Orders', value: orders.length, color: 'text-hotpink-600', bg: 'bg-hotpink-50' },
+            { label: 'Total', value: orders.length, color: 'text-hotpink-600', bg: 'bg-hotpink-50' },
             { label: 'Pending', value: orders.filter(o => o.status === 'Pending' || o.status === 'Processing').length, color: 'text-amber-600', bg: 'bg-amber-50' },
             { label: 'Confirmed', value: orders.filter(o => o.status === 'Confirmed').length, color: 'text-indigo-600', bg: 'bg-indigo-50' },
-            { label: 'Order Packed', value: orders.filter(o => o.status === 'Shipped').length, color: 'text-blue-600', bg: 'bg-blue-50' },
-            { label: 'Order Picked', value: orders.filter(o => o.deliveryStatus === 'in_progress').length, color: 'text-purple-600', bg: 'bg-purple-50' },
+            { label: 'Packed', value: orders.filter(o => o.status === 'Shipped' && o.deliveryStatus !== 'in_progress' && o.deliveryStatus !== 'assigned').length, color: 'text-blue-600', bg: 'bg-blue-50' },
+            { label: 'Picked', value: orders.filter(o => o.deliveryStatus === 'in_progress' || o.deliveryStatus === 'assigned').length, color: 'text-purple-600', bg: 'bg-purple-50' },
             { label: 'Delivered', value: orders.filter(o => o.status === 'Delivered').length, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+            { label: 'Cancelled', value: orders.filter(o => o.status === 'Cancelled').length, color: 'text-red-600', bg: 'bg-red-50' },
           ].map((stat, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className={`${stat.bg} rounded-2xl p-4 text-center shadow-sm border border-white`}
+              className={`${stat.bg} flex-1 min-w-[120px] rounded-2xl p-4 text-center shadow-sm border border-white`}
             >
               <p className={`text-3xl font-normal ${stat.color}`}>{stat.value}</p>
-              <p className="text-xs font-normal text-gray-500 uppercase tracking-wider mt-1">{stat.label}</p>
+              <p className="text-[10px] font-normal text-gray-500 uppercase tracking-wider mt-1">{stat.label}</p>
             </motion.div>
           ))}
         </div>
@@ -365,7 +377,7 @@ const Orders = () => {
                           />
                           <div className="flex-1 text-center sm:text-left">
                             <h5 className="font-normal text-gray-800 text-lg leading-tight mb-1">{item.productName}</h5>
-                            <p className="text-xs text-gray-500 font-normal">Qty: {item.quantity} × ₹{item.price}</p>
+                            <p className="text-xs text-gray-500 font-normal">Qty: {item.quantity} × ₹{Number(item.price).toFixed(2)}</p>
                           </div>
                           <div className="text-right">
                              <p className="text-lg font-normal text-gray-900">₹{(item.quantity * item.price).toFixed(2)}</p>
@@ -377,7 +389,7 @@ const Orders = () => {
                     {/* Footer: Total + Actions */}
                     <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-gray-100">
                       <div>
-                        <p className="text-xs text-gray-400 font-normal uppercase tracking-wider">Grand Total</p>
+                        <p className="text-xs text-gray-400 font-normal uppercase tracking-wider mt-2">Order Total</p>
                         <p className="text-3xl font-normal text-hotpink-600 drop-shadow-sm">₹{total.toFixed(2)}</p>
                       </div>
                       <div className="flex items-center gap-3">
@@ -476,7 +488,7 @@ const Orders = () => {
         </motion.div>
       </div>
 
-      <ToastContainer position="top-center" autoClose={2000} />
+      
 
       {/* Hidden Professional Invoice Template (Hex Colors Only for html2canvas compatibility) */}
       {invoiceOrder && (

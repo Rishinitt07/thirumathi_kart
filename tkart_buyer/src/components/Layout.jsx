@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
+
 import {
   FiSearch,
   FiShoppingCart,
@@ -15,11 +15,22 @@ import {
   FiInfo,
   FiLogOut
 } from 'react-icons/fi';
-import tklogo from './tkart.png';
+import tklogo from '../assets/tklogo.png';
 import axios from 'axios';
 import { fetchInitialData } from '../utils/sync';
 
+
+
+
 // Error boundary for sidebar items
+const Bounce = null;
+const toast = {
+  success: (msg) => console.log(msg),
+  error: (msg) => console.log(msg),
+  info: (msg) => console.log(msg),
+  warn: (msg) => console.log(msg)
+};
+
 const withErrorBoundary = (Component) => (props) => {
   try {
     return <Component {...props} />;
@@ -369,17 +380,7 @@ export const Layout = () => {
 
   return (
     <div className="min-h-screen bg-white font-josefin">
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        pauseOnHover={false}
-      />
+      
 
       <Navbar toggleSidebar={() => setSidebarOpen(true)} />
       <Sidebar isOpen={sidebarOpen} closeSidebar={() => setSidebarOpen(false)} />

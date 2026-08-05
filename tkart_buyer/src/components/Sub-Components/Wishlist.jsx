@@ -1,11 +1,22 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { FaTrash, FaCartPlus } from "react-icons/fa";
-import { toast, ToastContainer } from "react-toastify";
+
 import { motion } from "framer-motion";
-import "react-toastify/dist/ReactToastify.css";
+
 import ProductDetailModal from './ProductDetailModal';
 import { syncCartToDB, syncWishlistToDB } from '../../utils/sync';
 
+
+
+
+
+const Bounce = null;
+const toast = {
+  success: (msg) => console.log(msg),
+  error: (msg) => console.log(msg),
+  info: (msg) => console.log(msg),
+  warn: (msg) => console.log(msg)
+};
 
 const WishlistCard = ({ item, onRemove, onAddToCart, onSelectProduct }) => {
   
@@ -160,7 +171,7 @@ const Wishlist = () => {
 
             {filteredWishlist.length === 0 ? (
               <p className="col-span-full text-center text-gray-500">
-                {searchTerm ? `No matches found for "${searchTerm}"` : "Your wishlist is empty. Browse products and add some! 💖"}
+                {searchTerm ? `No matches found for "${searchTerm}"` : "Your wishlist is empty. Browse products and add some! "}
               </p>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
@@ -184,7 +195,7 @@ const Wishlist = () => {
         onClose={() => setSelectedProduct(null)} 
       />
 
-      <ToastContainer position="top-center" autoClose={2000} />
+      
     </div>
   );
 };

@@ -2,13 +2,24 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
+
 import axios from 'axios';
 import { FiShoppingCart, FiUser, FiHome, FiShoppingBag, FiXCircle } from 'react-icons/fi';
-import tklogo from '../tkart.png';
+import tklogo from '../assets/tklogo.png';
+
+
+
 
 // Reusable Sidebar Component
+const Bounce = null;
+const toast = {
+  success: (msg) => console.log(msg),
+  error: (msg) => console.log(msg),
+  info: (msg) => console.log(msg),
+  warn: (msg) => console.log(msg)
+};
+
 const SidebarItem = ({ to, label, icon, onClick }) => (
   <NavLink
     to={to}

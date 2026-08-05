@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
+
 import axios from 'axios';
 import { syncCartToDB, syncWishlistToDB } from '../../utils/sync';
 import {
@@ -24,8 +24,19 @@ import {
 import { debounce } from 'lodash';
 import ReactGA from 'react-ga4';
 
+
+
+
 // Initialize Google Analytics (Replace 'G-XXXXXXXXXX' with your actual GA4 tracking ID)
 ReactGA.initialize('G-YOUR_ACTUAL_TRACKING_ID');
+
+const Bounce = null;
+const toast = {
+  success: (msg) => console.log(msg),
+  error: (msg) => console.log(msg),
+  info: (msg) => console.log(msg),
+  warn: (msg) => console.log(msg)
+};
 
 const Categories = () => {
   const location = useLocation();
@@ -61,73 +72,73 @@ const Categories = () => {
   const [discountFilter, setDiscountFilter] = useState(false);
 
 const categoryStructure = {
-  'All': { subcategories: ['All'], icon: '🛍️', colors: [], sizes: [], brands: [] },
+  'All': { subcategories: ['All'], icon: '', colors: [], sizes: [], brands: [] },
   'Beauty and Healthcare': {
     subcategories: ['All', 'Essential Oils', 'Hair Care', 'Makeup', 'Organic Skincare', 'Personal Hygiene', 'Soaps & Body Wash', 'Wellness Supplements'],
-    icon: '💆‍♀️',
+    icon: '',
     colors: [],
     sizes: ['Standard', 'Travel'],
     brands: ['PureCare', 'GlowUp', 'WellnessPro'],
   },
   'Clothing': {
     subcategories: ['All', 'Blouses', 'Dresses', 'Ethnic Wear', 'Footwear', 'Kids Wear', 'Men’s Wear', 'Sarees', 'Shirts & Tops', 'Women’s Wear'],
-    icon: '👕',
+    icon: '',
     colors: ['Red', 'Blue', 'Green', 'Black', 'White'],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     brands: ['StyleTrend', 'UrbanWear', 'ClassicFit'],
   },
   'Fashion': {
     subcategories: ['All', 'Bags & Purses', 'Caps & Hats', 'Eyewear', 'Footwear', 'Scarves & Stoles', 'Watches'],
-    icon: '👓',
+    icon: '',
     colors: ['Black', 'Brown', 'Silver', 'Gold'],
     sizes: ['One Size'],
     brands: ['ChicStyle', 'ModernTrend'],
   },
   'Fashion and Jewellery': {
     subcategories: ['All', 'Anklets', 'Bangles & Bracelets', 'Earrings', 'Necklaces', 'Rings', 'Traditional Sets'],
-    icon: '💍',
+    icon: '',
     colors: ['Gold', 'Silver', 'Rose Gold', 'Black'],
     sizes: ['One Size', 'Adjustable'],
     brands: ['GlamourGlow', 'ChicShine', 'ElegantCraft'],
   },
   'Food': {
     subcategories: ['All', 'Bakery', 'Beverages', 'Dry Fruits & Nuts', 'Homemade Snacks', 'Pickles & Chutneys', 'Ready-to-Eat', 'Spices & Masala', 'Staples & Grains'],
-    icon: '🍎',
+    icon: '',
     colors: [],
     sizes: ['Small', 'Medium', 'Large'],
     brands: ['HealthyBites', 'TasteGood', 'PureEats'],
   },
   'Groceries': {
     subcategories: ['All', 'Atta & Flours', 'Dals & Pulses', 'Edible Oils', 'Organic Products', 'Rice & Grains', 'Salt & Sugar', 'Spices & Condiments', 'Tea & Coffee'],
-    icon: '🛒',
+    icon: '',
     colors: [],
     sizes: ['1kg', '500g', '250g'],
     brands: ['DailyFresh', 'FarmChoice'],
   },
   'Handicraft': {
     subcategories: ['All', 'Bamboo Crafts', 'Handmade Bags', 'Handmade Home Decor', 'Pottery', 'Terracotta Items', 'Wood Carvings'],
-    icon: '🖌️',
+    icon: '',
     colors: ['Brown', 'Blue', 'Red', 'Natural'],
     sizes: ['Small', 'Medium', 'Large'],
     brands: ['CraftWorks', 'ArtisanHub', 'HandmadeHaven'],
   },
   'Office Code': {
     subcategories: ['All', 'Chairs', 'Desks', 'Filing Products', 'Laptop Stands', 'Lighting', 'Stationery', 'Storage Solutions'],
-    icon: '💼',
+    icon: '',
     colors: ['Black', 'White', 'Gray'],
     sizes: ['Standard', 'Compact'],
     brands: ['OfficePro', 'WorkSmart', 'ErgoDesign'],
   },
   'Organic Fruits and Vegetables': {
     subcategories: ['All', 'Fruits', 'Leafy Greens', 'Organic Juices', 'Root Vegetables', 'Seasonal Produce', 'Vegetables'],
-    icon: '🥕',
+    icon: '',
     colors: [],
     sizes: ['Small', 'Medium', 'Large'],
     brands: ['FarmFresh', 'GreenHarvest', 'OrganicFields'],
   },
   'Others': {
     subcategories: ['All', 'Books', 'DIY Kits', 'Gift Items', 'Home Cleaning', 'Pet Supplies', 'Toys & Games'],
-    icon: '📦',
+    icon: '',
     colors: [],
     sizes: [],
     brands: ['Generic', 'VarietyCo'],
@@ -434,7 +445,7 @@ const categoryStructure = {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center p-6 bg-white rounded-lg shadow-md max-w-md mx-auto">
-          <div className="text-red-500 text-5xl mb-4">⚠️</div>
+          <div className="text-red-500 text-5xl mb-4"></div>
           <h2 className="text-xl font-normal mb-2">Error Loading Products</h2>
           <p className="text-gray-600 mb-4">{error}</p>
           <button
@@ -454,17 +465,7 @@ const categoryStructure = {
   return (
     <>
       <div className="min-h-screen bg-white">
-        <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
+        
 
         <header className="bg-white shadow-sm">
           <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
